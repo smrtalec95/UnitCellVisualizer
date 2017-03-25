@@ -1,4 +1,4 @@
-var CrystalType = {SIMPLE : 0, BODY : 1, FACE : 2 };
+var CrystalType = {SIMPLE : 0, BODY : 1, FACE : 2 , NaCl : 3};
 
 function Crystal(type, eighth, half, sphere, colors) {
 
@@ -8,18 +8,24 @@ function Crystal(type, eighth, half, sphere, colors) {
         switch (type) {
             
             case CrystalType.SIMPLE :
-            unit = new SimpleCubic(eighth, half, sphere, colors);
-            this.createSimpleLayers();
+                unit = new SimpleCubic(eighth, half, sphere, colors);
+                this.createSimpleLayers();
             break;
 
             case CrystalType.BODY :
-            unit = new BodyCentered(eighth, half, sphere, colors);
-            this.createBodyLayers();
+                unit = new BodyCentered(eighth, half, sphere, colors);
+                this.createBodyLayers();
             break;
 
             case CrystalType.FACE :
-            unit = new FaceCentered(eighth, half, sphere, colors);
-            this.createFaceLayers();
+                unit = new FaceCentered(eighth, half, sphere, colors);
+                this.createFaceLayers();
+            break;
+            
+            //new additions for NaCl Unit Cell
+            case CrystalType.NaCl :
+                unit = new SodiumChloride(eighth, half, sphere, colors);
+                this.createNaClLayers();
             break;
         }
     };
@@ -27,14 +33,21 @@ function Crystal(type, eighth, half, sphere, colors) {
     this.getName = function() {
 
         switch (type) {
+            
             case CrystalType.SIMPLE :
-            return "Simple";
+                return "Simple";
             break;
+            
             case CrystalType.BODY :
-            return "Body-Centered";
+                return "Body-Centered";
             break;
+            
             case CrystalType.FACE :
-            return "Face-Centered";
+                return "Face-Centered";
+            break;
+            
+            case CrystalType.NaCl :
+                return "Sodium Chloride";
             break;
         }
     };
@@ -144,6 +157,8 @@ function Crystal(type, eighth, half, sphere, colors) {
         } else if (type == CrystalType.FACE) {
             MV.scale(0.71);
         }
+        //may need to include something here for my cell
+        //assuming it's some sort of zoom?
 
         for (var i = 0; i < layers.length; i++) {
 
@@ -166,14 +181,21 @@ function Crystal(type, eighth, half, sphere, colors) {
 
     this.drawInspect = function(MV, prog) {
         switch (type) {
-        case CrystalType.SIMPLE:
-            this.drawSimpleInspect(MV, prog);
+            
+            case CrystalType.SIMPLE:
+                this.drawSimpleInspect(MV, prog);
             break;
-        case CrystalType.BODY:
-            this.drawBodyInspect(MV, prog);
+            
+            case CrystalType.BODY:
+                this.drawBodyInspect(MV, prog);
             break;
-        case CrystalType.FACE:
-            this.drawFaceInspect(MV, prog);
+            
+            case CrystalType.FACE:
+                this.drawFaceInspect(MV, prog);
+            break;
+            
+            case CrystalType.NaCl:
+                this.drawNaClInspect(MV, prog);
             break;
         }
     };
@@ -291,6 +313,10 @@ function Crystal(type, eighth, half, sphere, colors) {
         layers.push(new Layer(4,1, 3.0*s, 1.0, 1.40845, colors["grey"], sphere));
     };
     
+    this.createNaClLayers = function() {
+        //TODO
+    };
+    
     this.drawSimpleInspect = function(MV, prog) {
         gl.uniform1f(prog.getHandle("alpha"), 1.0);
         gl.uniform3fv(prog.getHandle("kdFront"), colors["blue"]);
@@ -394,6 +420,10 @@ function Crystal(type, eighth, half, sphere, colors) {
         this.drawHalf(MV, prog, 0, vec3.fromValues(inspctExp + .99, 0, 0));
         this.drawHalf(MV, prog, 180, vec3.fromValues(inspctExp + .99, 0, 0));
         MV.popMatrix();
+    };
+    
+    this.drawNaClInspect = function(MV, prog) {
+        //TODO
     };
     
     this.drawEighth = function(MV, prog, rot, translate) {  
