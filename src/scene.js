@@ -25,6 +25,10 @@ var Scene = {
         crystal = new Crystal(CrystalType.FACE, this.eighth, this.half, this.sphere, this.colors);
         crystal.init();
         this.crystals.push(crystal);
+        
+        crystal = new Crystal(CrystalType.NaCl, this.eighth, this.half, this.sphere, this.colors);
+        crystal.init();
+        this.crystals.push(crystal);
     },
 
     setupColors : function() {
@@ -34,6 +38,7 @@ var Scene = {
         this.colors["blue"] = vec3.fromValues(0, 0.7, 1.0);
         this.colors["orange"] = vec3.fromValues(1.0, 0.6, 0.2);
         this.colors["black"] = vec3.fromValues(0, 0, 0);
+        //TODO add purps
     },
 
     nextCrystal : function() {
