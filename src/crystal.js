@@ -314,7 +314,10 @@ function Crystal(type, eighth, half, sphere, colors) {
     };
     
     this.createNaClLayers = function() {
-        //TODO
+        layers.push(new Layer(4,4, -3, 1.0, 1.0, colors["grey"], sphere));
+        layers.push(new Layer(4,4, -1, 1.0, 1.0, colors["grey"], sphere));
+        layers.push(new Layer(4,4, 1, 1.0, 1.0, colors["grey"], sphere));
+        layers.push(new Layer(4,4, 3, 1.0, 1.0, colors["grey"], sphere));
     };
     
     this.drawSimpleInspect = function(MV, prog) {
@@ -423,7 +426,28 @@ function Crystal(type, eighth, half, sphere, colors) {
     };
     
     this.drawNaClInspect = function(MV, prog) {
-        //TODO
+        gl.uniform1f(prog.getHandle("alpha"), 1.0);
+        gl.uniform3fv(prog.getHandle("kdFront"), colors["blue"]);
+        
+        MV.pushMatrix();
+        this.drawEighth(MV, prog, 0, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
+        this.drawEighth(MV, prog, 90, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
+        this.drawEighth(MV, prog, 180, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
+        this.drawEighth(MV, prog, 270, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
+        
+        MV.pushMatrix();
+        MV.rotate(90.0, vec3.fromValues(1.0, 0.0, 0.0));
+        this.drawEighth(MV, prog, 0, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
+        this.drawEighth(MV, prog, 90, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
+        
+        MV.rotate(180.0, vec3.fromValues(1.0, 0.0, 0.0));
+        
+        this.drawEighth(MV, prog, 180, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
+        this.drawEighth(MV, prog, 270, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
+        
+        MV.popMatrix();
+        
+        MV.popMatrix();
     };
     
     this.drawEighth = function(MV, prog, rot, translate) {  
