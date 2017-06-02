@@ -130,8 +130,10 @@ function Crystal(type, eighth, half, sphere, colors) {
         
         MV.scale(scale);
         
+        //this is one unit cell (ie what shows up when translucency is toggled)
         unit.draw(MV, prog, vec3.fromValues(0,0,0), alpha, true, vec3.fromValues(1,1,1), vec3.fromValues(2,2,2)); 
         
+        //used for expanding/contracting
         for (var i = 0; i < cells.length; i++) {
             var v = vec3.fromValues(cells[i].pos[0], cells[i].pos[1], cells[i].pos[2]);
             // Vector for cell positioning
@@ -141,6 +143,7 @@ function Crystal(type, eighth, half, sphere, colors) {
             var ndx = cells[i].ndx;
             vec3.scale(v, v, expansion); // Adjust cell positioning by any expansion
           
+            //this is the whole model as it appears on the screen
             unit.draw(MV, prog, v, alpha, false, bounds, ndx); // Draw cell
         }
         
@@ -314,10 +317,11 @@ function Crystal(type, eighth, half, sphere, colors) {
     };
     
     this.createNaClLayers = function() {
-        layers.push(new Layer(4,4, -3, 1.0, 1.0, colors["grey"], sphere));
-        layers.push(new Layer(4,4, -1, 1.0, 1.0, colors["grey"], sphere));
-        layers.push(new Layer(4,4, 1, 1.0, 1.0, colors["grey"], sphere));
-        layers.push(new Layer(4,4, 3, 1.0, 1.0, colors["grey"], sphere));
+        layers.push(new Layer(5, 5, -3, 1.0, 1.0, colors["grey"], sphere));
+        layers.push(new Layer(5, 5, -1, 1.0, 1.0, colors["grey"], sphere));
+        layers.push(new Layer(5, 5,  1, 1.0, 1.0, colors["grey"], sphere));
+        layers.push(new Layer(5, 5,  3, 1.0, 1.0, colors["grey"], sphere));
+        layers.push(new Layer(5, 5,  5, 1.0, 1.0, colors["grey"], sphere));
     };
     
     this.drawSimpleInspect = function(MV, prog) {
