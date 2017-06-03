@@ -317,11 +317,10 @@ function Crystal(type, eighth, half, sphere, colors) {
     };
     
     this.createNaClLayers = function() {
-        layers.push(new Layer(5, 5, -3, 1.0, 1.0, colors["grey"], sphere));
-        layers.push(new Layer(5, 5, -1, 1.0, 1.0, colors["grey"], sphere));
-        layers.push(new Layer(5, 5,  1, 1.0, 1.0, colors["grey"], sphere));
-        layers.push(new Layer(5, 5,  3, 1.0, 1.0, colors["grey"], sphere));
-        layers.push(new Layer(5, 5,  5, 1.0, 1.0, colors["grey"], sphere));
+        layers.push(new Layer(4, 4, -3, 1.0, 1.0, colors["grey"], sphere));
+        layers.push(new Layer(4, 4, -1, 1.0, 1.0, colors["grey"], sphere));
+        layers.push(new Layer(4, 4,  1, 1.0, 1.0, colors["grey"], sphere));
+        layers.push(new Layer(4, 4,  3, 1.0, 1.0, colors["grey"], sphere));
     };
     
     this.drawSimpleInspect = function(MV, prog) {
