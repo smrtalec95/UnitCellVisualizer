@@ -441,26 +441,21 @@ function Crystal(type, eighth, half, sphere, colors) {
     
     this.drawNaClInspect = function(MV, prog) {
         gl.uniform1f(prog.getHandle("alpha"), 1.0);
-        gl.uniform3fv(prog.getHandle("kdFront"), colors["blue"]);
         
+        gl.uniform3fv(prog.getHandle("kdFront"), colors["green"]);
         MV.pushMatrix();
-        this.drawEighth(MV, prog, 0, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
-        this.drawEighth(MV, prog, 90, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
-        this.drawEighth(MV, prog, 180, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
-        this.drawEighth(MV, prog, 270, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
-        
-        MV.pushMatrix();
-        MV.rotate(90.0, vec3.fromValues(1.0, 0.0, 0.0));
-        this.drawEighth(MV, prog, 0, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
-        this.drawEighth(MV, prog, 90, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
-        
-        MV.rotate(180.0, vec3.fromValues(1.0, 0.0, 0.0));
-        
-        this.drawEighth(MV, prog, 180, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
-        this.drawEighth(MV, prog, 270, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
-        
+        MV.translate(vec3.fromValues(-2, 0, -25));
+        MV.scale(1.3);
+        gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
+        sphere.draw(prog);
         MV.popMatrix();
         
+        gl.uniform3fv(prog.getHandle("kdFront"), colors["purple"]);
+        MV.pushMatrix();
+        MV.translate(vec3.fromValues(2, 0, -25));
+        MV.scale(.7);
+        gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
+        sphere.draw(prog);
         MV.popMatrix();
     };
     
