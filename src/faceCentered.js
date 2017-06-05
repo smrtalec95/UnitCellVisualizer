@@ -1,6 +1,6 @@
 function FaceCentered(eighth, half, sphere, colors) {
     
-    this.draw = function(MV, prog, pos, alpha, center, bounds, ndx) {
+    this.draw = function(MV, prog, pos, alpha, center, bounds, ndx, splitAmt) {
         
 
         /*gl.uniform3fv(prog.getHandle("kdFront"), colors["red"]);            // 9

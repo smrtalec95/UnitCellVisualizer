@@ -74,7 +74,7 @@ function SodiumChloride(eighth, half, sphere, colors) {
     
     
     
-    this.draw = function(MV, prog, pos, alpha, center, bounds, ndx) {
+    this.draw = function(MV, prog, pos, alpha, center, bounds, ndx, splitAmt) {
         
         if (center && alpha < 1.0) {
             gl.uniform1f(prog.getHandle("alpha"), 1.0);
@@ -85,6 +85,12 @@ function SodiumChloride(eighth, half, sphere, colors) {
         
         MV.pushMatrix();
         
+        //even atoms go left
+        if((bounds[0] + bounds[1] + bounds[2]) % 2 == 0) {
+            MV.translate(vec3.fromValues(-1 * splitAmt, 0, 0));
+        } else {
+            MV.translate(vec3.fromValues(splitAmt, 0, 0));
+        }
         MV.translate(pos);
         gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
         sphere.draw(prog);
@@ -104,4 +110,6 @@ function SodiumChloride(eighth, half, sphere, colors) {
         
         MV.popMatrix();
     };*/
+    
+    var splitAmt = 0;
 }

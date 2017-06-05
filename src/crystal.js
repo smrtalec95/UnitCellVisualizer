@@ -131,7 +131,7 @@ function Crystal(type, eighth, half, sphere, colors) {
         MV.scale(scale);
         
         //this is one unit cell (ie what shows up when translucency is toggled)
-        unit.draw(MV, prog, vec3.fromValues(0,0,0), alpha, true, vec3.fromValues(1,1,1), vec3.fromValues(2,2,2)); 
+        unit.draw(MV, prog, vec3.fromValues(0,0,0), alpha, true, vec3.fromValues(1,1,1), vec3.fromValues(2,2,2), split); 
         
         //used for expanding/contracting
         for (var i = 0; i < cells.length; i++) {
@@ -144,7 +144,7 @@ function Crystal(type, eighth, half, sphere, colors) {
             vec3.scale(v, v, expansion); // Adjust cell positioning by any expansion
           
             //this is the whole model as it appears on the screen
-            unit.draw(MV, prog, v, alpha, false, bounds, ndx); // Draw cell
+            unit.draw(MV, prog, v, alpha, false, bounds, ndx, split); // Draw cell
         }
         
         MV.popMatrix();
@@ -454,6 +454,17 @@ function Crystal(type, eighth, half, sphere, colors) {
         MV.popMatrix();
     };
     
+    this.split = function() {
+        //currently only cell that actually splits is NaCl
+        if(type == CrystalType.NaCl) {
+            if (split == 0) {
+                split = 8;
+            } else {
+                split = 0;
+            }
+        }
+    }
+    
     this.drawEighth = function(MV, prog, rot, translate) {  
         MV.pushMatrix();
         MV.rotate(rot, vec3.fromValues(0.0, 1.0, 0.0));
@@ -486,6 +497,8 @@ function Crystal(type, eighth, half, sphere, colors) {
     var translucent = false;
     var layersDraw = true;
     var inspecting = false;
+    
+    var split = 0;
 
     var unit;
     var eighth = eighth;

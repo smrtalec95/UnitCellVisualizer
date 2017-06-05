@@ -34,28 +34,39 @@ var User = {
             switch(e.which) {
 
 	        case 'E'.charCodeAt(0): // left
-                Scene.expand();
-		        break;
+                    Scene.expand();
+                    break;
+                        
 	        case 'C'.charCodeAt(0): // right
-		        Scene.contract();
-		        break;
+                    Scene.contract();
+                    break;
+                        
 	        case 'T'.charCodeAt(0):
-                Scene.toggleTranslucency();
-		        break;
+                    Scene.toggleTranslucency();
+                    break;
+                        
 	        case 'N'.charCodeAt(0):
-                camera.reset();
-                Scene.nextCrystal();
-                document.getElementById("crystalType").innerHTML = Scene.getCrystalName();
-		        break;
-            case 'L'.charCodeAt(0):
-                Scene.toggleLayers();
-                break;
-            case 'I'.charCodeAt(0):
-                Scene.toggleInspection();
-                break;
-            case 17:
-                User.ctrl = true;
-                break;
+                    camera.reset();
+                    Scene.nextCrystal();
+                    document.getElementById("crystalType").innerHTML = Scene.getCrystalName();
+                    break;
+                        
+                case 'L'.charCodeAt(0):
+                    Scene.toggleLayers();
+                    break;
+                    
+                case 'I'.charCodeAt(0):
+                    Scene.toggleInspection();
+                    break;
+                    
+                case 'S'.charCodeAt(0):
+                    Scene.toggleSplit();
+                    break;
+            
+                case 17:
+                    User.ctrl = true;
+                    break;
+                
 	        default: return; // exit this handler for other keys
 	        }
 	        e.preventDefault(); // prevent the default action (scroll / move caret)
