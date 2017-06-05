@@ -2,7 +2,7 @@ function SodiumChloride(eighth, half, sphere, colors) {
     
     this.prototype = new UnitCell(eighth, half, sphere, colors);
 
-    this.draw = function(MV, prog, pos, alpha, center, bounds, ndx) {
+    /*this.draw = function(MV, prog, pos, alpha, center, bounds, ndx) {
         if (center && alpha < 1.0) {
             gl.uniform1f(prog.getHandle("alpha"), 1.0);
             gl.uniform3fv(prog.getHandle("kdFront"), colors["blue"]);
@@ -50,8 +50,50 @@ function SodiumChloride(eighth, half, sphere, colors) {
         MV.popMatrix();
 
         gl.uniform1f(prog.getHandle("alpha"), alpha); // Make sure alpha is same as it was 
+    };*/
+    /*
+    this.drawScaledEighth = function(MV, prog, rot, scale) {
+        MV.pushMatrix();
+        
+        MV.rotate(rot, vec3.fromValues(0.0, 1.0, 0.0));
+        MV.translate(vec3.fromValues(1.0, -1.0, -1.0) / scale);
+        MV.scale(scale);
+        gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
+        eighth.draw(prog);
+        
+        MV.popMatrix();
+    }
+    
+    this.drawNaEighth = function(MV, prog, rot) {
+        this.drawScaledEighth(MV, prog, rot, vec3.fromValues(.5, .5, .5));
+    }
+    
+    this.drawClEighth = function(MV, prog, rot) {
+        this.drawScaledEighth(MV, prog, rot, vec3.fromValues(1.5, 1.5, 1.5));
+    }*/
+    
+    
+    
+    this.draw = function(MV, prog, pos, alpha, center, bounds, ndx) {
+        
+        if (center && alpha < 1.0) {
+            gl.uniform1f(prog.getHandle("alpha"), 1.0);
+            gl.uniform3fv(prog.getHandle("kdFront"), colors["blue"]);
+        } else {
+            gl.uniform3fv(prog.getHandle("kdFront"), colors["grey"]);
+        }
+        
+        MV.pushMatrix();
+        
+        MV.translate(pos);
+        gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
+        sphere.draw(prog);
+        
+        MV.popMatrix();
     };
 
+    //not used for now
+    /*
     this.drawEighth = function(MV, prog, rot) {
         MV.pushMatrix();
         
@@ -61,5 +103,5 @@ function SodiumChloride(eighth, half, sphere, colors) {
         eighth.draw(prog);
         
         MV.popMatrix();
-    };
+    };*/
 }
