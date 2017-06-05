@@ -317,11 +317,20 @@ function Crystal(type, eighth, half, sphere, colors) {
     };
     
     this.createNaClLayers = function() {
-        layers.push(new Layer(5, 5, -4, 1.0, 1.0, colors["grey"], sphere));
-        layers.push(new Layer(5, 5, -2, 1.0, 1.0, colors["grey"], sphere));
-        layers.push(new Layer(5, 5,  0, 1.0, 1.0, colors["grey"], sphere));
-        layers.push(new Layer(5, 5,  2, 1.0, 1.0, colors["grey"], sphere));
-        layers.push(new Layer(5, 5,  4, 1.0, 1.0, colors["grey"], sphere));
+        // make another layer constructor, for alternating atom layers
+        
+        //shut off expand/contract for NaCl
+        
+        //fix inspect for NaCl
+        layers.push(new AltLayer(5, 5, -4, 1.0, 1.0, colors["green"], 1.3, colors["purple"], .7, sphere));
+        
+        layers.push(new AltLayer(5, 5, -2, 1.0, 1.0, colors["purple"], .7, colors["green"], 1.3, sphere));
+        
+        layers.push(new AltLayer(5, 5, 0, 1.0, 1.0, colors["green"], 1.3, colors["purple"], .7, sphere));
+        
+        layers.push(new AltLayer(5, 5, 2, 1.0, 1.0, colors["purple"], .7, colors["green"], 1.3, sphere));
+        
+        layers.push(new AltLayer(5, 5, 4, 1.0, 1.0, colors["green"], 1.3, colors["purple"], .7, sphere));
     };
     
     this.drawSimpleInspect = function(MV, prog) {
@@ -499,9 +508,6 @@ function Crystal(type, eighth, half, sphere, colors) {
     var inspecting = false;
     
     var splitVal = 0;
-    //might be a better way to do this, than saving a reference to
-    //the MV stack so split can draw the NaCl cell as well
-    var MVforSplit = new MatrixStack();
 
     var unit;
     var eighth = eighth;

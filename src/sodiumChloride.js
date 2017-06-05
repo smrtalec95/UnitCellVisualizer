@@ -95,10 +95,10 @@ function SodiumChloride(eighth, half, sphere, colors) {
         
         //even atoms are larger and green [Cl]
         if((bounds[0] + bounds[1] + bounds[2]) % 2 == 0) {
-            MV.scale(1.5);
+            MV.scale(1.3);
             gl.uniform3fv(prog.getHandle("kdFront"), colors["green"]);
         } else {
-            MV.scale(.5);
+            MV.scale(.7);
             gl.uniform3fv(prog.getHandle("kdFront"), colors["purple"]);
         }
         
