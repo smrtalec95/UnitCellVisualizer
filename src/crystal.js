@@ -131,7 +131,7 @@ function Crystal(type, eighth, half, sphere, colors) {
         MV.scale(scale);
         
         //this is one unit cell (ie what shows up when translucency is toggled)
-        unit.draw(MV, prog, vec3.fromValues(0,0,0), alpha, true, vec3.fromValues(1,1,1), vec3.fromValues(2,2,2), split); 
+        unit.draw(MV, prog, vec3.fromValues(0,0,0), alpha, true, vec3.fromValues(1,1,1), vec3.fromValues(2,2,2), splitVal); 
         
         //used for expanding/contracting
         for (var i = 0; i < cells.length; i++) {
@@ -144,7 +144,7 @@ function Crystal(type, eighth, half, sphere, colors) {
             vec3.scale(v, v, expansion); // Adjust cell positioning by any expansion
           
             //this is the whole model as it appears on the screen
-            unit.draw(MV, prog, v, alpha, false, bounds, ndx, split); // Draw cell
+            unit.draw(MV, prog, v, alpha, false, bounds, ndx, splitVal); // Draw cell
         }
         
         MV.popMatrix();
@@ -457,10 +457,10 @@ function Crystal(type, eighth, half, sphere, colors) {
     this.split = function() {
         //currently only cell that actually splits is NaCl
         if(type == CrystalType.NaCl) {
-            if (split == 0) {
-                split = 8;
+            if (splitVal == 0) {
+                splitVal = 8;
             } else {
-                split = 0;
+                splitVal = 0;
             }
         }
     }
@@ -498,7 +498,10 @@ function Crystal(type, eighth, half, sphere, colors) {
     var layersDraw = true;
     var inspecting = false;
     
-    var split = 0;
+    var splitVal = 0;
+    //might be a better way to do this, than saving a reference to
+    //the MV stack so split can draw the NaCl cell as well
+    var MVforSplit = new MatrixStack();
 
     var unit;
     var eighth = eighth;

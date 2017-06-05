@@ -92,6 +92,16 @@ function SodiumChloride(eighth, half, sphere, colors) {
             MV.translate(vec3.fromValues(splitAmt, 0, 0));
         }
         MV.translate(pos);
+        
+        //even atoms are larger and green [Cl]
+        if((bounds[0] + bounds[1] + bounds[2]) % 2 == 0) {
+            MV.scale(1.5);
+            gl.uniform3fv(prog.getHandle("kdFront"), colors["green"]);
+        } else {
+            MV.scale(.5);
+            gl.uniform3fv(prog.getHandle("kdFront"), colors["purple"]);
+        }
+        
         gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
         sphere.draw(prog);
         

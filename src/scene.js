@@ -38,7 +38,7 @@ var Scene = {
         this.colors["blue"] = vec3.fromValues(0, 0.7, 1.0);
         this.colors["orange"] = vec3.fromValues(1.0, 0.6, 0.2);
         this.colors["black"] = vec3.fromValues(0, 0, 0);
-        //TODO add purps
+        this.colors["purple"] = vec3.fromValues(.578125, 0, .82421875);
     },
 
     nextCrystal : function() {
