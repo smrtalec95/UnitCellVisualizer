@@ -64,18 +64,22 @@ function Crystal(type, eighth, half, sphere, colors) {
     };
     
     this.expand = function() {
-        if (inspecting) {
-            if (inspctExp < 0.6) { inspctExp += .2; }
-        } else {
-            if (expansion < 4.0) { expansion += .2; }
+        if(type != CrystalType.NaCl) {
+            if (inspecting) {
+                if (inspctExp < 0.6) { inspctExp += .2; }
+            } else {
+                if (expansion < 4.0) { expansion += .2; }
+            }
         }
     };
     
     this.contract = function() {
-        if (inspecting) {
-            if (inspctExp > 0.2) { inspctExp -= .2; }
-        } else {
-            if (expansion > 1.0) { expansion -= .2; }
+        if(type != CrystalType.NaCl) {
+            if (inspecting) {
+                if (inspctExp > 0.2) { inspctExp -= .2; }
+            } else {
+                if (expansion > 1.0) { expansion -= .2; }
+            }
         }
     };
     
@@ -317,9 +321,6 @@ function Crystal(type, eighth, half, sphere, colors) {
     };
     
     this.createNaClLayers = function() {
-        // make another layer constructor, for alternating atom layers
-        
-        //shut off expand/contract for NaCl
         
         //fix inspect for NaCl
         layers.push(new AltLayer(5, 5, -4, 1.0, 1.0, colors["green"], 1.3, colors["purple"], .7, sphere));
@@ -465,14 +466,14 @@ function Crystal(type, eighth, half, sphere, colors) {
     
     this.split = function() {
         //currently only cell that actually splits is NaCl
-        if(type == CrystalType.NaCl) {
+        if(type === CrystalType.NaCl) {
             if (splitVal == 0) {
                 splitVal = 8;
             } else {
                 splitVal = 0;
             }
         }
-    }
+    };
     
     this.drawEighth = function(MV, prog, rot, translate) {  
         MV.pushMatrix();
