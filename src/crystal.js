@@ -64,22 +64,18 @@ function Crystal(type, eighth, half, sphere, colors) {
     };
     
     this.expand = function() {
-        if(type != CrystalType.NaCl) {
-            if (inspecting) {
-                if (inspctExp < 0.6) { inspctExp += .2; }
-            } else {
-                if (expansion < 4.0) { expansion += .2; }
-            }
+        if (inspecting) {
+            if (inspctExp < 0.6) { inspctExp += .2; }
+        } else {
+            if (expansion < 4.0) { expansion += .2; }
         }
     };
     
     this.contract = function() {
-        if(type != CrystalType.NaCl) {
-            if (inspecting) {
-                if (inspctExp > 0.2) { inspctExp -= .2; }
-            } else {
-                if (expansion > 1.0) { expansion -= .2; }
-            }
+        if (inspecting) {
+            if (inspctExp > 0.2) { inspctExp -= .2; }
+        } else {
+            if (expansion > 1.0) { expansion -= .2; }
         }
     };
     
@@ -439,6 +435,7 @@ function Crystal(type, eighth, half, sphere, colors) {
         MV.popMatrix();
     };
     
+    //this goobers when you start rotating
     this.drawNaClInspect = function(MV, prog) {
         gl.uniform1f(prog.getHandle("alpha"), 1.0);
         
