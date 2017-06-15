@@ -159,6 +159,8 @@ function Crystal(type, eighth, half, sphere, colors) {
             MV.scale(0.87);
         } else if (type == CrystalType.FACE) {
             MV.scale(0.71);
+        } else if (type == CrystalType.NaCl) {
+            MV.scale(.51);
         }
         //may need to include something here for my cell
         //assuming it's some sort of zoom?
@@ -317,17 +319,23 @@ function Crystal(type, eighth, half, sphere, colors) {
     };
     
     this.createNaClLayers = function() {
+        layers.push(new AltLayer(9, 9, -8, 1.0, 1.0, colors["purple"], .7, colors["green"], 1.3, sphere));
         
-        //fix inspect for NaCl
-        layers.push(new AltLayer(5, 5, -4, 1.0, 1.0, colors["green"], 1.3, colors["purple"], .7, sphere));
+        layers.push(new AltLayer(9, 9, -6, 1.0, 1.0, colors["green"], 1.3, colors["purple"], .7, sphere));
         
-        layers.push(new AltLayer(5, 5, -2, 1.0, 1.0, colors["purple"], .7, colors["green"], 1.3, sphere));
+        layers.push(new AltLayer(9, 9, -4, 1.0, 1.0, colors["purple"], .7, colors["green"], 1.3, sphere));
         
-        layers.push(new AltLayer(5, 5, 0, 1.0, 1.0, colors["green"], 1.3, colors["purple"], .7, sphere));
+        layers.push(new AltLayer(9, 9, -2, 1.0, 1.0, colors["green"], 1.3, colors["purple"], .7, sphere));
         
-        layers.push(new AltLayer(5, 5, 2, 1.0, 1.0, colors["purple"], .7, colors["green"], 1.3, sphere));
+        layers.push(new AltLayer(9, 9, 0, 1.0, 1.0, colors["purple"], .7, colors["green"], 1.3, sphere));
         
-        layers.push(new AltLayer(5, 5, 4, 1.0, 1.0, colors["green"], 1.3, colors["purple"], .7, sphere));
+        layers.push(new AltLayer(9, 9, 2, 1.0, 1.0, colors["green"], 1.3, colors["purple"], .7, sphere));
+        
+        layers.push(new AltLayer(9, 9, 4, 1.0, 1.0, colors["purple"], .7, colors["green"], 1.3, sphere));
+        
+        layers.push(new AltLayer(9, 9, 6, 1.0, 1.0, colors["green"], 1.3, colors["purple"], .7, sphere));
+        
+        layers.push(new AltLayer(9, 9, 8, 1.0, 1.0, colors["purple"], .7, colors["green"], 1.3, sphere));
     };
     
     this.drawSimpleInspect = function(MV, prog) {
