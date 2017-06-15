@@ -168,8 +168,6 @@ function Crystal(type, eighth, half, sphere, colors) {
         } else if (type == CrystalType.NaCl) {
             MV.scale(.51);
         }
-        //may need to include something here for my cell
-        //assuming it's some sort of zoom?
 
         for (var i = 0; i < layers.length; i++) {
 
@@ -179,6 +177,14 @@ function Crystal(type, eighth, half, sphere, colors) {
             if (!layers[i].isAtRest()) {
                 layers[i].update();
                 break;
+            }
+            
+            //if current layer is at rest, flip the next layer
+            //only for NaCl
+            //may be a better way to do this logistically
+            if(type == CrystalType.NaCl && layers[i].isAtRest() && i < layers.length - 1
+                    && layers[i + 1].notCalledFlip() && i % 2 == 0) {
+                layers[i + 1].flip();
             }
 
             // If last layer has fallen and settled, switch to other model for expand/contract effects
@@ -325,23 +331,23 @@ function Crystal(type, eighth, half, sphere, colors) {
     };
     
     this.createNaClLayers = function() {
-        layers.push(new AltLayer(9, 9, -8, 1.0, 1.0, colors["purple"], .7, colors["green"], 1.3, sphere));
+        layers.push(new NaClLayer(9, 9, -8, 1.0, 1.0, colors["purple"], .7, colors["green"], 1.3, sphere));
         
-        layers.push(new AltLayer(9, 9, -6, 1.0, 1.0, colors["green"], 1.3, colors["purple"], .7, sphere));
+        layers.push(new NaClLayer(9, 9, -6, 1.0, 1.0, colors["green"], 1.3, colors["purple"], .7, sphere));
         
-        layers.push(new AltLayer(9, 9, -4, 1.0, 1.0, colors["purple"], .7, colors["green"], 1.3, sphere));
+        layers.push(new NaClLayer(9, 9, -4, 1.0, 1.0, colors["purple"], .7, colors["green"], 1.3, sphere));
         
-        layers.push(new AltLayer(9, 9, -2, 1.0, 1.0, colors["green"], 1.3, colors["purple"], .7, sphere));
+        layers.push(new NaClLayer(9, 9, -2, 1.0, 1.0, colors["green"], 1.3, colors["purple"], .7, sphere));
         
-        layers.push(new AltLayer(9, 9, 0, 1.0, 1.0, colors["purple"], .7, colors["green"], 1.3, sphere));
+        layers.push(new NaClLayer(9, 9, 0, 1.0, 1.0, colors["purple"], .7, colors["green"], 1.3, sphere));
         
-        layers.push(new AltLayer(9, 9, 2, 1.0, 1.0, colors["green"], 1.3, colors["purple"], .7, sphere));
+        layers.push(new NaClLayer(9, 9, 2, 1.0, 1.0, colors["green"], 1.3, colors["purple"], .7, sphere));
         
-        layers.push(new AltLayer(9, 9, 4, 1.0, 1.0, colors["purple"], .7, colors["green"], 1.3, sphere));
+        layers.push(new NaClLayer(9, 9, 4, 1.0, 1.0, colors["purple"], .7, colors["green"], 1.3, sphere));
         
-        layers.push(new AltLayer(9, 9, 6, 1.0, 1.0, colors["green"], 1.3, colors["purple"], .7, sphere));
+        layers.push(new NaClLayer(9, 9, 6, 1.0, 1.0, colors["green"], 1.3, colors["purple"], .7, sphere));
         
-        layers.push(new AltLayer(9, 9, 8, 1.0, 1.0, colors["purple"], .7, colors["green"], 1.3, sphere));
+        layers.push(new NaClLayer(9, 9, 8, 1.0, 1.0, colors["purple"], .7, colors["green"], 1.3, sphere));
     };
     
     this.drawSimpleInspect = function(MV, prog) {
@@ -477,7 +483,7 @@ function Crystal(type, eighth, half, sphere, colors) {
         MV.popMatrix();
     };
     
-    this.split = function() {
+    /*this.split = function() {
         //currently only cell that actually splits is NaCl
         if(type === CrystalType.NaCl) {
             if (splitVal == 0) {
@@ -486,7 +492,7 @@ function Crystal(type, eighth, half, sphere, colors) {
                 splitVal = 0;
             }
         }
-    };
+    };*/
     
     this.drawEighth = function(MV, prog, rot, translate) {  
         MV.pushMatrix();

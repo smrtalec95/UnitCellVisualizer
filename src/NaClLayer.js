@@ -1,27 +1,31 @@
 // a more robust Layer
 // for NaCl
-function AltLayer(rows, cols, restHeight, xexpansion, zexpansion, color1, size1, color2, size2, sphere) {
+function NaClLayer(rows, cols, restHeight, xexpansion, zexpansion, color1, size1, color2, size2, sphere) {
 
     this.reset = function() {
         curHeight = startHeight;
+        currSplitAmt = splitAmt;
         atRest = false;
     };
 
     this.update = function() {
         if (curHeight - speed > restHeight) {
             curHeight -= speed;
+            
         } else {
             curHeight = restHeight;
-            atRest = true;
+            if(currSplitAmt > 0) {
+                currSplitAmt -= speed;
+            } else {
+                currSplitAmt = 0;
+                atRest = true;
+            }
         }
     };
 
     this.draw = function(MV, prog) {
 
         gl.uniform1f(prog.getHandle("alpha"), 1.0);
-        //gl.uniform3fv(prog.getHandle("kdFront"), color);
-        
-        
 
         for (var i = 0; i < rows; i++) {
             for (var j = 0; j < cols; j++) {
@@ -29,6 +33,17 @@ function AltLayer(rows, cols, restHeight, xexpansion, zexpansion, color1, size1,
                 var pos = vec3.fromValues(offset[0] + j*2*xexpansion, curHeight*xexpansion, offset[2] + i*2*zexpansion);
 
                 MV.pushMatrix();
+                //even spheres draw on the left
+                if((i + j) % 2 == 0 && flip) {
+                    MV.translate(vec3.fromValues(-1 * currSplitAmt, 0, 0));
+                } else if ((i + j) % 2 == 0 && !flip) {
+                    MV.translate(vec3.fromValues(currSplitAmt, 0, 0));
+                } else if (flip) {
+                    MV.translate(vec3.fromValues(currSplitAmt, 0, 0));
+                } else {
+                    MV.translate(vec3.fromValues(-1 * currSplitAmt, 0, 0));
+                }
+                
                 MV.translate(pos);
                 
                 //even spheres get the first scale
@@ -49,17 +64,33 @@ function AltLayer(rows, cols, restHeight, xexpansion, zexpansion, color1, size1,
     };
     
     this.isAtRest = function() { return atRest; };
+    
+    this.flip = function() {
+        flip = !flip;
+        calledFlip = true;
+    }
+    
+    this.notCalledFlip = function() {return !calledFlip;}
 
     var rows = rows;
     var cols = cols;
-    var startHeight = 7.0;
+    var startHeight = 10.0;
     var restHeight = restHeight;
     var xexpansion = xexpansion;
     var zexpansion = zexpansion;
-    var curHeight = 7.0;
-    var speed = .05;
+    var curHeight = 10.0;
+    var speed = .1;
     var atRest = false;
     var color = color;
     var offset = vec3.fromValues(-(cols-1)*xexpansion, restHeight,-(rows-1)*zexpansion);
     var sphere = sphere;
+    var flip = false;
+    var calledFlip = false;
+    var color1 = color1;
+    var color2 = color2;
+    var size1 = size1;
+    var size2 = size2;
+    var countTimes = 0;
+    var splitAmt = 10;
+    var currSplitAmt = 10;
 }
