@@ -449,24 +449,31 @@ function Crystal(type, eighth, half, sphere, colors) {
         MV.popMatrix();
     };
     
-    //this goobers when you start rotating
     this.drawNaClInspect = function(MV, prog) {
-        gl.uniform1f(prog.getHandle("alpha"), 1.0);
         
+        gl.uniform1f(prog.getHandle("alpha"), 1.0);
         gl.uniform3fv(prog.getHandle("kdFront"), colors["green"]);
+        
         MV.pushMatrix();
-        MV.translate(vec3.fromValues(-2, 0, -25));
+        MV.scale(0.51);
+        MV.pushMatrix();
+        
+        MV.scale(scale);
+        MV.translate(vec3.fromValues(-1, 0, 0));
         MV.scale(1.3);
         gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
         sphere.draw(prog);
         MV.popMatrix();
-        
+
         gl.uniform3fv(prog.getHandle("kdFront"), colors["purple"]);
+        
         MV.pushMatrix();
-        MV.translate(vec3.fromValues(2, 0, -25));
-        MV.scale(.7);
+        MV.scale(scale);
+        MV.translate(vec3.fromValues(1,0,0));
+        MV.scale(0.7);
         gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
         sphere.draw(prog);
+        MV.popMatrix();
         MV.popMatrix();
     };
     
