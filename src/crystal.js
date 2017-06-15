@@ -118,8 +118,14 @@ function Crystal(type, eighth, half, sphere, colors) {
     this.drawCells = function(MV, prog) {
 
         this.sortCells(MV.top());
-
-        var alpha = translucent ? 0.5 : 1.0;
+        
+        if(type == CrystalType.NaCl && translucent) {
+            alpha = .25;
+        } else if (translucent) {
+            alpha = .5;
+        } else {
+            alpha = 1.0;
+        }
 
         gl.uniform1f(prog.getHandle("alpha"), alpha);
         

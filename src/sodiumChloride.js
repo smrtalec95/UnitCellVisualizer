@@ -4,6 +4,9 @@ function SodiumChloride(eighth, half, sphere, colors) {
     
     this.draw = function(MV, prog, pos, alpha, center, bounds, ndx, splitAmt) {
         
+        if(center && alpha < 1) {
+            gl.uniform1f(prog.getHandle("alpha"), 1.0);
+        }
         MV.pushMatrix();
         MV.translate(pos);
         
@@ -112,6 +115,7 @@ function SodiumChloride(eighth, half, sphere, colors) {
         }
         
         MV.popMatrix();
+        gl.uniform1f(prog.getHandle("alpha"), alpha); //reset alpha
     };
 
     this.drawNaFourth = function(MV, prog, rot, flipX, rotY) {
