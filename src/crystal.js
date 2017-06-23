@@ -119,6 +119,7 @@ function Crystal(type, eighth, half, sphere, colors) {
 
         this.sortCells(MV.top());
         
+        //NaCl needs lower translucency value - looks better
         if(type == CrystalType.NaCl && translucent) {
             alpha = .25;
         } else if (translucent) {
@@ -137,7 +138,7 @@ function Crystal(type, eighth, half, sphere, colors) {
         MV.scale(scale);
         
         //this is one unit cell (ie what shows up when translucency is toggled)
-        unit.draw(MV, prog, vec3.fromValues(0,0,0), alpha, true, vec3.fromValues(1,1,1), vec3.fromValues(2,2,2), splitVal); 
+        unit.draw(MV, prog, vec3.fromValues(0,0,0), alpha, true, vec3.fromValues(2,2,2), vec3.fromValues(2,2,2)); 
         
         //used for expanding/contracting
         for (var i = 0; i < cells.length; i++) {
@@ -150,7 +151,7 @@ function Crystal(type, eighth, half, sphere, colors) {
             vec3.scale(v, v, expansion); // Adjust cell positioning by any expansion
           
             //this is the whole model as it appears on the screen
-            unit.draw(MV, prog, v, alpha, false, bounds, ndx, splitVal); // Draw cell
+            unit.draw(MV, prog, v, alpha, false, bounds, ndx); // Draw cell
         }
         
         MV.popMatrix();
@@ -331,24 +332,16 @@ function Crystal(type, eighth, half, sphere, colors) {
     };
     
     this.createNaClLayers = function() {
-        layers.push(new NaClLayer(9, 9, -8, 1.0, 1.0, colors["purple"], .7, colors["green"], 1.3, sphere));
+        layers.push(new NaClLayer(5, 5, -4, 1.0, 1.0, colors["green"], 1.3, colors["purple"], .7, sphere));
         
-        layers.push(new NaClLayer(9, 9, -6, 1.0, 1.0, colors["green"], 1.3, colors["purple"], .7, sphere));
+        layers.push(new NaClLayer(5, 5, -2, 1.0, 1.0, colors["purple"], .7, colors["green"], 1.3, sphere));
         
-        layers.push(new NaClLayer(9, 9, -4, 1.0, 1.0, colors["purple"], .7, colors["green"], 1.3, sphere));
+        layers.push(new NaClLayer(5, 5, 0, 1.0, 1.0, colors["green"], 1.3, colors["purple"], .7, sphere));
         
-        layers.push(new NaClLayer(9, 9, -2, 1.0, 1.0, colors["green"], 1.3, colors["purple"], .7, sphere));
+        layers.push(new NaClLayer(5, 5, 2, 1.0, 1.0, colors["purple"], .7, colors["green"], 1.3, sphere));
         
-        layers.push(new NaClLayer(9, 9, 0, 1.0, 1.0, colors["purple"], .7, colors["green"], 1.3, sphere));
-        
-        layers.push(new NaClLayer(9, 9, 2, 1.0, 1.0, colors["green"], 1.3, colors["purple"], .7, sphere));
-        
-        layers.push(new NaClLayer(9, 9, 4, 1.0, 1.0, colors["purple"], .7, colors["green"], 1.3, sphere));
-        
-        layers.push(new NaClLayer(9, 9, 6, 1.0, 1.0, colors["green"], 1.3, colors["purple"], .7, sphere));
-        
-        layers.push(new NaClLayer(9, 9, 8, 1.0, 1.0, colors["purple"], .7, colors["green"], 1.3, sphere));
-    };
+        layers.push(new NaClLayer(5, 5, 4, 1.0, 1.0, colors["green"], 1.3, colors["purple"], .7, sphere));
+    }
     
     this.drawSimpleInspect = function(MV, prog) {
         gl.uniform1f(prog.getHandle("alpha"), 1.0);
@@ -483,17 +476,6 @@ function Crystal(type, eighth, half, sphere, colors) {
         MV.popMatrix();
     };
     
-    /*this.split = function() {
-        //currently only cell that actually splits is NaCl
-        if(type === CrystalType.NaCl) {
-            if (splitVal == 0) {
-                splitVal = 8;
-            } else {
-                splitVal = 0;
-            }
-        }
-    };*/
-    
     this.drawEighth = function(MV, prog, rot, translate) {  
         MV.pushMatrix();
         MV.rotate(rot, vec3.fromValues(0.0, 1.0, 0.0));
@@ -526,8 +508,6 @@ function Crystal(type, eighth, half, sphere, colors) {
     var translucent = false;
     var layersDraw = true;
     var inspecting = false;
-    
-    var splitVal = 0;
 
     var unit;
     var eighth = eighth;

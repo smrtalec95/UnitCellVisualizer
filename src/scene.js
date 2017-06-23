@@ -35,6 +35,7 @@ var Scene = {
         this.colors["grey"] = vec3.fromValues(0.5, 0.5, 0.5);
         this.colors["red"] = vec3.fromValues(1.0, 0, 0);
         this.colors["green"] = vec3.fromValues(0, 1.0, 0);
+        this.colors["forestGreen"] = vec3.fromValues(.1333, .543, .1333);
         this.colors["blue"] = vec3.fromValues(0, 0.7, 1.0);
         this.colors["orange"] = vec3.fromValues(1.0, 0.6, 0.2);
         this.colors["black"] = vec3.fromValues(0, 0, 0);
@@ -85,12 +86,6 @@ var Scene = {
     toggleInspection : function() {
         for (var i = 0; i < this.crystals.length; i++) {
             this.crystals[i].toggleInspection();
-        }
-    },
-    
-    toggleSplit : function() {
-        for(var i = 0; i < this.crystals.length; i++) {
-            this.crystals[i].split();
         }
     },
 

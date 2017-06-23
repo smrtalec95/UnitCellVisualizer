@@ -58,10 +58,6 @@ var User = {
                 case 'I'.charCodeAt(0):
                     Scene.toggleInspection();
                     break;
-                    
-                case 'S'.charCodeAt(0):
-                    Scene.toggleSplit();
-                    break;
             
                 case 17:
                     User.ctrl = true;
