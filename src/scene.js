@@ -44,6 +44,7 @@ var Scene = {
         this.colors["orange"] = vec3.fromValues(1.0, 0.6, 0.2);
         this.colors["black"] = vec3.fromValues(0, 0, 0);
         this.colors["purple"] = vec3.fromValues(.578125, 0, .82421875);
+        this.colors["white"] = vec3.fromValues(1, 1, 1);
     },
 
     nextCrystal : function() {
