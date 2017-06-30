@@ -1,6 +1,7 @@
 function SodiumChloride(eighth, half, sphere, colors) {
     
     this.prototype = new UnitCell(eighth, half, sphere, colors);
+    // changes
     
     //only need to render a 3 by 3 area
     //reduces lag - this cell is more complex
