@@ -1,4 +1,4 @@
-var CrystalType = {SIMPLE : 0, BODY : 1, FACE : 2 , NaCl : 3};
+var CrystalType = {SIMPLE : 0, BODY : 1, FACE : 2 , NaCl : 3, CaF2: 4};
 
 function Crystal(type, eighth, half, sphere, colors) {
 
@@ -27,6 +27,10 @@ function Crystal(type, eighth, half, sphere, colors) {
                 unit = new SodiumChloride(eighth, half, sphere, colors);
                 this.createNaClLayers();
             break;
+            
+            case CrystalType.CaF2:
+                unit = new CalciumFluoride(eighth, half, sphere, colors);
+                this.createCaF2Layers();
         }
     };
     
@@ -48,6 +52,10 @@ function Crystal(type, eighth, half, sphere, colors) {
             
             case CrystalType.NaCl :
                 return "Sodium Chloride";
+            break;
+            
+            case CrystalType.CaF2:
+                return "Calcium Fluoride";
             break;
         }
     };
@@ -215,6 +223,10 @@ function Crystal(type, eighth, half, sphere, colors) {
             case CrystalType.NaCl:
                 this.drawNaClInspect(MV, prog);
             break;
+            
+            case CrystalType.CaF2:
+                this.drawCaF2Inspect(MV, prog);
+            break;
         }
     };
 
@@ -333,14 +345,19 @@ function Crystal(type, eighth, half, sphere, colors) {
     
     this.createNaClLayers = function() {
         layers.push(new NaClLayer(5, 5, -4, 1.0, 1.0, colors["green"], 1.3, colors["purple"], .7, sphere));
-        
         layers.push(new NaClLayer(5, 5, -2, 1.0, 1.0, colors["purple"], .7, colors["green"], 1.3, sphere));
-        
         layers.push(new NaClLayer(5, 5, 0, 1.0, 1.0, colors["green"], 1.3, colors["purple"], .7, sphere));
-        
         layers.push(new NaClLayer(5, 5, 2, 1.0, 1.0, colors["purple"], .7, colors["green"], 1.3, sphere));
-        
         layers.push(new NaClLayer(5, 5, 4, 1.0, 1.0, colors["green"], 1.3, colors["purple"], .7, sphere));
+    }
+    
+    this.createCaF2Layers = function() {
+        //todo add in CaF2 layering
+        //currently SC copy-pasta
+        layers.push(new Layer(4,4, -3, 1.0, 1.0, colors["grey"], sphere));
+        layers.push(new Layer(4,4, -1, 1.0, 1.0, colors["grey"], sphere));
+        layers.push(new Layer(4,4, 1, 1.0, 1.0, colors["grey"], sphere));
+        layers.push(new Layer(4,4, 3, 1.0, 1.0, colors["grey"], sphere));
     }
     
     this.drawSimpleInspect = function(MV, prog) {
@@ -475,6 +492,10 @@ function Crystal(type, eighth, half, sphere, colors) {
         MV.popMatrix();
         MV.popMatrix();
     };
+    
+    this.drawCaF2Inspect = function() {
+        //todo
+    }
     
     this.drawEighth = function(MV, prog, rot, translate) {  
         MV.pushMatrix();
