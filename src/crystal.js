@@ -127,11 +127,8 @@ function Crystal(type, eighth, half, sphere, colors) {
 
         this.sortCells(MV.top());
         
-        //NaCl needs lower translucency value - looks better
-        if(type == CrystalType.NaCl && translucent) {
+        if (translucent) {
             alpha = .25;
-        } else if (translucent) {
-            alpha = .5;
         } else {
             alpha = 1.0;
         }
