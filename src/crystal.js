@@ -500,8 +500,28 @@ function Crystal(type, eighth, half, sphere, colors) {
         MV.popMatrix();
     };
     
-    this.drawCaF2Inspect = function() {
-        //todo
+    this.drawCaF2Inspect = function(MV, prog) {
+        MV.pushMatrix();
+        MV.scale(.47);
+        MV.scale(scale);
+        
+        gl.uniform3fv(prog.getHandle("kdFront"), colors["white"]);
+        MV.pushMatrix();
+        MV.translate(vec3.fromValues(-2, 0, 0));
+        gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
+        sphere.draw(prog);
+        MV.popMatrix();
+        
+        gl.uniform3fv(prog.getHandle("kdFront"), colors["orange"]);
+        MV.pushMatrix();
+        gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
+        sphere.draw(prog);
+        MV.translate(vec3.fromValues(2, 0, 0));
+        gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
+        sphere.draw(prog);
+        MV.popMatrix();
+        
+        MV.popMatrix();
     }
     
     this.drawEighth = function(MV, prog, rot, translate) {  
