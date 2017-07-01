@@ -174,7 +174,7 @@ function Crystal(type, eighth, half, sphere, colors) {
         } else if (type == CrystalType.NaCl) {
             MV.scale(.51);
         } else if(type == CrystalType.CaF2) {
-            MV.scale(.47);
+            MV.scale(.44);
         }
 
         for (var i = 0; i < layers.length; i++) {
@@ -351,17 +351,17 @@ function Crystal(type, eighth, half, sphere, colors) {
     }
     
     this.createCaF2Layers = function() {
-        layers.push(new CaF2Layer(3, 3, -2.35, 2.15, 2.15, sphere, "F", true, colors["orange"]));
-        layers.push(new CaF2Layer(5, 5, -4.2, 1, 1, sphere, "Ca", false, colors["white"]));
-        layers.push(new CaF2Layer(3, 3, -1.45, 2.15, 2.15, sphere, "F", true, colors["orange"]));
-        layers.push(new CaF2Layer(5, 5, -2.2, 1, 1, sphere, "Ca", true, colors["white"]));
-        layers.push(new CaF2Layer(3, 3, -.45, 2.15, 2.15, sphere, "F", true, colors["orange"]));
-        layers.push(new CaF2Layer(5, 5, -.2, 1, 1, sphere, "Ca", false, colors["white"]));
-        layers.push(new CaF2Layer(3, 3, .45, 2.15, 2.15, sphere, "F", true, colors["orange"]));
-        layers.push(new CaF2Layer(5, 5, 2.2, 1, 1, sphere, "Ca", true, colors["white"]));
-        layers.push(new CaF2Layer(3, 3, 1.45, 2.15, 2.15, sphere, "F", true, colors["orange"]));
-        layers.push(new CaF2Layer(5, 5, 4.2, 1, 1, sphere, "Ca", false, colors["white"]));
-        layers.push(new CaF2Layer(3, 3, 2.35, 2.15, 2.15, sphere, "F", true, colors["orange"]));
+        layers.push(new CaF2Layer(3, 3, -2.5, 2.3, 2.3, sphere, "F", true, colors["orange"]));
+        layers.push(new CaF2Layer(5, 5, -4.2, 1.15, 1.15, sphere, "Ca", false, colors["white"]));
+        layers.push(new CaF2Layer(3, 3, -1.5, 2.3, 2.3, sphere, "F", true, colors["orange"]));
+        layers.push(new CaF2Layer(5, 5, -2.2, 1.15, 1.15, sphere, "Ca", true, colors["white"]));
+        layers.push(new CaF2Layer(3, 3, -.5, 2.3, 2.3, sphere, "F", true, colors["orange"]));
+        layers.push(new CaF2Layer(5, 5, -.2, 1.15, 1.15, sphere, "Ca", false, colors["white"]));
+        layers.push(new CaF2Layer(3, 3, .5, 2.3, 2.3, sphere, "F", true, colors["orange"]));
+        layers.push(new CaF2Layer(5, 5, 2.2, 1.15, 1.15, sphere, "Ca", true, colors["white"]));
+        layers.push(new CaF2Layer(3, 3, 1.5, 2.3, 2.3, sphere, "F", true, colors["orange"]));
+        layers.push(new CaF2Layer(5, 5, 4.2, 1.15, 1.15, sphere, "Ca", false, colors["white"]));
+        layers.push(new CaF2Layer(3, 3, 2.5, 2.3, 2.3, sphere, "F", true, colors["orange"]));
         
         //layers.push(new Layer(4,4, 1, 1.0, 1.0, colors["grey"], sphere));
         //layers.push(new Layer(4,4, 3, 1.0, 1.0, colors["grey"], sphere));

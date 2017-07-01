@@ -24,7 +24,7 @@ function CalciumFluoride(eighth, half, sphere, colors) {
 
         MV.pushMatrix();
         MV.translate(pos);
-        MV.scale(.47);
+        MV.scale(.44);
         
         //draw:---
         this.drawFCluster(MV, prog, center, alpha);
@@ -144,9 +144,9 @@ function CalciumFluoride(eighth, half, sphere, colors) {
             gl.uniform3fv(prog.getHandle("kdFront"), colors["orange"]);
         }
         
-        for(var i = -1; i < 2; i += 2) {
-            for(var j = -1; j < 2; j += 2) {
-                for(var k = -1; k < 2; k += 2) {
+        for(var i = -1.15; i < 2; i += 2.3) {
+            for(var j = -1.15; j < 2; j += 2.3) {
+                for(var k = -1.15; k < 2; k += 2.3) {
                     MV.pushMatrix();
                     MV.translate(vec3.fromValues(i, j, k));
                     gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
@@ -171,7 +171,7 @@ function CalciumFluoride(eighth, half, sphere, colors) {
             MV.rotate(180, vec3.fromValues(1, 0, 0));
         }
         MV.rotate(rot, vec3.fromValues(0, 1, 0));
-        MV.translate(vec3.fromValues(2.15, -2.15, -2.15));
+        MV.translate(vec3.fromValues(2.3, -2.3, -2.3));
         
         gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
         eighth.draw(prog);
@@ -203,7 +203,7 @@ function CalciumFluoride(eighth, half, sphere, colors) {
             }
             MV.rotate(-90, vec3.fromValues(0, 1, 0));
         }
-        MV.translate(vec3.fromValues(1.15, 0, 0));
+        MV.translate(vec3.fromValues(1.3, 0, 0));
         MV.rotate(180, vec3.fromValues(0, 1, 0));
         
         gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());

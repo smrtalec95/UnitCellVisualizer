@@ -30,8 +30,8 @@ function CaF2Layer(rows, cols, restHeight, xexpansion, zexpansion, sphere, atom,
                     MV.pushMatrix();
                     MV.translate(pos);
                     
-                    for(var m = -1; m < 2; m += 2) {
-                        for(var n = -1; n < 2; n += 2) {
+                    for(var m = -1.15; m < 2; m += 2.3) {
+                        for(var n = -1.15; n < 2; n += 2.3) {
                             MV.pushMatrix();
                             MV.translate(vec3.fromValues(m, 0, n));
                             gl.uniform3fv(prog.getHandle("kdFront"), color);
