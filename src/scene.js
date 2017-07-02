@@ -51,6 +51,11 @@ var Scene = {
         this.whichCrystal = (this.whichCrystal + 1) % this.crystals.length;
         this.crystals[this.whichCrystal].setDrawLayers();
     },
+    
+    prevCrystal: function() {
+        this.whichCrystal = (this.whichCrystal == 0 ? this.crystals.length - 1 : this.whichCrystal - 1);
+        this.crystals[this.whichCrystal].setDrawLayers();
+    },
 
     getCrystal : function() {
         return this.crystals[this.whichCrystal];
@@ -96,6 +101,11 @@ var Scene = {
 
     isLoaded : function() {
         return this.eighth.isLoaded() && this.half.isLoaded() && this.sphere.isLoaded();
+    },
+    
+    goToCrystal : function(crystalType) {
+        this.whichCrystal = crystalType;
+        this.crystals[this.whichCrystal].setDrawLayers();
     },
 
     whichCrystal : 0,

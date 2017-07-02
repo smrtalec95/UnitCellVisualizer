@@ -28,6 +28,16 @@ var User = {
             }
         };
 
+        canvas.onwheel = function(e) {
+            //wheel up - zoom in
+            if(e.deltaY < 0) {
+                camera.zoomIn();
+            }
+            //wheel down - zoom out
+            if(e.deltaY > 0) {
+                camera.zoomOut();
+            }
+        }
 
         $(document).keydown(function(e) {
 
@@ -48,6 +58,12 @@ var User = {
 	        case 'N'.charCodeAt(0):
                     camera.reset();
                     Scene.nextCrystal();
+                    document.getElementById("crystalType").innerHTML = Scene.getCrystalName();
+                    break;
+                    
+                case 'P'.charCodeAt(0):
+                    camera.reset();
+                    Scene.prevCrystal();
                     document.getElementById("crystalType").innerHTML = Scene.getCrystalName();
                     break;
                         

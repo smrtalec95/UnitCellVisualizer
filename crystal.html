@@ -109,12 +109,38 @@
 
   }
 
-  var instructions = "mouse : rotate view\nmouse + ctrl : zoom\n'e' : expand\n'c' : contract\n" + 
-                     "'i' : inspect unit cell\n't' : translucent\n'l' : toggle layer aniamtion\n'n'" + 
-                     ": next\n";
+  var instructions = "mouse : rotate view\nmouse + ctrl : zoom\nmouse wheel : zoom\n'e' : expand\n'c' : contract\n" + 
+                     "'i' : inspect unit cell\n't' : translucent\n'l' : toggle layer animation\n'n'" + 
+                     ": next cell\n'p' : previous cell\n";
 
   function instruct() {
      alert(instructions);
+  }
+  
+  function expand() {
+      Scene.expand();
+  }
+  
+  function contract() {
+      Scene.contract();
+  }
+  
+  function translucency() {
+      Scene.toggleTranslucency();
+  }
+  
+  function inspect() {
+      Scene.toggleInspection();
+  }
+  
+  function layer() {
+      Scene.toggleLayers();
+  }
+  
+  
+  function goToCrystal(crystalType) {
+      Scene.goToCrystal(crystalType);
+      document.getElementById("crystalType").innerHTML = Scene.getCrystalName();
   }
 
 </script>
@@ -126,12 +152,29 @@
   <div id="navigation">
     <p>Crystal Lattice</p>
   </div>
+    
+  <div id=cells">
+    <center>
+    <button id="SC" onclick="goToCrystal(0)" type="button">SC</button>
+    <button id="BCC" onclick="goToCrystal(1)" type="button">BCC</button>
+    <button id="FCC" onclick="goToCrystal(2)" type="button">FCC</button>
+    <button id="NaCl" onclick="goToCrystal(3)" type="button">NaCl</button>
+    <button id="CaF2" onclick="goToCrystal(4)" type="button">CaF2</button>
+    </center>
+  </div>
 
   <div id="container">
     <center>
   <canvas id="canvas" width="900px" height="675"></canvas>
   <p id="crystalType">Simple</p>
-      <button id="instructions" onclick="instruct()" type="button">Instructions</button>
+  <p>
+      <button id="instructions" onclick="instruct()" type="button">Key Controls</button>
+      <button id="expand" onclick="expand()" type="button">Expand</button>
+      <button id="contract" onclick="contract()" type="button">Contract</button>
+      <button id="translucency" onclick="translucency()" type="button">Translucency</button>
+      <button id="inspect" onclick="inspect()" type="button">Inspect</button>
+      <button id="layer" onclick="layer()" type="button">Layering</button>
+  </p>
     </center>
 
   </div>

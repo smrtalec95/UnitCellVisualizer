@@ -44,6 +44,14 @@ function Camera()
 	  
         mousePrev = vec2.fromValues(x, y);
     };
+    
+    this.zoomOut = function() {
+        translations[2] -= .25;
+    }
+    
+    this.zoomIn = function() {
+        translations[2] += .25;
+    }
 	
     this.applyProjectionMatrix = function(P) {
     	P.perspective(fovy, aspect, znear, zfar);

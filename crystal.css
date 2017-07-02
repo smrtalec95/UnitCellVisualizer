@@ -42,8 +42,48 @@ a:visited { text-decoration: none; color:#414141;}
 #instructions {
     margin: auto;
     position: relative;
-    top: 40px;
-    width: 200px;
+    top: 20px;
+    width: 150px;
+    height: 40px;
+}
+
+#expand {
+    margin: auto;
+    position: relative;
+    top: 20px;
+    width: 150px;
+    height: 40px;
+}
+
+#contract {
+    margin: auto;
+    position: relative;
+    top: 20px;
+    width: 150px;
+    height: 40px;
+}
+
+#translucency {
+    margin: auto;
+    position: relative;
+    top: 20px;
+    width: 150px;
+    height: 40px;
+}
+
+#inspect {
+    margin: auto;
+    position: relative;
+    top: 20px;
+    width: 150px;
+    height: 40px;
+}
+
+#layer {
+    margin: auto;
+    position: relative;
+    top: 20px;
+    width: 150px;
     height: 40px;
 }
 
@@ -61,4 +101,44 @@ a:visited { text-decoration: none; color:#414141;}
     margin: 0;
     position: relative;
     top: 30px;
+}
+
+#SC {
+    margin: auto;
+    position: relative;
+    top: 20px;
+    width: 150px;
+    height: 40px;
+}
+
+#BCC {
+    margin: auto;
+    position: relative;
+    top: 20px;
+    width: 150px;
+    height: 40px;
+}
+
+#FCC {
+    margin: auto;
+    position: relative;
+    top: 20px;
+    width: 150px;
+    height: 40px;
+}
+
+#NaCl {
+    margin: auto;
+    position: relative;
+    top: 20px;
+    width: 150px;
+    height: 40px;
+}
+
+#CaF2 {
+    margin: auto;
+    position: relative;
+    top: 20px;
+    width: 150px;
+    height: 40px;
 }
