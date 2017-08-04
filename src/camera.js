@@ -46,11 +46,11 @@ function Camera()
     };
     
     this.zoomOut = function() {
-        translations[2] -= .25;
+        translations[2] -= .15;
     }
     
     this.zoomIn = function() {
-        translations[2] += .25;
+        translations[2] += .15;
     }
 	
     this.applyProjectionMatrix = function(P) {

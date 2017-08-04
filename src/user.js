@@ -3,6 +3,7 @@ var User = {
     mouseDown : false,
     first : true,
     ctrl : false,
+    shift : false,
 
     setup: function() {
 
@@ -29,13 +30,26 @@ var User = {
         };
 
         canvas.onwheel = function(e) {
-            //wheel up - zoom in
-            if(e.deltaY < 0) {
-                camera.zoomIn();
-            }
-            //wheel down - zoom out
-            if(e.deltaY > 0) {
-                camera.zoomOut();
+            //16 is shift
+            if(User.shift) {
+                //wheel up - expand
+                if(e.deltaY < 0) {
+                    Scene.expand();
+                }
+                //wheel down - contract
+                //if(e.deltaY < 0) {
+                else {
+                    Scene.contract();
+                }
+            } else {
+                //wheel up - zoom in
+                if(e.deltaY < 0) {
+                    camera.zoomIn();
+                }
+                //wheel down - zoom out
+                else {
+                    camera.zoomOut();
+                }
             }
         }
 
@@ -78,6 +92,11 @@ var User = {
                 case 'W'.charCodeAt(0) :
                     Scene.toggleCoord();
                     break;
+                    
+                case 16:
+                    User.shift = true;
+                    console.log('Shift is down');
+                    break;
             
                 case 17:
                     User.ctrl = true;
@@ -93,6 +112,10 @@ var User = {
 
             if (e.which == 17) {
                 User.ctrl = false;
+            }
+            else if(e.which == 16) {
+                User.shift = false;
+                console.log('Shift is released');
             }
         });
     },

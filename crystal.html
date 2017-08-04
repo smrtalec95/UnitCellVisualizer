@@ -109,9 +109,12 @@
 
   }
 
-  var instructions = "mouse : rotate view\nmouse + ctrl : zoom\nmouse wheel : zoom\n'e' : expand\n'c' : contract\n" + 
-                     "'i' : inspect unit cell\n't' : translucent\n'l' : toggle layer animation\n'n'" + 
-                     ": next cell\n'p' : previous cell\n";
+  var instructions = "mouse : rotate view\nmouse + ctrl : zoom\n" + 
+                     "scroll : zoom\nshift + scroll: expand/contract\n" + 
+                     "'e' : expand\n'c' : contract\n" + 
+                     "'i' : inspect unit cell\n't' : translucent\n" + 
+                     "'l' : toggle layer animation\n'n': next cell\n" + 
+                     "'p' : previous cell\n";
 
   function instruct() {
      alert(instructions);
