@@ -74,6 +74,10 @@ var User = {
                 case 'I'.charCodeAt(0):
                     Scene.toggleInspection();
                     break;
+                    
+                case 'W'.charCodeAt(0) :
+                    Scene.toggleCoord();
+                    break;
             
                 case 17:
                     User.ctrl = true;

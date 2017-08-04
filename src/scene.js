@@ -98,6 +98,12 @@ var Scene = {
             this.crystals[i].toggleInspection();
         }
     },
+    
+    toggleCoord : function() {
+        for(var i = 0; i < this.crystals.length; i++) {
+            this.crystals[i].toggleCoordView();
+        }
+    },
 
     isLoaded : function() {
         return this.eighth.isLoaded() && this.half.isLoaded() && this.sphere.isLoaded();

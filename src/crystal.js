@@ -64,7 +64,10 @@ function Crystal(type, eighth, half, sphere, colors) {
     this.draw = function(MV, prog) {
         if (inspecting) {
             this.drawInspect(MV, prog);
-        } else if (layersDraw) {
+        } else if(dispCoord) {
+            this.drawCoordView(MV, prog);
+        }
+        else if (layersDraw) {
             this.drawLayers(MV, prog);
         } else {
             this.drawCells(MV, prog);
@@ -546,6 +549,77 @@ function Crystal(type, eighth, half, sphere, colors) {
         MV.popMatrix();
     };
     
+    this.isBasic = function(type) {
+        return type == CrystalType.SIMPLE ||
+               type == CrystalType.BODY ||
+               type == CrystalType.FACE;
+    }
+    
+    this.toggleCoordView = function() {
+        if(this.isBasic(type)) {
+            dispCoord = !dispCoord;
+        }
+    }
+    
+    this.drawCoordView = function(MV, prog) {
+        switch(type) {
+            case CrystalType.SIMPLE :
+                this.drawSimpleCoordView(MV, prog);
+            break;
+            
+            case CrystalType.BODY :
+                this.drawBodyCoordView(MV, prog);
+            break;
+            
+            case CrystalType.FACE :
+                this.drawFaceCoordView(MV, prog);
+            break;
+        }
+    }
+    
+    this.drawSimpleCoordView = function(MV, prog) {
+        MV.pushMatrix();
+        MV.scale(scale);
+        gl.uniform3fv(prog.getHandle("kdFront"), colors["red"]);
+        gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
+        sphere.draw(prog);
+        gl.uniform3fv(prog.getHandle("kdFront"), colors["grey"]);
+        
+        for(var i = 0; i < 3; i++) {
+            for(var j = -2; j < 5; j += 4) {
+                MV.pushMatrix();
+                if(i == 0) {
+                    MV.translate(vec3.fromValues(j, 0, 0));
+                }
+                else if (i == 1) {
+                    MV.translate(vec3.fromValues(0, j, 0));
+                }
+                else {
+                    MV.translate(vec3.fromValues(0, 0, j));
+                }
+                gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
+                sphere.draw(prog);
+                MV.popMatrix();
+            }
+        }
+        
+        MV.popMatrix();
+    }
+    
+    this.drawBodyCoordView = function(MV, prog) {
+        MV.pushMatrix();
+        MV.scale(scale);
+        MV.popMatrix();
+        //todo
+    }
+    
+    this.drawFaceCoordView = function(MV, prog) {
+        MV.pushMatrix();
+        MV.scale(scale);
+        MV.popMatrix();
+        //todo
+    }
+    
     var type = type;
     var rows = 5;
     var cols = 5;
@@ -556,6 +630,7 @@ function Crystal(type, eighth, half, sphere, colors) {
     var translucent = false;
     var layersDraw = true;
     var inspecting = false;
+    var dispCoord = false;
 
     var unit;
     var eighth = eighth;
