@@ -580,7 +580,6 @@ function Crystal(type, eighth, half, sphere, colors) {
     this.drawSimpleCoordView = function(MV, prog) {
         MV.pushMatrix();
         MV.scale(scale);
-        MV.translate(vec3.fromValues(-1, -1, 0));
         gl.uniform3fv(prog.getHandle("kdFront"), colors["red"]);
         gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
         sphere.draw(prog);
@@ -631,7 +630,47 @@ function Crystal(type, eighth, half, sphere, colors) {
     }
     
     this.drawFaceCoordView = function(MV, prog) {
-        //todo
+        MV.pushMatrix();
+        MV.scale(scale);
+        gl.uniform3fv(prog.getHandle("kdFront"), colors["red"]);
+        gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
+        sphere.draw(prog);
+        gl.uniform3fv(prog.getHandle("kdFront"), colors["grey"]);
+        
+        for(var i = -1.35; i < 2; i += 2.7) {
+            for(var j = -1.35; j < 2; j += 2.7) {
+                MV.pushMatrix();
+                MV.translate(vec3.fromValues(0, i, j));
+                gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
+                sphere.draw(prog);
+                MV.popMatrix();
+            }
+        }
+        
+        for(var i = -1.4; i < 2; i+= 2.8) {
+            MV.pushMatrix();
+            MV.translate(vec3.fromValues(i, 0, 0));
+            
+            for(var j = -1.4; j < 2; j += 2.8) {
+                MV.pushMatrix();
+                MV.translate(vec3.fromValues(0, 0, j));
+                gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
+                sphere.draw(prog);
+                MV.popMatrix();
+            }
+            
+            for(var k = -1.4; k < 2; k += 2.8) {
+                MV.pushMatrix();
+                MV.translate(vec3.fromValues(0, k, 0));
+                gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
+                sphere.draw(prog);
+                MV.popMatrix();
+            }
+            
+            MV.popMatrix();
+        }
+        
+        MV.popMatrix();
     }
     
     var type = type;
