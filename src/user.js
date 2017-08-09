@@ -89,7 +89,7 @@ var User = {
                     Scene.toggleInspection();
                     break;
                     
-                case 'W'.charCodeAt(0) :
+                case 'R'.charCodeAt(0) :
                     Scene.toggleCoord();
                     break;
                     

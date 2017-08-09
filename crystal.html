@@ -113,8 +113,8 @@
                      "scroll : zoom\nshift + scroll: expand/contract\n" + 
                      "'e' : expand\n'c' : contract\n" + 
                      "'i' : inspect unit cell\n't' : translucent\n" + 
-                     "'l' : toggle layer animation\n'n': next cell\n" + 
-                     "'p' : previous cell\n";
+                     "'l' : toggle layer animation\n'r' : coordination view\n" +
+                     "'n': next cell\n'p' : previous cell\n";
 
   function instruct() {
      alert(instructions);
@@ -138,6 +138,10 @@
   
   function layer() {
       Scene.toggleLayers();
+  }
+  
+  function coordination() {
+      Scene.toggleCoord();
   }
   
   
@@ -177,6 +181,7 @@
       <button id="translucency" onclick="translucency()" type="button">Translucency</button>
       <button id="inspect" onclick="inspect()" type="button">Inspect</button>
       <button id="layer" onclick="layer()" type="button">Layering</button>
+      <button id="coordination" onclick="coordination()" type="button">Coordination</button>
   </p>
     </center>
 

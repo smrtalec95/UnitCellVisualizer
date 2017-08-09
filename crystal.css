@@ -43,7 +43,7 @@ a:visited { text-decoration: none; color:#414141;}
     margin: auto;
     position: relative;
     top: 20px;
-    width: 150px;
+    width: 100px;
     height: 40px;
 }
 
@@ -51,7 +51,7 @@ a:visited { text-decoration: none; color:#414141;}
     margin: auto;
     position: relative;
     top: 20px;
-    width: 150px;
+    width: 100px;
     height: 40px;
 }
 
@@ -59,7 +59,7 @@ a:visited { text-decoration: none; color:#414141;}
     margin: auto;
     position: relative;
     top: 20px;
-    width: 150px;
+    width: 100px;
     height: 40px;
 }
 
@@ -67,7 +67,7 @@ a:visited { text-decoration: none; color:#414141;}
     margin: auto;
     position: relative;
     top: 20px;
-    width: 150px;
+    width: 100px;
     height: 40px;
 }
 
@@ -75,7 +75,7 @@ a:visited { text-decoration: none; color:#414141;}
     margin: auto;
     position: relative;
     top: 20px;
-    width: 150px;
+    width: 100px;
     height: 40px;
 }
 
@@ -83,7 +83,15 @@ a:visited { text-decoration: none; color:#414141;}
     margin: auto;
     position: relative;
     top: 20px;
-    width: 150px;
+    width: 100px;
+    height: 40px;
+}
+
+#coordination {
+    margin: auto;
+    position: relative;
+    top: 20px;
+    width: 100px;
     height: 40px;
 }
 
