@@ -114,8 +114,10 @@ function Crystal(type, eighth, half, sphere, colors) {
     };
 
     this.toggleInspection = function() {
-        inspctExp = 0.0;
-        inspecting = !inspecting;
+        if(!dispCoord) {
+            inspctExp = 0.0;
+            inspecting = !inspecting;
+        }
     };
     
     var Cell = function(bounds, pos, ndx) {
@@ -556,7 +558,7 @@ function Crystal(type, eighth, half, sphere, colors) {
     }
     
     this.toggleCoordView = function() {
-        if(this.isBasic(type)) {
+        if(this.isBasic(type) && !inspecting) {
             dispCoord = !dispCoord;
         }
     }
