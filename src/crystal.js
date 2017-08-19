@@ -367,9 +367,6 @@ function Crystal(type, eighth, half, sphere, colors) {
         layers.push(new CaF2Layer(3, 3, 1.5, 2.3, 2.3, sphere, "F", true, colors["orange"]));
         layers.push(new CaF2Layer(5, 5, 4.2, 1.15, 1.15, sphere, "Ca", false, colors["white"]));
         layers.push(new CaF2Layer(3, 3, 2.5, 2.3, 2.3, sphere, "F", true, colors["orange"]));
-        
-        //layers.push(new Layer(4,4, 1, 1.0, 1.0, colors["grey"], sphere));
-        //layers.push(new Layer(4,4, 3, 1.0, 1.0, colors["grey"], sphere));
     }
     
     this.drawSimpleInspect = function(MV, prog) {
@@ -479,29 +476,43 @@ function Crystal(type, eighth, half, sphere, colors) {
     
     this.drawNaClInspect = function(MV, prog) {
         
+        var eps = .01;
+        
         gl.uniform1f(prog.getHandle("alpha"), 1.0);
         gl.uniform3fv(prog.getHandle("kdFront"), colors["green"]);
         
         MV.pushMatrix();
         MV.scale(0.51);
-        MV.pushMatrix();
         
-        MV.scale(scale);
-        MV.translate(vec3.fromValues(-1, 0, 0));
-        MV.scale(1.3);
-        gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
-        sphere.draw(prog);
-        MV.popMatrix();
+        for(var i = -6.5; i < 7; i+=4) {
+            
+            MV.pushMatrix();
+            MV.scale(scale);
+            MV.translate(vec3.fromValues(-1.5, i, 0));
+            MV.scale(1.3);
+            gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
+            
+            //make the last sphere dark green
+            if(i >= 5.5 - eps && i <= 5.5 + eps) {
+                gl.uniform3fv(prog.getHandle("kdFront"), colors["forestGreen"]);
+            }
+            sphere.draw(prog);
+            MV.popMatrix();
+        }
 
         gl.uniform3fv(prog.getHandle("kdFront"), colors["purple"]);
         
-        MV.pushMatrix();
-        MV.scale(scale);
-        MV.translate(vec3.fromValues(1,0,0));
-        MV.scale(0.7);
-        gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
-        sphere.draw(prog);
-        MV.popMatrix();
+        for(var i = -6.5; i < 7; i+=4) {
+        
+            MV.pushMatrix();
+            MV.scale(scale);
+            MV.translate(vec3.fromValues(1.5, i, 0));
+            MV.scale(0.7);
+            gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
+            sphere.draw(prog);
+            MV.popMatrix();
+        }
+        
         MV.popMatrix();
     };
     
@@ -510,21 +521,25 @@ function Crystal(type, eighth, half, sphere, colors) {
         MV.scale(.47);
         MV.scale(scale);
         
-        gl.uniform3fv(prog.getHandle("kdFront"), colors["white"]);
-        MV.pushMatrix();
-        MV.translate(vec3.fromValues(-2, 0, 0));
-        gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
-        sphere.draw(prog);
-        MV.popMatrix();
+        for(var i = -6.5; i < 7; i += 4) {
         
-        gl.uniform3fv(prog.getHandle("kdFront"), colors["orange"]);
-        MV.pushMatrix();
-        gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
-        sphere.draw(prog);
-        MV.translate(vec3.fromValues(2, 0, 0));
-        gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
-        sphere.draw(prog);
-        MV.popMatrix();
+            gl.uniform3fv(prog.getHandle("kdFront"), colors["white"]);
+            MV.pushMatrix();
+            MV.translate(vec3.fromValues(-4, i, 0));
+            gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
+            sphere.draw(prog);
+            MV.popMatrix();
+
+            gl.uniform3fv(prog.getHandle("kdFront"), colors["orange"]);
+            MV.pushMatrix();
+            MV.translate(vec3.fromValues(0, i, 0));
+            gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
+            sphere.draw(prog);
+            MV.translate(vec3.fromValues(4, 0, 0));
+            gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
+            sphere.draw(prog);
+            MV.popMatrix();
+        }
         
         MV.popMatrix();
     }
