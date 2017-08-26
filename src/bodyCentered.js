@@ -116,4 +116,5 @@ function BodyCentered(eighth, half, sphere, colors, inspect) {
 
     this.scale = 0.87;
     this.inspect = inspect;
+    this.name = "Body Centered";
 }

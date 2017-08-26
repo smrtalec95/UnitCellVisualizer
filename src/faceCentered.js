@@ -282,4 +282,5 @@ function FaceCentered(eighth, half, sphere, colors, inspect) {
 
     this.scale = 0.71;
     this.inspect = inspect;
+    this.name = "Face Centered";
 }

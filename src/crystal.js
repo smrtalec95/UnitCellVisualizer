@@ -36,28 +36,7 @@ function Crystal(type, eighth, half, sphere, colors) {
     
     this.getName = function() {
 
-        switch (type) {
-            
-            case CrystalType.SIMPLE :
-                return "Simple";
-            break;
-            
-            case CrystalType.BODY :
-                return "Body-Centered";
-            break;
-            
-            case CrystalType.FACE :
-                return "Face-Centered";
-            break;
-            
-            case CrystalType.NaCl :
-                return "Sodium Chloride";
-            break;
-            
-            case CrystalType.CaF2:
-                return "Calcium Fluoride";
-            break;
-        }
+        return unit.name;
     };
 
 

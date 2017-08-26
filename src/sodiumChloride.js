@@ -320,4 +320,6 @@ function SodiumChloride(eighth, half, sphere, colors, inspect) {
         
         MV.popMatrix();
     }
+    
+    this.name = "Sodium Chloride";
 }

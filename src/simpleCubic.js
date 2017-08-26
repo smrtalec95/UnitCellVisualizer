@@ -89,4 +89,5 @@ function SimpleCubic(eighth, half, sphere, colors, inspect) {
     }
     
     this.inspect = inspect;
+    this.name = "Simple";
 }

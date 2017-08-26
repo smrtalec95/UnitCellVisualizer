@@ -239,4 +239,6 @@ function CalciumFluoride(eighth, half, sphere, colors, inspect) {
         
         MV.popMatrix();
     }
+    
+    this.name = "Calcium Fluoride";
 }
