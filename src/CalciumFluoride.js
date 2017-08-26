@@ -1,4 +1,4 @@
-function CalciumFluoride(eighth, half, sphere, colors) {
+function CalciumFluoride(eighth, half, sphere, colors, scale) {
     
     this.prototype = new UnitCell(eighth, half, sphere, colors);
     
@@ -208,6 +208,35 @@ function CalciumFluoride(eighth, half, sphere, colors) {
         
         gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
         half.draw(prog);
+        MV.popMatrix();
+    }
+    
+    this.drawInspect = function(MV, prog, scale, inspctExp) {
+        console.log('CaF2 inspect');
+        MV.pushMatrix();
+        MV.scale(.47);
+        MV.scale(scale);
+        
+        for(var i = -6.5; i < 7; i += 4) {
+        
+            gl.uniform3fv(prog.getHandle("kdFront"), colors["white"]);
+            MV.pushMatrix();
+            MV.translate(vec3.fromValues(-4, i, 0));
+            gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
+            sphere.draw(prog);
+            MV.popMatrix();
+
+            gl.uniform3fv(prog.getHandle("kdFront"), colors["orange"]);
+            MV.pushMatrix();
+            MV.translate(vec3.fromValues(0, i, 0));
+            gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
+            sphere.draw(prog);
+            MV.translate(vec3.fromValues(4, 0, 0));
+            gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
+            sphere.draw(prog);
+            MV.popMatrix();
+        }
+        
         MV.popMatrix();
     }
 }

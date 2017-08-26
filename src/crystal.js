@@ -8,28 +8,28 @@ function Crystal(type, eighth, half, sphere, colors) {
         switch (type) {
             
             case CrystalType.SIMPLE :
-                unit = new SimpleCubic(eighth, half, sphere, colors);
+                unit = new SimpleCubic(eighth, half, sphere, colors, scale);
                 this.createSimpleLayers();
             break;
 
             case CrystalType.BODY :
-                unit = new BodyCentered(eighth, half, sphere, colors);
+                unit = new BodyCentered(eighth, half, sphere, colors, scale);
                 this.createBodyLayers();
             break;
 
             case CrystalType.FACE :
-                unit = new FaceCentered(eighth, half, sphere, colors);
+                unit = new FaceCentered(eighth, half, sphere, colors, scale);
                 this.createFaceLayers();
             break;
             
             //new additions for NaCl Unit Cell
             case CrystalType.NaCl :
-                unit = new SodiumChloride(eighth, half, sphere, colors);
+                unit = new SodiumChloride(eighth, half, sphere, colors, scale);
                 this.createNaClLayers();
             break;
             
             case CrystalType.CaF2:
-                unit = new CalciumFluoride(eighth, half, sphere, colors);
+                unit = new CalciumFluoride(eighth, half, sphere, colors, scale);
                 this.createCaF2Layers();
         }
     };
@@ -210,7 +210,7 @@ function Crystal(type, eighth, half, sphere, colors) {
     };
 
     this.drawInspect = function(MV, prog) {
-        switch (type) {
+        /*switch (type) {
             
             case CrystalType.SIMPLE:
                 this.drawSimpleInspect(MV, prog);
@@ -231,7 +231,8 @@ function Crystal(type, eighth, half, sphere, colors) {
             case CrystalType.CaF2:
                 this.drawCaF2Inspect(MV, prog);
             break;
-        }
+        }*/
+        unit.drawInspect(MV, prog, scale, inspctExp);
     };
 
     this.initCellPositions = function() {
@@ -367,181 +368,6 @@ function Crystal(type, eighth, half, sphere, colors) {
         layers.push(new CaF2Layer(3, 3, 1.5, 2.3, 2.3, sphere, "F", true, colors["orange"]));
         layers.push(new CaF2Layer(5, 5, 4.2, 1.15, 1.15, sphere, "Ca", false, colors["white"]));
         layers.push(new CaF2Layer(3, 3, 2.5, 2.3, 2.3, sphere, "F", true, colors["orange"]));
-    }
-    
-    this.drawSimpleInspect = function(MV, prog) {
-        gl.uniform1f(prog.getHandle("alpha"), 1.0);
-        gl.uniform3fv(prog.getHandle("kdFront"), colors["blue"]);
-        
-        MV.pushMatrix();
-        this.drawEighth(MV, prog, 0, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
-        this.drawEighth(MV, prog, 90, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
-        this.drawEighth(MV, prog, 180, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
-        this.drawEighth(MV, prog, 270, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
-        
-        MV.pushMatrix();
-        MV.rotate(90.0, vec3.fromValues(1.0, 0.0, 0.0));
-        this.drawEighth(MV, prog, 0, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
-        this.drawEighth(MV, prog, 90, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
-        
-        MV.rotate(180.0, vec3.fromValues(1.0, 0.0, 0.0));
-        
-        this.drawEighth(MV, prog, 180, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
-        this.drawEighth(MV, prog, 270, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
-        
-        MV.popMatrix();
-        
-        MV.popMatrix();
-    };
-    
-    this.drawBodyInspect = function(MV, prog) {
-        gl.uniform1f(prog.getHandle("alpha"), 1.0);
-        gl.uniform3fv(prog.getHandle("kdFront"), colors["grey"]);
-        
-        MV.pushMatrix();
-        MV.translate(vec3.fromValues(-inspctExp/20 - 0.15, 0, 0));
-        this.drawEighth(MV, prog, 0, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
-        this.drawEighth(MV, prog, 90, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
-        this.drawEighth(MV, prog, 180, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
-        this.drawEighth(MV, prog, 270, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
-        
-        MV.pushMatrix();
-        MV.rotate(90.0, vec3.fromValues(1.0, 0.0, 0.0));
-        this.drawEighth(MV, prog, 0, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
-        this.drawEighth(MV, prog, 90, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
-        
-        MV.rotate(180.0, vec3.fromValues(1.0, 0.0, 0.0));
-        
-        this.drawEighth(MV, prog, 180, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
-        this.drawEighth(MV, prog, 270, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
-        
-        MV.popMatrix();    
-        MV.popMatrix();
-
-        gl.uniform3fv(prog.getHandle("kdFront"), colors["red"]);
-        
-        MV.pushMatrix();
-        MV.translate(vec3.fromValues(.15,0,0));
-        MV.scale(scale);
-        gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
-        sphere.draw(prog);
-        MV.popMatrix();
-    };
-    
-    this.drawFaceInspect = function(MV, prog) {
-        gl.uniform1f(prog.getHandle("alpha"), 1.0);
-        gl.uniform3fv(prog.getHandle("kdFront"), colors["grey"]);
-        MV.pushMatrix();
-        MV.translate(vec3.fromValues(-0.45*1.1, 0, 0));
-        this.drawEighth(MV, prog, 0, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
-        this.drawEighth(MV, prog, 90, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
-        this.drawEighth(MV, prog, 180, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
-        this.drawEighth(MV, prog, 270, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
-        
-        MV.pushMatrix();
-        MV.rotate(90.0, vec3.fromValues(1.0, 0.0, 0.0));
-        this.drawEighth(MV, prog, 0, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
-        this.drawEighth(MV, prog, 90, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
-        
-        MV.rotate(180.0, vec3.fromValues(1.0, 0.0, 0.0));
-        
-        this.drawEighth(MV, prog, 180, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
-        this.drawEighth(MV, prog, 270, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
-        
-        MV.popMatrix();    
-        MV.popMatrix();
-        
-        gl.uniform3fv(prog.getHandle("kdFront"), colors["green"]);
-        MV.pushMatrix();
-        MV.translate(vec3.fromValues(-0.15*1.1, 0, 0));
-        this.drawHalf(MV, prog, 0, vec3.fromValues(inspctExp + .99, 0, 0));
-        this.drawHalf(MV, prog, 180, vec3.fromValues(inspctExp + .99, 0, 0));
-        MV.popMatrix();
-        
-        
-        gl.uniform3fv(prog.getHandle("kdFront"), colors["orange"]);
-        MV.pushMatrix();
-        MV.translate(vec3.fromValues(0.15*1.1, 0, 0));
-        this.drawHalf(MV, prog, 0, vec3.fromValues(inspctExp + .99, 0, 0));
-        this.drawHalf(MV, prog, 180, vec3.fromValues(inspctExp + .99, 0, 0));
-        MV.popMatrix();
-        
-        gl.uniform3fv(prog.getHandle("kdFront"), colors["grey"]);
-        MV.pushMatrix();
-        MV.translate(vec3.fromValues(0.45*1.1, 0, 0));
-        this.drawHalf(MV, prog, 0, vec3.fromValues(inspctExp + .99, 0, 0));
-        this.drawHalf(MV, prog, 180, vec3.fromValues(inspctExp + .99, 0, 0));
-        MV.popMatrix();
-    };
-    
-    this.drawNaClInspect = function(MV, prog) {
-        
-        var eps = .01;
-        
-        gl.uniform1f(prog.getHandle("alpha"), 1.0);
-        gl.uniform3fv(prog.getHandle("kdFront"), colors["green"]);
-        
-        MV.pushMatrix();
-        MV.scale(0.51);
-        
-        for(var i = -6.5; i < 7; i+=4) {
-            
-            MV.pushMatrix();
-            MV.scale(scale);
-            MV.translate(vec3.fromValues(-1.5, i, 0));
-            MV.scale(1.3);
-            gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
-            
-            //make the last sphere dark green
-            if(i >= 5.5 - eps && i <= 5.5 + eps) {
-                gl.uniform3fv(prog.getHandle("kdFront"), colors["forestGreen"]);
-            }
-            sphere.draw(prog);
-            MV.popMatrix();
-        }
-
-        gl.uniform3fv(prog.getHandle("kdFront"), colors["purple"]);
-        
-        for(var i = -6.5; i < 7; i+=4) {
-        
-            MV.pushMatrix();
-            MV.scale(scale);
-            MV.translate(vec3.fromValues(1.5, i, 0));
-            MV.scale(0.7);
-            gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
-            sphere.draw(prog);
-            MV.popMatrix();
-        }
-        
-        MV.popMatrix();
-    };
-    
-    this.drawCaF2Inspect = function(MV, prog) {
-        MV.pushMatrix();
-        MV.scale(.47);
-        MV.scale(scale);
-        
-        for(var i = -6.5; i < 7; i += 4) {
-        
-            gl.uniform3fv(prog.getHandle("kdFront"), colors["white"]);
-            MV.pushMatrix();
-            MV.translate(vec3.fromValues(-4, i, 0));
-            gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
-            sphere.draw(prog);
-            MV.popMatrix();
-
-            gl.uniform3fv(prog.getHandle("kdFront"), colors["orange"]);
-            MV.pushMatrix();
-            MV.translate(vec3.fromValues(0, i, 0));
-            gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
-            sphere.draw(prog);
-            MV.translate(vec3.fromValues(4, 0, 0));
-            gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
-            sphere.draw(prog);
-            MV.popMatrix();
-        }
-        
-        MV.popMatrix();
     }
     
     this.drawEighth = function(MV, prog, rot, translate) {  
