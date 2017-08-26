@@ -8,28 +8,28 @@ function Crystal(type, eighth, half, sphere, colors) {
         switch (type) {
             
             case CrystalType.SIMPLE :
-                unit = new SimpleCubic(eighth, half, sphere, colors, scale);
+                unit = new SimpleCubic(eighth, half, sphere, colors, inspect);
                 this.createSimpleLayers();
             break;
 
             case CrystalType.BODY :
-                unit = new BodyCentered(eighth, half, sphere, colors, scale);
+                unit = new BodyCentered(eighth, half, sphere, colors, inspect);
                 this.createBodyLayers();
             break;
 
             case CrystalType.FACE :
-                unit = new FaceCentered(eighth, half, sphere, colors, scale);
+                unit = new FaceCentered(eighth, half, sphere, colors, inspect);
                 this.createFaceLayers();
             break;
             
             //new additions for NaCl Unit Cell
             case CrystalType.NaCl :
-                unit = new SodiumChloride(eighth, half, sphere, colors, scale);
+                unit = new SodiumChloride(eighth, half, sphere, colors, inspect);
                 this.createNaClLayers();
             break;
             
             case CrystalType.CaF2:
-                unit = new CalciumFluoride(eighth, half, sphere, colors, scale);
+                unit = new CalciumFluoride(eighth, half, sphere, colors, inspect);
                 this.createCaF2Layers();
         }
     };
@@ -527,7 +527,6 @@ function Crystal(type, eighth, half, sphere, colors) {
     var layersDraw = true;
     var inspecting = false;
     var dispCoord = false;
-
     var unit;
     var eighth = eighth;
     var half = half;
@@ -535,4 +534,5 @@ function Crystal(type, eighth, half, sphere, colors) {
     var colors = colors;
     var cells = new Array();
     var layers = new Array();
+    var inspect = new Inspect(eighth, half, scale);
 }

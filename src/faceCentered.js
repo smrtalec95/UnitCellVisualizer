@@ -1,4 +1,4 @@
-function FaceCentered(eighth, half, sphere, colors, scale) {
+function FaceCentered(eighth, half, sphere, colors, inspect) {
     
     this.draw = function(MV, prog, pos, alpha, center, bounds, ndx, splitAmt) {
         
@@ -281,5 +281,5 @@ function FaceCentered(eighth, half, sphere, colors, scale) {
     }
 
     this.scale = 0.71;
-    this.inspect = new Inspect(eighth, half, scale);
+    this.inspect = inspect;
 }

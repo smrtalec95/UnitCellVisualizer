@@ -1,4 +1,4 @@
-function BodyCentered(eighth, half, sphere, colors, scale) {
+function BodyCentered(eighth, half, sphere, colors, inspect) {
 
     this.draw = function(MV, prog, pos, alpha, center, bounds, ndx, splitAmt) {
         if (center && alpha < 1.0) { 
@@ -115,5 +115,5 @@ function BodyCentered(eighth, half, sphere, colors, scale) {
     }
 
     this.scale = 0.87;
-    this.inspect = new Inspect(eighth, half, scale);
+    this.inspect = inspect;
 }

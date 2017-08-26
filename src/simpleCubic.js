@@ -1,4 +1,4 @@
-function SimpleCubic(eighth, half, sphere, colors, scale) {
+function SimpleCubic(eighth, half, sphere, colors, inspect) {
     
     this.prototype = new UnitCell(eighth, half, sphere, colors);
 
@@ -88,5 +88,5 @@ function SimpleCubic(eighth, half, sphere, colors, scale) {
         MV.popMatrix();
     }
     
-    this.inspect = new Inspect(eighth, half, scale);
+    this.inspect = inspect;
 }

@@ -1,4 +1,4 @@
-function CalciumFluoride(eighth, half, sphere, colors, scale) {
+function CalciumFluoride(eighth, half, sphere, colors, inspect) {
     
     this.prototype = new UnitCell(eighth, half, sphere, colors);
     
