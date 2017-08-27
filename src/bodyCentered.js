@@ -113,8 +113,24 @@ function BodyCentered(eighth, half, sphere, colors, inspect) {
         MV.popMatrix();
         //MV.popMatrix();
     }
-
+    
+    this.getCellLayers = function() {
+        if(layers == null) {
+            layers = new Array();
+            layers.push(new Layer(4,4, -3, 1.14942, 1.14942, colors["grey"], sphere));
+            layers.push(new Layer(3,3, -2, 1.14942, 1.14942, colors["red"], sphere));
+            layers.push(new Layer(4,4, -1, 1.14942, 1.14942, colors["grey"], sphere));
+            layers.push(new Layer(3,3, 0, 1.14942, 1.14942, colors["red"], sphere));
+            layers.push(new Layer(4,4, 1, 1.14942, 1.14942, colors["grey"], sphere));
+            layers.push(new Layer(3,3, 2, 1.14942, 1.14942, colors["red"], sphere));
+            layers.push(new Layer(4,4, 3, 1.14942, 1.14942, colors["grey"], sphere));
+        }
+        
+        return layers;
+    }
+    
+    this.name = "Body Centered";
     this.scale = 0.87;
     this.inspect = inspect;
-    this.name = "Body Centered";
+    var layers = null;
 }

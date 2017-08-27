@@ -95,7 +95,6 @@ var User = {
                     
                 case 16:
                     User.shift = true;
-                    console.log('Shift is down');
                     break;
             
                 case 17:
@@ -115,7 +114,6 @@ var User = {
             }
             else if(e.which == 16) {
                 User.shift = false;
-                console.log('Shift is released');
             }
         });
     },

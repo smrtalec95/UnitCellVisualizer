@@ -88,6 +88,19 @@ function SimpleCubic(eighth, half, sphere, colors, inspect) {
         MV.popMatrix();
     }
     
-    this.inspect = inspect;
+    this.getCellLayers = function() {
+        if(layers == null) {
+            layers = new Array();
+            layers.push(new Layer(4,4, -3, 1.0, 1.0, colors["grey"], sphere));
+            layers.push(new Layer(4,4, -1, 1.0, 1.0, colors["grey"], sphere));
+            layers.push(new Layer(4,4, 1, 1.0, 1.0, colors["grey"], sphere));
+            layers.push(new Layer(4,4, 3, 1.0, 1.0, colors["grey"], sphere));
+        }
+        
+        return layers;
+    }
+    
     this.name = "Simple";
+    this.inspect = inspect;
+    var layers = null;
 }

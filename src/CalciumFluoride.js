@@ -240,5 +240,25 @@ function CalciumFluoride(eighth, half, sphere, colors, inspect) {
         MV.popMatrix();
     }
     
+    this.getCellLayers = function() {
+        if(layers == null) {
+            layers = new Array();
+            layers.push(new CaF2Layer(3, 3, -2.5, 2.3, 2.3, sphere, "F", true, colors["orange"]));
+            layers.push(new CaF2Layer(5, 5, -4.2, 1.15, 1.15, sphere, "Ca", false, colors["white"]));
+            layers.push(new CaF2Layer(3, 3, -1.5, 2.3, 2.3, sphere, "F", true, colors["orange"]));
+            layers.push(new CaF2Layer(5, 5, -2.2, 1.15, 1.15, sphere, "Ca", true, colors["white"]));
+            layers.push(new CaF2Layer(3, 3, -.5, 2.3, 2.3, sphere, "F", true, colors["orange"]));
+            layers.push(new CaF2Layer(5, 5, -.2, 1.15, 1.15, sphere, "Ca", false, colors["white"]));
+            layers.push(new CaF2Layer(3, 3, .5, 2.3, 2.3, sphere, "F", true, colors["orange"]));
+            layers.push(new CaF2Layer(5, 5, 2.2, 1.15, 1.15, sphere, "Ca", true, colors["white"]));
+            layers.push(new CaF2Layer(3, 3, 1.5, 2.3, 2.3, sphere, "F", true, colors["orange"]));
+            layers.push(new CaF2Layer(5, 5, 4.2, 1.15, 1.15, sphere, "Ca", false, colors["white"]));
+            layers.push(new CaF2Layer(3, 3, 2.5, 2.3, 2.3, sphere, "F", true, colors["orange"]));
+        }
+        
+        return layers;
+    }
+    
     this.name = "Calcium Fluoride";
+    var layers = null;
 }

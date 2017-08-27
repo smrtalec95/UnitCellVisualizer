@@ -321,5 +321,19 @@ function SodiumChloride(eighth, half, sphere, colors, inspect) {
         MV.popMatrix();
     }
     
+    this.getCellLayers = function() {
+        if(layers == null) {
+            layers = new Array();
+            layers.push(new NaClLayer(5, 5, -4, 1.0, 1.0, colors["green"], 1.3, colors["purple"], .7, sphere));
+            layers.push(new NaClLayer(5, 5, -2, 1.0, 1.0, colors["purple"], .7, colors["green"], 1.3, sphere));
+            layers.push(new NaClLayer(5, 5, 0, 1.0, 1.0, colors["green"], 1.3, colors["purple"], .7, sphere));
+            layers.push(new NaClLayer(5, 5, 2, 1.0, 1.0, colors["purple"], .7, colors["green"], 1.3, sphere));
+            layers.push(new NaClLayer(5, 5, 4, 1.0, 1.0, colors["green"], 1.3, colors["purple"], .7, sphere));
+        }
+        
+        return layers;
+    }
+    
     this.name = "Sodium Chloride";
+    var layers = null;
 }

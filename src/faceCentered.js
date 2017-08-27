@@ -279,8 +279,35 @@ function FaceCentered(eighth, half, sphere, colors, inspect) {
         MV.popMatrix();
         //MV.popMatrix();
     }
+    
+    this.getCellLayers = function() {
+        if(layers == null) {
+            var s = 2;
+            layers = new Array();
+            layers.push(new Layer(4,1, -3.0*s, 1.0, 1.40845, colors["grey"], sphere));
+            layers.push(new Layer(3,2, -2.5*s, 1.0, 1.40845, colors["orange"], sphere));
+            layers.push(new Layer(4,3, -2.0*s, 1.0, 1.40845, colors["green"], sphere));
 
-    this.scale = 0.71;
-    this.inspect = inspect;
+            layers.push(new Layer(3,4, -1.5*s, 1.0, 1.40845, colors["grey"], sphere));
+            layers.push(new Layer(4,5, -1.0*s, 1.0, 1.40845, colors["orange"], sphere));
+            layers.push(new Layer(3,6, -0.5*s, 1.0, 1.40845, colors["green"], sphere));
+
+            layers.push(new Layer(4,7, 0, 1.0, 1.40845, colors["grey"], sphere));
+
+            layers.push(new Layer(3,6, 0.5*s, 1.0, 1.40845, colors["orange"], sphere));
+            layers.push(new Layer(4,5, 1.0*s, 1.0, 1.40845, colors["green"], sphere));
+            layers.push(new Layer(3,4, 1.5*s, 1.0, 1.40845, colors["grey"], sphere));
+
+            layers.push(new Layer(4,3, 2.0*s, 1.0, 1.40845, colors["orange"], sphere));
+            layers.push(new Layer(3,2, 2.5*s, 1.0, 1.40845, colors["green"], sphere));
+            layers.push(new Layer(4,1, 3.0*s, 1.0, 1.40845, colors["grey"], sphere));
+        }
+        
+        return layers;
+    }
+    
     this.name = "Face Centered";
+    this.scale = 0.71;
+    this.inspect = inspect
+    var layers = null;
 }

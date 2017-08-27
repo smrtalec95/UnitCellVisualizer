@@ -9,33 +9,30 @@ function Crystal(type, eighth, half, sphere, colors) {
             
             case CrystalType.SIMPLE :
                 unit = new SimpleCubic(eighth, half, sphere, colors, inspect);
-                this.createSimpleLayers();
             break;
 
             case CrystalType.BODY :
                 unit = new BodyCentered(eighth, half, sphere, colors, inspect);
-                this.createBodyLayers();
             break;
 
             case CrystalType.FACE :
                 unit = new FaceCentered(eighth, half, sphere, colors, inspect);
-                this.createFaceLayers();
             break;
             
             //new additions for NaCl Unit Cell
             case CrystalType.NaCl :
                 unit = new SodiumChloride(eighth, half, sphere, colors, inspect);
-                this.createNaClLayers();
             break;
             
             case CrystalType.CaF2:
                 unit = new CalciumFluoride(eighth, half, sphere, colors, inspect);
-                this.createCaF2Layers();
+            break;
         }
+        
+        layers = unit.getCellLayers();
     };
     
     this.getName = function() {
-
         return unit.name;
     };
 
@@ -189,28 +186,6 @@ function Crystal(type, eighth, half, sphere, colors) {
     };
 
     this.drawInspect = function(MV, prog) {
-        /*switch (type) {
-            
-            case CrystalType.SIMPLE:
-                this.drawSimpleInspect(MV, prog);
-            break;
-            
-            case CrystalType.BODY:
-                this.drawBodyInspect(MV, prog);
-            break;
-            
-            case CrystalType.FACE:
-                this.drawFaceInspect(MV, prog);
-            break;
-            
-            case CrystalType.NaCl:
-                this.drawNaClInspect(MV, prog);
-            break;
-            
-            case CrystalType.CaF2:
-                this.drawCaF2Inspect(MV, prog);
-            break;
-        }*/
         unit.drawInspect(MV, prog, scale, inspctExp);
     };
 
@@ -286,68 +261,7 @@ function Crystal(type, eighth, half, sphere, colors) {
     
     this.sortAlg = function(a, b) {
         return b.distance - a.distance; // Might have to switch !!!!!!!!!!!!
-    }; 
-
-    this.createSimpleLayers = function() {
-        layers.push(new Layer(4,4, -3, 1.0, 1.0, colors["grey"], sphere));
-        layers.push(new Layer(4,4, -1, 1.0, 1.0, colors["grey"], sphere));
-        layers.push(new Layer(4,4, 1, 1.0, 1.0, colors["grey"], sphere));
-        layers.push(new Layer(4,4, 3, 1.0, 1.0, colors["grey"], sphere));
     };
-
-    this.createBodyLayers = function() {
-        layers.push(new Layer(4,4, -3, 1.14942, 1.14942, colors["grey"], sphere));
-        layers.push(new Layer(3,3, -2, 1.14942, 1.14942, colors["red"], sphere));
-        layers.push(new Layer(4,4, -1, 1.14942, 1.14942, colors["grey"], sphere));
-        layers.push(new Layer(3,3, 0, 1.14942, 1.14942, colors["red"], sphere));
-        layers.push(new Layer(4,4, 1, 1.14942, 1.14942, colors["grey"], sphere));
-        layers.push(new Layer(3,3, 2, 1.14942, 1.14942, colors["red"], sphere));
-        layers.push(new Layer(4,4, 3, 1.14942, 1.14942, colors["grey"], sphere));
-    };
-    
-    this.createFaceLayers = function() {
-        var s = 2;
-
-        layers.push(new Layer(4,1, -3.0*s, 1.0, 1.40845, colors["grey"], sphere));
-        layers.push(new Layer(3,2, -2.5*s, 1.0, 1.40845, colors["orange"], sphere));
-        layers.push(new Layer(4,3, -2.0*s, 1.0, 1.40845, colors["green"], sphere));
-        
-        layers.push(new Layer(3,4, -1.5*s, 1.0, 1.40845, colors["grey"], sphere));
-        layers.push(new Layer(4,5, -1.0*s, 1.0, 1.40845, colors["orange"], sphere));
-        layers.push(new Layer(3,6, -0.5*s, 1.0, 1.40845, colors["green"], sphere));
-        
-        layers.push(new Layer(4,7, 0, 1.0, 1.40845, colors["grey"], sphere));
-        
-        layers.push(new Layer(3,6, 0.5*s, 1.0, 1.40845, colors["orange"], sphere));
-        layers.push(new Layer(4,5, 1.0*s, 1.0, 1.40845, colors["green"], sphere));
-        layers.push(new Layer(3,4, 1.5*s, 1.0, 1.40845, colors["grey"], sphere));
-        
-        layers.push(new Layer(4,3, 2.0*s, 1.0, 1.40845, colors["orange"], sphere));
-        layers.push(new Layer(3,2, 2.5*s, 1.0, 1.40845, colors["green"], sphere));
-        layers.push(new Layer(4,1, 3.0*s, 1.0, 1.40845, colors["grey"], sphere));
-    };
-    
-    this.createNaClLayers = function() {
-        layers.push(new NaClLayer(5, 5, -4, 1.0, 1.0, colors["green"], 1.3, colors["purple"], .7, sphere));
-        layers.push(new NaClLayer(5, 5, -2, 1.0, 1.0, colors["purple"], .7, colors["green"], 1.3, sphere));
-        layers.push(new NaClLayer(5, 5, 0, 1.0, 1.0, colors["green"], 1.3, colors["purple"], .7, sphere));
-        layers.push(new NaClLayer(5, 5, 2, 1.0, 1.0, colors["purple"], .7, colors["green"], 1.3, sphere));
-        layers.push(new NaClLayer(5, 5, 4, 1.0, 1.0, colors["green"], 1.3, colors["purple"], .7, sphere));
-    }
-    
-    this.createCaF2Layers = function() {
-        layers.push(new CaF2Layer(3, 3, -2.5, 2.3, 2.3, sphere, "F", true, colors["orange"]));
-        layers.push(new CaF2Layer(5, 5, -4.2, 1.15, 1.15, sphere, "Ca", false, colors["white"]));
-        layers.push(new CaF2Layer(3, 3, -1.5, 2.3, 2.3, sphere, "F", true, colors["orange"]));
-        layers.push(new CaF2Layer(5, 5, -2.2, 1.15, 1.15, sphere, "Ca", true, colors["white"]));
-        layers.push(new CaF2Layer(3, 3, -.5, 2.3, 2.3, sphere, "F", true, colors["orange"]));
-        layers.push(new CaF2Layer(5, 5, -.2, 1.15, 1.15, sphere, "Ca", false, colors["white"]));
-        layers.push(new CaF2Layer(3, 3, .5, 2.3, 2.3, sphere, "F", true, colors["orange"]));
-        layers.push(new CaF2Layer(5, 5, 2.2, 1.15, 1.15, sphere, "Ca", true, colors["white"]));
-        layers.push(new CaF2Layer(3, 3, 1.5, 2.3, 2.3, sphere, "F", true, colors["orange"]));
-        layers.push(new CaF2Layer(5, 5, 4.2, 1.15, 1.15, sphere, "Ca", false, colors["white"]));
-        layers.push(new CaF2Layer(3, 3, 2.5, 2.3, 2.3, sphere, "F", true, colors["orange"]));
-    }
     
     this.drawEighth = function(MV, prog, rot, translate) {  
         MV.pushMatrix();
@@ -512,6 +426,6 @@ function Crystal(type, eighth, half, sphere, colors) {
     var sphere = sphere;
     var colors = colors;
     var cells = new Array();
-    var layers = new Array();
+    var layers;
     var inspect = new Inspect(eighth, half, scale);
 }
