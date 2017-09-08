@@ -95,6 +95,21 @@ a:visited { text-decoration: none; color:#414141;}
     height: 40px;
 }
 
+#about {
+    margin: auto;
+    position: relative;
+    top: 20px;
+    width: 100px;
+    height: 40px;
+}
+
+#aboutText {
+  transition: opactity 3s ease-in;
+  cursor: pointer;
+  background: #FFFFFF;
+  width: 600px;
+}
+
 #canvas {
     position: relative;
     top: 30px;
