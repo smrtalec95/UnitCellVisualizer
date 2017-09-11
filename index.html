@@ -75,6 +75,7 @@
         // Setup key events
         User.setup();
 
+        $('#aboutText').hide();
         tick();
   }
 
@@ -150,6 +151,15 @@
       Scene.goToCrystal(crystalType);
       document.getElementById("crystalType").innerHTML = Scene.getCrystalName();
   }
+  
+  function about() {
+      if($('#aboutText').is(":visible")) {
+          $('#aboutText').hide();
+      } else {
+          $('#aboutText').show();
+      }
+      
+  }
 
 </script>
 
@@ -173,20 +183,79 @@
 
   <div id="container">
     <center>
-  <canvas id="canvas" width="900px" height="675"></canvas>
-  <p id="crystalType">Simple</p>
-  <p>
-      <button id="instructions" onclick="instruct()" type="button">Key Controls</button>
-      <button id="expand" onclick="expand()" type="button">Expand</button>
-      <button id="contract" onclick="contract()" type="button">Contract</button>
-      <button id="translucency" onclick="translucency()" type="button">Translucency</button>
-      <button id="inspect" onclick="inspect()" type="button">Inspect</button>
-      <button id="layer" onclick="layer()" type="button">Layering</button>
-      <button id="coordination" onclick="coordination()" type="button">Coordination</button>
-  </p>
+    <canvas id="canvas" width="900px" height="675"></canvas>
+      <p id="crystalType">Simple</p>
+      <p>
+        <button id="instructions" onclick="instruct()" type="button">Key Controls</button>
+        <button id="expand" onclick="expand()" type="button">Expand</button>
+        <button id="contract" onclick="contract()" type="button">Contract</button>
+        <button id="translucency" onclick="translucency()" type="button">Translucency</button>
+        <button id="inspect" onclick="inspect()" type="button">Inspect</button>
+        <button id="layer" onclick="layer()" type="button">Layering</button>
+        <button id="coordination" onclick="coordination()" type="button">Coordination</button>
+        <button id="about" onclick="about()" type="button">About...</button>
+      </p>
     </center>
 
   </div>
+    <center><div id="aboutText">
+        <center><h1>About</h1></center>
+          <p>
+              This is a Unit Cell Visualization simulation designed for use in 
+              CHEM 124 at Cal Poly. The simulation is designed with student 
+              interaction in mind, and provides many features to facilitate 
+              student's understanding of concepts relative to crystal structures.
+          </p>
+          <p>
+              This is an open source project. It is developed in JavaScript, 
+              using WebGL for all graphics. The project source currently resides 
+              <a href="https://github.com/smrtalec95/UnitCellVisualizer">on Github</a>.
+          </p>
+          
+          <center><h1>Contributors</h1></center>
+        
+        <h2>Dr. Zahra Alghoul</h2>
+        <p>
+            Initial project specifications, and Chemistry knowledge. Ensured the 
+            simulation's displays were accurate to their real world 
+            counterparts. Specified simulation features.
+        </p>
+        
+        <h2>Dr. Zoe Wood</h2>
+        <p>
+            Initial project specifications, and Graphics 
+            knowledge. Oversaw Corbin's work on the simulation as his senior 
+            project advisor, as well as oversaw Alec's work on the simulation 
+            as his final project for CPE 471, Into to Computer Graphics.
+        </p>
+        
+        <h2>Corbin Gruber</h2>
+        <p>
+            Initial project design and implementation. Created initial design 
+            for the simulation. Implementation and testing. Created the SC, BCC,
+            and FCC simulations, along with expand, contract, rotations, 
+            zooming, translucency, inspection, and layering views. Original 
+            control schema involving primarily keystroke controls, along with 
+            mouse movement for rotating the views.
+        </p>
+        
+        <h2>Alec James</h2>
+        <p>
+            Updated project design and implementation. Added on 
+            Sodium Chloride and Calcium Fluoride along with all features 
+            implemented by Corbin in the simple crystal types. Added on 
+            coordination number views for the simple crystal types. Updated 
+            control schema using buttons for easier navigation and control, 
+            as well as improved zooming and expand/contract controls.
+        </p>
+        
+        <center><h1>Special thanks</h1></center>
+        <p>
+            Thanks to Dr. Gregory Scott for putting the simulation under 
+            Cal Poly's chemistry department site, and keeping it updated for
+            all future modifications.
+        </p>
+    </div></center>
 
 </body>
 
