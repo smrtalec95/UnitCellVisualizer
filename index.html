@@ -158,7 +158,10 @@
       } else {
           $('#aboutText').show();
       }
-      
+  }
+  
+  function showLegend() {
+      Scene.showLegend();
   }
 
 </script>
@@ -178,6 +181,7 @@
     <button id="FCC" onclick="goToCrystal(2)" type="button">FCC</button>
     <button id="NaCl" onclick="goToCrystal(3)" type="button">Sodium Chloride</button>
     <button id="CaF2" onclick="goToCrystal(4)" type="button">Calcium Fluoride</button>
+    <button id="legend" onclick="showLegend()" type="button">Legend</button>
     </center>
   </div>
 

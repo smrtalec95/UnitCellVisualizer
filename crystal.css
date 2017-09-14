@@ -165,3 +165,11 @@ a:visited { text-decoration: none; color:#414141;}
     width: 150px;
     height: 40px;
 }
+
+#legend {
+    margin: auto;
+    position: relative;
+    top: 20px;
+    width: 150px;
+    height: 40px;
+}
