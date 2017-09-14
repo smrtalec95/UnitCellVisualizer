@@ -33,6 +33,10 @@ var Scene = {
         crystal = new Crystal(CrystalType.CaF2, this.eighth, this.half, this.sphere, this.colors);
         crystal.init();
         this.crystals.push(crystal);
+        
+        crystal = new Crystal(CrystalType.LEGEND, this.eighth, this.half, this.sphere, this.colors);
+        crystal.init();
+        this.crystals.push(crystal);
     },
 
     setupColors : function() {

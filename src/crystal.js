@@ -1,4 +1,4 @@
-var CrystalType = {SIMPLE : 0, BODY : 1, FACE : 2 , NaCl : 3, CaF2: 4};
+var CrystalType = {SIMPLE : 0, BODY : 1, FACE : 2 , NaCl : 3, CaF2: 4, LEGEND : 5};
 
 function Crystal(type, eighth, half, sphere, colors) {
 
@@ -27,6 +27,10 @@ function Crystal(type, eighth, half, sphere, colors) {
             case CrystalType.CaF2:
                 unit = new CalciumFluoride(eighth, half, sphere, colors, inspect);
             break;
+            
+            case CrystalType.LEGEND:
+                unit = new Legend(sphere, colors);
+            break;
         }
         
         layers = unit.getCellLayers();
@@ -43,7 +47,7 @@ function Crystal(type, eighth, half, sphere, colors) {
         } else if(dispCoord) {
             this.drawCoordView(MV, prog);
         }
-        else if (layersDraw) {
+        else if (layersDraw && type != CrystalType.LEGEND) {
             this.drawLayers(MV, prog);
         } else {
             this.drawCells(MV, prog);
