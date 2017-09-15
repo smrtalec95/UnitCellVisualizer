@@ -44,6 +44,7 @@
   var prog;
   var camera;
   var sphere = new Shape();
+  var type = "";
 
   function webGLStart() {
 
@@ -96,13 +97,13 @@
         camera.applyProjectionMatrix(P);
 
         MV.pushMatrix();
-        camera.applyViewMatrix(MV);
+        camera.applyViewMatrix(MV, type);
 
         prog.bind();
 
         gl.uniformMatrix4fv(prog.getHandle("P"), false, P.top());
         MV.pushMatrix();
-        Scene.draw(MV, prog);
+        type = Scene.draw(MV, prog);
         MV.popMatrix();
 
         prog.unbind();

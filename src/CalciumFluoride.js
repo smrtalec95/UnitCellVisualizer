@@ -212,7 +212,6 @@ function CalciumFluoride(eighth, half, sphere, colors, inspect) {
     }
     
     this.drawInspect = function(MV, prog, scale, inspctExp) {
-        console.log('CaF2 inspect');
         MV.pushMatrix();
         MV.scale(.47);
         MV.scale(scale);

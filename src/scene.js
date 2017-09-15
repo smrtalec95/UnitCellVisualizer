@@ -70,7 +70,7 @@ var Scene = {
     },
 
     draw : function(MV, prog) {
-        this.crystals[this.whichCrystal].draw(MV, prog);
+        return this.crystals[this.whichCrystal].draw(MV, prog);
     },
 
     expand : function() {

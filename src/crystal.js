@@ -52,6 +52,8 @@ function Crystal(type, eighth, half, sphere, colors) {
         } else {
             this.drawCells(MV, prog);
         }
+        
+        return this.getName();
     };
     
     this.expand = function() {
@@ -80,7 +82,7 @@ function Crystal(type, eighth, half, sphere, colors) {
     };
 
     this.toggleLayers = function() {
-         if (!inspecting) {
+         if (!inspecting && type != CrystalType.LEGEND) {
              layersDraw = !layersDraw;
              
              for (var i = 0; i < layers.length; i++) {
@@ -94,7 +96,7 @@ function Crystal(type, eighth, half, sphere, colors) {
     };
 
     this.toggleInspection = function() {
-        if(!dispCoord) {
+        if(!dispCoord && type != CrystalType.LEGEND) {
             inspctExp = 0.0;
             inspecting = !inspecting;
         }

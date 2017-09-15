@@ -6,6 +6,10 @@ function Legend(sphere, colors) {
         //legend has no layering
     }
     
+    this.drawInspect = function() {
+        //legend has no inspect view
+    }
+    
     this.draw = function(MV, prog, pos, alpha, center, bounds, ndx, splitAmt) {
         //todo
         MV.pushMatrix();
@@ -55,4 +59,5 @@ function Legend(sphere, colors) {
     
     this.sphere = sphere;
     this.colors = colors;
+    this.name = "Legend";
 }

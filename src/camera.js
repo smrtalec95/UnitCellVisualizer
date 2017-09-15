@@ -57,10 +57,12 @@ function Camera()
     	P.perspective(fovy, aspect, znear, zfar);
     };
 	
-    this.applyViewMatrix = function(MV) {
-        MV.translate(translations);
-	    MV.rotate(rotations[1], vec3.fromValues(1.0, 0.0, 0.0));
-	    MV.rotate(rotations[0], vec3.fromValues(0.0, 1.0, 0.0));
+    this.applyViewMatrix = function(MV, type) {
+        if(type != "Legend") {
+            MV.translate(translations);
+            MV.rotate(rotations[1], vec3.fromValues(1.0, 0.0, 0.0));
+            MV.rotate(rotations[0], vec3.fromValues(0.0, 1.0, 0.0));
+        }
     };
     
     this.reset = function() {

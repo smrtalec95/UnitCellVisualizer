@@ -280,7 +280,6 @@ function SodiumChloride(eighth, half, sphere, colors, inspect) {
     }
     
     this.drawInspect = function(MV, prog, scale, inspctExp) {
-        console.log('NaCl inspect');
         var eps = .01;
         
         gl.uniform1f(prog.getHandle("alpha"), 1.0);
