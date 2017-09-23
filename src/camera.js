@@ -58,11 +58,18 @@ function Camera()
     };
 	
     this.applyViewMatrix = function(MV, type) {
-        if(type != "Legend") {
+        if(type == "Legend") {
+            MV.translate(vec3.fromValues(0.0, 0.0, -3.0));
+        }
+        else {
+            if(this.prevType == "Legend") {
+                this.reset();
+            }
             MV.translate(translations);
             MV.rotate(rotations[1], vec3.fromValues(1.0, 0.0, 0.0));
             MV.rotate(rotations[0], vec3.fromValues(0.0, 1.0, 0.0));
         }
+        this.prevType = type;
     };
     
     this.reset = function() {
@@ -83,4 +90,5 @@ function Camera()
     var sfactor = 0.005;
     var mousePrev = vec2.fromValues(0,0);
     var state = this.State.ROTATE;
+    var prevType = "";
 }

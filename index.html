@@ -1,263 +1,285 @@
 <html>
 
-<head>
-<title>Crystal Lattice</title>
-<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+    <head>
+        <title>Crystal Lattice</title>
+        <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
 
-<link rel="stylesheet" type="text/css" href="crystal.css">
-<script type="text/javascript" src="jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="src/webgl-utils.js"></script>
-<script type="text/javascript" src="src/gl-matrix/common.js"></script>
-<script type="text/javascript" src="src/gl-matrix/mat3.js"></script>
-<script type="text/javascript" src="src/gl-matrix/mat4.js"></script>
-<script type="text/javascript" src="src/gl-matrix/vec2.js"></script>
-<script type="text/javascript" src="src/gl-matrix/vec3.js"></script>
-<script type="text/javascript" src="src/gl-matrix/vec4.js"></script>
-<script type="text/javascript" src="src/program.js"></script>
-<script type="text/javascript" src="src/shader.js"></script>
-<script type="text/javascript" src="src/obj-loader.js"></script>
-<script type="text/javascript" src="src/shape.js"></script>
-<script type="text/javascript" src="src/scene.js"></script>
-<script type="text/javascript" src="src/matrixStack.js"></script>
-<script type="text/javascript" src="src/stack.js"></script>
-<script type="text/javascript" src="src/scene.js"></script>
-<script type="text/javascript" src="src/camera.js"></script>
-<script type="text/javascript" src="src/assert.js"></script>
-<script type="text/javascript" src="src/crystal.js"></script>
-<script type="text/javascript" src="src/unitCell.js"></script>
-<script type="text/javascript" src="src/simpleCubic.js"></script>
-<script type="text/javascript" src="src/layer.js"></script>
-<script type ="text/javascript" src="src/NaClLayer.js"></script>
-<script type ="text/javascript" src="src/CaF2Layer.js"></script>
-<script type="text/javascript" src="src/user.js"></script>
-<script type="text/javascript" src="src/angleAxis.js"></script>
-<script type="text/javascript" src="src/bodyCentered.js"></script>
-<script type="text/javascript" src="src/faceCentered.js"></script>
-<script type="text/javascript" src="src/sodiumChloride.js"></script>
-<script type="text/javascript" src="src/CalciumFluoride.js"></script>
-<script type="text/javascript" src="src/inspect.js"></script>
-<script type="text/javascript" src="src/legend.js"></script>
+        <link rel="stylesheet" type="text/css" href="crystal.css">
+        <script type="text/javascript" src="jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="src/webgl-utils.js"></script>
+        <script type="text/javascript" src="src/gl-matrix/common.js"></script>
+        <script type="text/javascript" src="src/gl-matrix/mat3.js"></script>
+        <script type="text/javascript" src="src/gl-matrix/mat4.js"></script>
+        <script type="text/javascript" src="src/gl-matrix/vec2.js"></script>
+        <script type="text/javascript" src="src/gl-matrix/vec3.js"></script>
+        <script type="text/javascript" src="src/gl-matrix/vec4.js"></script>
+        <script type="text/javascript" src="src/program.js"></script>
+        <script type="text/javascript" src="src/shader.js"></script>
+        <script type="text/javascript" src="src/obj-loader.js"></script>
+        <script type="text/javascript" src="src/shape.js"></script>
+        <script type="text/javascript" src="src/scene.js"></script>
+        <script type="text/javascript" src="src/matrixStack.js"></script>
+        <script type="text/javascript" src="src/stack.js"></script>
+        <script type="text/javascript" src="src/scene.js"></script>
+        <script type="text/javascript" src="src/camera.js"></script>
+        <script type="text/javascript" src="src/assert.js"></script>
+        <script type="text/javascript" src="src/crystal.js"></script>
+        <script type="text/javascript" src="src/unitCell.js"></script>
+        <script type="text/javascript" src="src/simpleCubic.js"></script>
+        <script type="text/javascript" src="src/layer.js"></script>
+        <script type ="text/javascript" src="src/NaClLayer.js"></script>
+        <script type ="text/javascript" src="src/CaF2Layer.js"></script>
+        <script type="text/javascript" src="src/user.js"></script>
+        <script type="text/javascript" src="src/angleAxis.js"></script>
+        <script type="text/javascript" src="src/bodyCentered.js"></script>
+        <script type="text/javascript" src="src/faceCentered.js"></script>
+        <script type="text/javascript" src="src/sodiumChloride.js"></script>
+        <script type="text/javascript" src="src/CalciumFluoride.js"></script>
+        <script type="text/javascript" src="src/inspect.js"></script>
+        <script type="text/javascript" src="src/legend.js"></script>
 
-<script type="text/javascript">
+        <script type="text/javascript">
 
-  var gl;
-  var prog;
-  var camera;
-  var sphere = new Shape();
-  var type = "";
+            var gl;
+            var prog;
+            var camera;
+            var sphere = new Shape();
+            var type = "";
 
-  function webGLStart() {
+            function webGLStart() {
 
-        // Initialize scene
-        Scene.load("resources/");
+                // Initialize scene
+                Scene.load("resources/");
 
-        initGL(); // sets up canvas element for webgl
+                initGL(); // sets up canvas element for webgl
 
-        gl.enable(gl.DEPTH_TEST);
-     	gl.enable(gl.BLEND);
-	    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-        gl.enable(gl.CULL_FACE);
+                gl.enable(gl.DEPTH_TEST);
+                gl.enable(gl.BLEND);
+                gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+                gl.enable(gl.CULL_FACE);
 
 
-        // Setup shader
-        prog = new Program("shader-vs", "shader-fs");
-        prog.load();
-        prog.bind();
-        prog.addHandle("vertPos", "attribute")
-        prog.addHandle("vertNor", "attribute");
-        prog.addHandle("P", "uniform");
-        prog.addHandle("MV", "uniform");
-        prog.addHandle("kdFront", "uniform");
-        prog.addHandle("alpha", "uniform");
+                // Setup shader
+                prog = new Program("shader-vs", "shader-fs");
+                prog.load();
+                prog.bind();
+                prog.addHandle("vertPos", "attribute")
+                prog.addHandle("vertNor", "attribute");
+                prog.addHandle("P", "uniform");
+                prog.addHandle("MV", "uniform");
+                prog.addHandle("kdFront", "uniform");
+                prog.addHandle("alpha", "uniform");
 
-        // Setup camera
-        camera = new Camera();
-        camera.setAspect(1200.0 / 900.0);
+                // Setup camera
+                camera = new Camera();
+                camera.setAspect(1200.0 / 900.0);
 
-        // Setup key events
-        User.setup();
+                // Setup key events
+                User.setup();
 
-        $('#aboutText').hide();
-        tick();
-  }
+                $('#aboutText').hide();
+                $('#legendText').hide(); 
+                tick();
+            }
 
-  function tick() {
+            function tick() {
 
-      requestAnimFrame(tick);
+                requestAnimFrame(tick);
 
-        // configure gl viewport and clean buffers
-        gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
-        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-        gl.clearColor(1.0, 1.0, 1.0, 1.0);
+                // configure gl viewport and clean buffers
+                gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
+                gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+                gl.clearColor(1.0, 1.0, 1.0, 1.0);
 
-        var MV = new MatrixStack();
-        var P = new MatrixStack();
+                var MV = new MatrixStack();
+                var P = new MatrixStack();
 
-        P.pushMatrix();
-        camera.applyProjectionMatrix(P);
+                P.pushMatrix();
+                camera.applyProjectionMatrix(P);
 
-        MV.pushMatrix();
-        camera.applyViewMatrix(MV, type);
+                MV.pushMatrix();
+                camera.applyViewMatrix(MV, type);
 
-        prog.bind();
+                prog.bind();
 
-        gl.uniformMatrix4fv(prog.getHandle("P"), false, P.top());
-        MV.pushMatrix();
-        type = Scene.draw(MV, prog);
-        MV.popMatrix();
+                gl.uniformMatrix4fv(prog.getHandle("P"), false, P.top());
+                MV.pushMatrix();
+                type = Scene.draw(MV, prog);
+                MV.popMatrix();
 
-        prog.unbind();
+                prog.unbind();
 
-        P.popMatrix();
-        MV.popMatrix();
+                P.popMatrix();
+                MV.popMatrix();
 
-  }
+            }
 
-  var instructions = "mouse : rotate view\nmouse + ctrl : zoom\n" + 
-                     "scroll : zoom\nshift + scroll: expand/contract\n" + 
-                     "'e' : expand\n'c' : contract\n" + 
-                     "'i' : inspect unit cell\n't' : translucent\n" + 
-                     "'l' : toggle layer animation\n'r' : coordination view\n" +
-                     "'n': next cell\n'p' : previous cell\n";
+            var instructions = "mouse : rotate view\nmouse + ctrl : zoom\n" +
+                    "scroll : zoom\nshift + scroll: expand/contract\n" +
+                    "'e' : expand\n'c' : contract\n" +
+                    "'i' : inspect unit cell\n't' : translucent\n" +
+                    "'l' : toggle layer animation\n'r' : coordination view\n" +
+                    "'n': next cell\n'p' : previous cell\n";
 
-  function instruct() {
-     alert(instructions);
-  }
-  
-  function expand() {
-      Scene.expand();
-  }
-  
-  function contract() {
-      Scene.contract();
-  }
-  
-  function translucency() {
-      Scene.toggleTranslucency();
-  }
-  
-  function inspect() {
-      Scene.toggleInspection();
-  }
-  
-  function layer() {
-      Scene.toggleLayers();
-  }
-  
-  function coordination() {
-      Scene.toggleCoord();
-  }
-  
-  
-  function goToCrystal(crystalType) {
-      Scene.goToCrystal(crystalType);
-      document.getElementById("crystalType").innerHTML = Scene.getCrystalName();
-  }
-  
-  function about() {
-      if($('#aboutText').is(":visible")) {
-          $('#aboutText').hide();
-      } else {
-          $('#aboutText').show();
-      }
-  }
+            function instruct() {
+                alert(instructions);
+            }
 
-</script>
+            function expand() {
+                Scene.expand();
+            }
 
-</head>
+            function contract() {
+                Scene.contract();
+            }
 
-<body onload="webGLStart();">
+            function translucency() {
+                Scene.toggleTranslucency();
+            }
 
-  <div id="navigation">
-    <p>Crystal Lattice</p>
-  </div>
-    
-  <div id=cells">
-    <center>
-    <button id="SC" onclick="goToCrystal(0)" type="button">SC</button>
-    <button id="BCC" onclick="goToCrystal(1)" type="button">BCC</button>
-    <button id="FCC" onclick="goToCrystal(2)" type="button">FCC</button>
-    <button id="NaCl" onclick="goToCrystal(3)" type="button">Sodium Chloride</button>
-    <button id="CaF2" onclick="goToCrystal(4)" type="button">Calcium Fluoride</button>
-    <button id="legend" onclick="goToCrystal(5)" type="button">Legend</button>
-    </center>
-  </div>
+            function inspect() {
+                Scene.toggleInspection();
+            }
 
-  <div id="container">
-    <center>
-    <canvas id="canvas" width="900px" height="675"></canvas>
-      <p id="crystalType">Simple</p>
-      <p>
-        <button id="instructions" onclick="instruct()" type="button">Key Controls</button>
-        <button id="expand" onclick="expand()" type="button">Expand</button>
-        <button id="contract" onclick="contract()" type="button">Contract</button>
-        <button id="translucency" onclick="translucency()" type="button">Translucency</button>
-        <button id="inspect" onclick="inspect()" type="button">Inspect</button>
-        <button id="layer" onclick="layer()" type="button">Layering</button>
-        <button id="coordination" onclick="coordination()" type="button">Coordination</button>
-        <button id="about" onclick="about()" type="button">About...</button>
-      </p>
-    </center>
+            function layer() {
+                Scene.toggleLayers();
+            }
 
-  </div>
+            function coordination() {
+                Scene.toggleCoord();
+            }
+
+
+            function goToCrystal(crystalType) {
+                if(crystalType == 5) {
+                    $('#legendText').show();  
+                }
+                else {
+                    $('#legendText').hide(); 
+                }
+                Scene.goToCrystal(crystalType);
+                document.getElementById("crystalType").innerHTML = Scene.getCrystalName();
+            }
+
+            function about() {
+                if ($('#aboutText').is(":visible")) {
+                    $('#aboutText').hide();
+                    $('#simulation').show();
+                } else {
+                    $('#aboutText').show();
+                    $('#simulation').hide();
+                }
+            }
+
+        </script>
+
+    </head>
+
+    <body onload="webGLStart();">
+        
+        <div id="simulation">
+            
+             <div id="navigation">
+                <p>Crystal Lattice</p>
+            </div>
+
+            <div id="cells">
+                <center>
+                    <button id="SC" onclick="goToCrystal(0)" type="button">SC</button>
+                    <button id="BCC" onclick="goToCrystal(1)" type="button">BCC</button>
+                    <button id="FCC" onclick="goToCrystal(2)" type="button">FCC</button>
+                    <button id="NaCl" onclick="goToCrystal(3)" type="button">Sodium Chloride</button>
+                    <button id="CaF2" onclick="goToCrystal(4)" type="button">Calcium Fluoride</button>
+                    <button id="legend" onclick="goToCrystal(5)" type="button">Legend</button>
+                </center>
+            </div>
+
+            <div id="container">
+                <center>
+                    <canvas id="canvas" width="900px" height="675"></canvas>
+                    
+                    <div id="legendText">
+                        <center>
+                            <p id="Ca"><strong>Calcium</strong></p>
+                            <p id="F"><strong>Fluoride</strong></p>
+                            <p id="Na"><strong>Sodium</strong></p>
+                            <p id="Cl"><strong>Chloride</strong></p>
+                        </center>
+                    </div>
+                    <p id="crystalType">Simple</p>
+                    <p id="controlButtons">
+                        <button id="instructions" onclick="instruct()" type="button">Key Controls</button>
+                        <button id="expand" onclick="expand()" type="button">Expand</button>
+                        <button id="contract" onclick="contract()" type="button">Contract</button>
+                        <button id="translucency" onclick="translucency()" type="button">Translucency</button>
+                        <button id="inspect" onclick="inspect()" type="button">Inspect</button>
+                        <button id="layer" onclick="layer()" type="button">Layering</button>
+                        <button id="coordination" onclick="coordination()" type="button">Coordination</button>
+                        <button id="about" onclick="about()" type="button">About...</button>
+                    </p>
+                </center>
+            </div>
+
+        </div>
     <center><div id="aboutText">
-        <center><h1>About</h1></center>
-          <p>
-              This is a Unit Cell Visualization simulation designed for use in 
-              CHEM 124 at Cal Poly. The simulation is designed with student 
-              interaction in mind, and provides many features to facilitate 
-              student's understanding of concepts relative to crystal structures.
-          </p>
-          <p>
-              This is an open source project. It is developed in JavaScript, 
-              using WebGL for all graphics. The project source currently resides 
-              <a href="https://github.com/smrtalec95/UnitCellVisualizer">on Github</a>.
-          </p>
-          
-          <center><h1>Contributors</h1></center>
-        
-        <h2>Dr. Zahra Alghoul</h2>
-        <p>
-            Initial project specifications, and Chemistry knowledge. Ensured the 
-            simulation's displays were accurate to their real world 
-            counterparts. Specified simulation features.
-        </p>
-        
-        <h2>Dr. Zoe Wood</h2>
-        <p>
-            Initial project specifications, and Graphics 
-            knowledge. Oversaw Corbin's work on the simulation as his senior 
-            project advisor, as well as oversaw Alec's work on the simulation 
-            as his final project for CPE 471, Into to Computer Graphics.
-        </p>
-        
-        <h2>Corbin Gruber</h2>
-        <p>
-            Initial project design and implementation. Created initial design 
-            for the simulation. Implementation and testing. Created the SC, BCC,
-            and FCC simulations, along with expand, contract, rotations, 
-            zooming, translucency, inspection, and layering views. Original 
-            control schema involving primarily keystroke controls, along with 
-            mouse movement for rotating the views.
-        </p>
-        
-        <h2>Alec James</h2>
-        <p>
-            Updated project design and implementation. Added on 
-            Sodium Chloride and Calcium Fluoride along with all features 
-            implemented by Corbin in the simple crystal types. Added on 
-            coordination number views for the simple crystal types. Updated 
-            control schema using buttons for easier navigation and control, 
-            as well as improved zooming and expand/contract controls.
-        </p>
-        
-        <center><h1>Special thanks</h1></center>
-        <p>
-            Thanks to Dr. Gregory Scott for putting the simulation under 
-            Cal Poly's chemistry department site, and keeping it updated for
-            all future modifications.
-        </p>
-    </div></center>
+            <center><h1>About</h1></center>
+            <p>
+                This is a Unit Cell Visualization simulation designed for use in 
+                CHEM 124 at Cal Poly. The simulation is designed with student 
+                interaction in mind, and provides many features to facilitate 
+                student's understanding of concepts relative to crystal structures.
+            </p>
+            <p>
+                This is an open source project. It is developed in JavaScript, 
+                using WebGL for all graphics. The project source currently resides 
+                <a href="https://github.com/smrtalec95/UnitCellVisualizer">on Github</a>.
+            </p>
+
+            <center><h1>Contributors</h1></center>
+
+            <h2>Dr. Zahra Alghoul</h2>
+            <p>
+                Initial project specifications, and Chemistry knowledge. Ensured the 
+                simulation's displays were accurate to their real world 
+                counterparts. Specified simulation features.
+            </p>
+
+            <h2>Dr. Zoe Wood</h2>
+            <p>
+                Initial project specifications, and Graphics 
+                knowledge. Oversaw Corbin's work on the simulation as his senior 
+                project advisor, as well as oversaw Alec's work on the simulation 
+                as his final project for CPE 471, Into to Computer Graphics.
+            </p>
+
+            <h2>Corbin Gruber</h2>
+            <p>
+                Initial project design and implementation. Created initial design 
+                for the simulation. Implementation and testing. Created the SC, BCC,
+                and FCC simulations, along with expand, contract, rotations, 
+                zooming, translucency, inspection, and layering views. Original 
+                control schema involving primarily keystroke controls, along with 
+                mouse movement for rotating the views.
+            </p>
+
+            <h2>Alec James</h2>
+            <p>
+                Updated project design and implementation. Added on 
+                Sodium Chloride and Calcium Fluoride along with all features 
+                implemented by Corbin in the simple crystal types. Added on 
+                coordination number views for the simple crystal types. Updated 
+                control schema using buttons for easier navigation and control, 
+                as well as improved zooming and expand/contract controls.
+            </p>
+
+            <center><h1>Special thanks</h1></center>
+            <p>
+                Thanks to Dr. Gregory Scott for putting the simulation under 
+                Cal Poly's chemistry department site, and keeping it updated for
+                all future modifications.
+            </p>
+            <button id="return" onclick="about()" type="button">Return</button>
+        </div></center>
 
 </body>
 
