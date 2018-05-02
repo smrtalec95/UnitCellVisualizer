@@ -121,5 +121,6 @@ var User = {
                 User.shift = false;
             }
         });
+        // hi
     },
 };
