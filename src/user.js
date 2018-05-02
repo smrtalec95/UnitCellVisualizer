@@ -55,12 +55,14 @@ var User = {
 
         $(document).keydown(function(e) {
             
-            if(e.shiftKey) {
-                shift = true;
-            }
-            else {
-                shift = false;
-            }
+            shift = e.shiftKey;
+//            
+//            if(e.shiftKey) {
+//                shift = true;
+//            }
+//            else {
+//                shift = false;
+//            }
 
             switch(e.which) {
 
@@ -125,9 +127,9 @@ var User = {
             if (e.which == 17) {
                 User.ctrl = false;
             }
-            else if(e.which == 16) {
-                User.shift = false;
-            }
+//            else if(e.which == 16) {
+//                User.shift = false;
+//            }
         });
     },
 };
