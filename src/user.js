@@ -93,7 +93,12 @@ var User = {
                     Scene.toggleCoord();
                     break;
                     
+                // 16 is windows shift, 91 & 93 are command keys on macs, 
+                // 224 is for firefox
                 case 16:
+                case 91:
+                case 93:
+                case 224:
                     User.shift = true;
                     break;
             
