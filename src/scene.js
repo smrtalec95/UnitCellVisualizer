@@ -87,7 +87,7 @@ var Scene = {
 
     toggleTranslucency : function() {
         for (var i = 0; i < this.crystals.length; i++) {
-            this.crystals[i].toggleTranslucency();
+            this.crystals[i].activateTranslucency();
         }
     },
 
@@ -99,13 +99,25 @@ var Scene = {
 
     toggleInspection : function() {
         for (var i = 0; i < this.crystals.length; i++) {
-            this.crystals[i].toggleInspection();
+            this.crystals[i].activateInspection();
         }
     },
     
     toggleCoord : function() {
         for(var i = 0; i < this.crystals.length; i++) {
-            this.crystals[i].toggleCoordView();
+            this.crystals[i].activateCoordView();
+        }
+    },
+    
+    toggleColor : function() {
+        for(var i = 0; i < this.crystals.length; i++) {
+            this.crystals[i].toggleColor();
+        }
+    },
+    
+    goToLattice : function() {
+        for(var i = 0; i < this.crystals.length; i++) {
+            this.crystals[i].goToLattice();
         }
     },
 

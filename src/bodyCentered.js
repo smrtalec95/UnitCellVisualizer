@@ -129,7 +129,7 @@ function BodyCentered(eighth, half, sphere, colors, inspect) {
         return layers;
     }
     
-    this.name = "Body Centered";
+    this.name = "Body-Centered Cubic";
     this.scale = 0.87;
     this.inspect = inspect;
     var layers = null;

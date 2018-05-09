@@ -306,8 +306,8 @@ function FaceCentered(eighth, half, sphere, colors, inspect) {
         return layers;
     }
     
-    this.name = "Face Centered";
+    this.name = "Face-Centered Cubic";
     this.scale = 0.71;
-    this.inspect = inspect
+    this.inspect = inspect;
     var layers = null;
 }

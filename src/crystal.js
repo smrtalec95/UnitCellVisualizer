@@ -72,8 +72,13 @@ function Crystal(type, eighth, half, sphere, colors) {
         }
     };
     
-    this.toggleTranslucency = function() {
-        translucent = !translucent;
+    this.activateTranslucency = function() {
+        if(type != CrystalType.LEGEND) {
+            translucent = true;
+            layersDraw = false;
+            inspecting = false;
+            dispCoord = false;
+        }
     };
     
     this.setDrawLayers = function() {
@@ -82,7 +87,7 @@ function Crystal(type, eighth, half, sphere, colors) {
     };
 
     this.toggleLayers = function() {
-         if (!inspecting && type != CrystalType.LEGEND) {
+         if (type != CrystalType.LEGEND) {
              layersDraw = !layersDraw;
              
              for (var i = 0; i < layers.length; i++) {
@@ -95,12 +100,28 @@ function Crystal(type, eighth, half, sphere, colors) {
          }
     };
 
-    this.toggleInspection = function() {
-        if(!dispCoord && type != CrystalType.LEGEND) {
+    this.activateInspection = function() {
+        if(type != CrystalType.LEGEND) {
             inspctExp = 0.0;
-            inspecting = !inspecting;
+            inspecting = true;
+            translucent = false;
+            layersDraw = false;
+            dispCoord = false;
         }
     };
+    
+    this.activateCoordView = function() {
+        if(type != CrystalType.LEGEND) {
+            dispCoord = true;
+            translucent = false;
+            layersDraw = false;
+            inspecting = false;
+        }
+    };
+    
+    this.toggleColor = function() {
+        color = !color;
+    }
     
     var Cell = function(bounds, pos, ndx) {
         
@@ -151,6 +172,7 @@ function Crystal(type, eighth, half, sphere, colors) {
     
     this.drawLayers = function(MV, prog) {
 
+        gl.uniform1f(prog.getHandle("alpha"), 1.0);
         MV.pushMatrix();
         MV.scale(scale);
         
@@ -192,6 +214,7 @@ function Crystal(type, eighth, half, sphere, colors) {
     };
 
     this.drawInspect = function(MV, prog) {
+        gl.uniform1f(prog.getHandle("alpha"), 1.0);
         unit.drawInspect(MV, prog, scale, inspctExp);
     };
 
@@ -297,13 +320,8 @@ function Crystal(type, eighth, half, sphere, colors) {
                type == CrystalType.FACE;
     }
     
-    this.toggleCoordView = function() {
-        if(this.isBasic(type) && !inspecting) {
-            dispCoord = !dispCoord;
-        }
-    }
-    
     this.drawCoordView = function(MV, prog) {
+        gl.uniform1f(prog.getHandle("alpha"), 1.0);
         switch(type) {
             case CrystalType.SIMPLE :
                 this.drawSimpleCoordView(MV, prog);
@@ -316,6 +334,14 @@ function Crystal(type, eighth, half, sphere, colors) {
             case CrystalType.FACE :
                 this.drawFaceCoordView(MV, prog);
             break;
+        }
+    }
+    
+    this.goToLattice = function() {
+        if(type != CrystalType.LEGEND) {
+            dispCoord = false;
+            translucent = false;
+            inspecting = false;
         }
     }
     
@@ -426,6 +452,7 @@ function Crystal(type, eighth, half, sphere, colors) {
     var layersDraw = true;
     var inspecting = false;
     var dispCoord = false;
+    var color = true;
     var unit;
     var eighth = eighth;
     var half = half;

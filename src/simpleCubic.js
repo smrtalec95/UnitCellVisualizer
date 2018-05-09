@@ -100,7 +100,7 @@ function SimpleCubic(eighth, half, sphere, colors, inspect) {
         return layers;
     }
     
-    this.name = "Simple";
+    this.name = "Simple Cubic";
     this.inspect = inspect;
     var layers = null;
 }
