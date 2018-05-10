@@ -114,11 +114,17 @@
 
             }
 
-            var instructions = "mouse : rotate view\nmouse + ctrl : zoom\n" +
-                    "scroll : zoom\nshift (command on mac) + scroll: expand/contract\n" +
-                    "'e' : expand\n'c' : contract\n" +
-                    "'i' : inspect unit cell makeup\n't' : translucent\n" +
-                    "'l' : toggle layer animation\n'r' : coordination view\n";
+            var instructions = "mouse : rotate view\n"
+                             + "mouse + ctrl : zoom\n"
+                             + "scroll : zoom\n"
+                             + "shift (command on mac) + scroll: expand/contract\n"
+                             + "'e' : expand\n" 
+                             + "'c' : contract\n"
+                             + "'i' : inspect unit cell makeup\n"
+                             + "'t' : translucent view\n"
+                             + "'r' : coordination view\n"
+                             + "'n' : toggle layer coloring\n"
+                             + "'l' : toggle layer animation\n'";
 
             function instruct() {
                 alert(instructions);
@@ -140,7 +146,8 @@
 
             function goToCrystal(crystalType) {
                 if(crystalType == 5) {
-                    $('#legendText').show();  
+                    $('#legendText').show();
+                    $('#crystalSelector').val('-1');
                 }
                 else {
                     $('#legendText').hide(); 
@@ -160,7 +167,9 @@
             }
             
             function changeCrystal(value) {
-                goToCrystal(value);
+                if(value != '-1') {
+                    goToCrystal(value);
+                }
             }
             
             function showDisplay(value) {
@@ -211,7 +220,8 @@
                     <button id="instructions" onclick="instruct()" type="button">Key Controls</button>
                     
                     <select id="crystalSelector" onchange="changeCrystal(value)">
-                        <option value="0">Simple Cubic</option>
+                        <option value="-1">--- Select a Lattice ---</option>
+                        <option value="0" selected>Simple Cubic</option>
                         <option value="1">Body-Centered Cubic</option>
                         <option value="2">Face-Centered Cubic</option>
                         <option value="3">Sodium Chloride</option>
