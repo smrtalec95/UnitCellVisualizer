@@ -1,12 +1,17 @@
 function BodyCentered(eighth, half, sphere, colors, inspect) {
 
-    this.draw = function(MV, prog, pos, alpha, center, bounds, ndx, splitAmt) {
+    this.draw = function(MV, prog, pos, alpha, center, bounds, ndx, color) {
         if (center && alpha < 1.0) { 
             gl.uniform1f(prog.getHandle("alpha"), 1.0);
         } 
 
         if (center || alpha == 1.0) {
-            gl.uniform3fv(prog.getHandle("kdFront"), colors["red"]);
+            if(color) {
+                gl.uniform3fv(prog.getHandle("kdFront"), colors["red"]);
+            }
+            else {
+                gl.uniform3fv(prog.getHandle("kdFront"), colors["grey"]);
+            }
         } else {
             gl.uniform3fv(prog.getHandle("kdFront"), colors["grey"]);
         }

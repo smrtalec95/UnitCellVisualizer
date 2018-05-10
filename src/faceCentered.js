@@ -1,8 +1,8 @@
 function FaceCentered(eighth, half, sphere, colors, inspect) {
     
-    this.draw = function(MV, prog, pos, alpha, center, bounds, ndx, splitAmt) {
+    this.draw = function(MV, prog, pos, alpha, center, bounds, ndx, color) {
         
-
+        this.color = color;
         /*gl.uniform3fv(prog.getHandle("kdFront"), colors["red"]);            // 9
         gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
         half.draw(prog);*/
@@ -105,7 +105,10 @@ function FaceCentered(eighth, half, sphere, colors, inspect) {
     }
 
     this.whichColor = function(center, alpha, x, y, z, id) {
-
+        if(!this.color) {
+            return colors["grey"];
+        }
+        
         if (!center && alpha < 1.0) { return colors["grey"]; }
          
         var key = (z + y) % 3; 
@@ -231,9 +234,7 @@ function FaceCentered(eighth, half, sphere, colors, inspect) {
     };
     
     this.drawInspect = function(MV, prog, scale, inspctExp) {
-        //console.log('FCC inspect');
-        //MV.pushMatrix();
-        //MV.scale(scale);
+
         gl.uniform1f(prog.getHandle("alpha"), 1.0);
         gl.uniform3fv(prog.getHandle("kdFront"), colors["grey"]);
         MV.pushMatrix();
@@ -263,7 +264,6 @@ function FaceCentered(eighth, half, sphere, colors, inspect) {
         this.inspect.drawHalf(MV, prog, 180, vec3.fromValues(inspctExp + .99, 0, 0));
         MV.popMatrix();
         
-        
         gl.uniform3fv(prog.getHandle("kdFront"), colors["orange"]);
         MV.pushMatrix();
         MV.translate(vec3.fromValues(0.15*1.1, 0, 0));
@@ -277,13 +277,13 @@ function FaceCentered(eighth, half, sphere, colors, inspect) {
         this.inspect.drawHalf(MV, prog, 0, vec3.fromValues(inspctExp + .99, 0, 0));
         this.inspect.drawHalf(MV, prog, 180, vec3.fromValues(inspctExp + .99, 0, 0));
         MV.popMatrix();
-        //MV.popMatrix();
     }
     
     this.getCellLayers = function() {
         if(layers == null) {
             var s = 2;
             layers = new Array();
+            
             layers.push(new Layer(4,1, -3.0*s, 1.0, 1.40845, colors["grey"], sphere));
             layers.push(new Layer(3,2, -2.5*s, 1.0, 1.40845, colors["orange"], sphere));
             layers.push(new Layer(4,3, -2.0*s, 1.0, 1.40845, colors["green"], sphere));
@@ -309,5 +309,6 @@ function FaceCentered(eighth, half, sphere, colors, inspect) {
     this.name = "Face-Centered Cubic";
     this.scale = 0.71;
     this.inspect = inspect;
+    this.color = false;
     var layers = null;
 }

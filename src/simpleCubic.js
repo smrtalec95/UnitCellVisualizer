@@ -2,10 +2,15 @@ function SimpleCubic(eighth, half, sphere, colors, inspect) {
     
     this.prototype = new UnitCell(eighth, half, sphere, colors);
 
-    this.draw = function(MV, prog, pos, alpha, center, bounds, ndx, splitAmt) {
+    this.draw = function(MV, prog, pos, alpha, center, bounds, ndx, color) {
         if (center && alpha < 1.0) {
             gl.uniform1f(prog.getHandle("alpha"), 1.0);
-            gl.uniform3fv(prog.getHandle("kdFront"), colors["blue"]);
+            if(color) {
+                gl.uniform3fv(prog.getHandle("kdFront"), colors["blue"]);
+            }
+            else {
+                gl.uniform3fv(prog.getHandle("kdFront"), colors["grey"]);
+            }
         } else {
             gl.uniform3fv(prog.getHandle("kdFront"), colors["grey"]);
         }

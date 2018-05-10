@@ -127,7 +127,7 @@ var Scene = {
     
     goToCrystal : function(crystalType) {
         this.whichCrystal = crystalType;
-        this.crystals[this.whichCrystal].setDrawLayers();
+        //this.crystals[this.whichCrystal].setDrawLayers();
     },
 
     whichCrystal : 0,
