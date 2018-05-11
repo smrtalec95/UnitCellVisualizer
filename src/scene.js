@@ -87,7 +87,7 @@ var Scene = {
 
     toggleTranslucency : function() {
         for (var i = 0; i < this.crystals.length; i++) {
-            this.crystals[i].toggleTranslucency();
+            this.crystals[i].activateTranslucency();
         }
     },
 
@@ -99,13 +99,43 @@ var Scene = {
 
     toggleInspection : function() {
         for (var i = 0; i < this.crystals.length; i++) {
-            this.crystals[i].toggleInspection();
+            this.crystals[i].activateInspection();
         }
     },
     
-    toggleCoord : function() {
+    toggleCoord : function(crystalSelector, dispSelector) {
+        var out = false;
+        // check NaCl and CaF2 - they don't currently have a coordination view
+        if(crystalSelector.val() == "3") {
+            alert('Sodium Chloride does not currently have a coordination view.');
+            Scene.goToLattice();
+            dispSelector.val("0");
+            
+        }
+        else if(crystalSelector.val() == "4") {
+            alert('Calcium Fluoride does not currently have a coordination view');
+            Scene.goToLattice();
+            dispSelector.val("0");
+        }
+        else {
+            for(var i = 0; i < this.crystals.length; i++) {
+                this.crystals[i].activateCoordView();
+            }
+            out = true;
+        }
+        Scene.isCoord = !Scene.isCoord;
+        return out;
+    },
+    
+    toggleColor : function() {
         for(var i = 0; i < this.crystals.length; i++) {
-            this.crystals[i].toggleCoordView();
+            this.crystals[i].toggleColor();
+        }
+    },
+    
+    goToLattice : function() {
+        for(var i = 0; i < this.crystals.length; i++) {
+            this.crystals[i].goToLattice();
         }
     },
 
@@ -115,7 +145,7 @@ var Scene = {
     
     goToCrystal : function(crystalType) {
         this.whichCrystal = crystalType;
-        this.crystals[this.whichCrystal].setDrawLayers();
+        //this.crystals[this.whichCrystal].setDrawLayers();
     },
 
     whichCrystal : 0,
@@ -123,6 +153,7 @@ var Scene = {
     half : new Shape(),
     sphere : new Shape(),
     crystals : new Array(),
-    colors : {}
+    colors : {},
+    isCoord : false
 };
 //changes

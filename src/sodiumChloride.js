@@ -10,13 +10,13 @@ function SodiumChloride(eighth, half, sphere, colors, inspect) {
                bounds[2] != UnitCellPos.MIN && bounds[2] != UnitCellPos.MAX;
     }
     
-    this.draw = function(MV, prog, pos, alpha, center, bounds, ndx, splitAmt) {
+    this.draw = function(MV, prog, pos, alpha, center, bounds, ndx, color) {
         if(this.inDrawDist(bounds)) {
-            this.drawUnit(MV, prog, pos, alpha, center, bounds, ndx, splitAmt);
+            this.drawUnit(MV, prog, pos, alpha, center, bounds, ndx, color);
         }
     }
     
-    this.drawUnit = function(MV, prog, pos, alpha, center, bounds, ndx, splitAmt) {
+    this.drawUnit = function(MV, prog, pos, alpha, center, bounds, ndx, color) {
         
         if(center && alpha < 1) {
             gl.uniform1f(prog.getHandle("alpha"), 1.0);

@@ -3,10 +3,12 @@ var User = {
     mouseDown : false,
     first : true,
     ctrl : false,
-    shift : false,
+    crystalSelector : null,
+    dispSelector : null,
 
-    setup: function() {
-
+    setup: function(dispSelector, crystalSelector) {
+        this.crystalSelector = crystalSelector;
+        this.dispSelector = dispSelector;
         var canvas = document.getElementById("canvas");
 
         canvas.onmousedown = function(e) {
@@ -30,8 +32,8 @@ var User = {
         };
 
         canvas.onwheel = function(e) {
-            //16 is shift
-            if(User.shift) {
+            
+            if(e.shiftKey) {
                 //wheel up - expand
                 if(e.deltaY < 0) {
                     Scene.expand();
@@ -54,7 +56,10 @@ var User = {
         }
 
         $(document).keydown(function(e) {
+            
+            shift = e.shiftKey;
 
+            // deactivated key controls while I sort out the new UI
             switch(e.which) {
 
 	        case 'E'.charCodeAt(0): // left
@@ -67,49 +72,43 @@ var User = {
                         
 	        case 'T'.charCodeAt(0):
                     Scene.toggleTranslucency();
-                    break;
-                        
-	        case 'N'.charCodeAt(0):
-                    camera.reset();
-                    Scene.nextCrystal();
-                    document.getElementById("crystalType").innerHTML = Scene.getCrystalName();
-                    break;
-                    
-                case 'P'.charCodeAt(0):
-                    camera.reset();
-                    Scene.prevCrystal();
-                    document.getElementById("crystalType").innerHTML = Scene.getCrystalName();
+                    dispSelector.val('1');
                     break;
                         
                 case 'L'.charCodeAt(0):
-                    Scene.toggleLayers();
+                    
+                    if(!shift) {
+                        Scene.toggleLayers();
+                    }
+                    
+                    Scene.goToLattice();
+                    dispSelector.val('0');
                     break;
                     
                 case 'I'.charCodeAt(0):
                     Scene.toggleInspection();
+                    dispSelector.val('2');
                     break;
                     
                 case 'R'.charCodeAt(0) :
-                    Scene.toggleCoord();
+                    var success = Scene.toggleCoord(crystalSelector, dispSelector);
+                    if(success) {
+                        dispSelector.val('3');
+                    }
                     break;
                     
-                // 16 is windows shift, 91 & 93 are command keys on macs, 
-                // 224 is for firefox
-                case 16:
-                case 91:
-                case 93:
-                case 224:
-                    User.shift = true;
+                case 'N'.charCodeAt(0):
+                    Scene.toggleColor();
                     break;
             
                 case 17:
                     User.ctrl = true;
                     break;
-                
+//                
 	        default: return; // exit this handler for other keys
-	        }
-	        e.preventDefault(); // prevent the default action (scroll / move caret)
-
+            }
+            
+            e.preventDefault(); // prevent the default action (scroll / move caret)
         });
 
         $(document).keyup(function(e) {
@@ -117,9 +116,9 @@ var User = {
             if (e.which == 17) {
                 User.ctrl = false;
             }
-            else if(e.which == 16) {
-                User.shift = false;
-            }
+//            else if(e.which == 16) {
+//                User.shift = false;
+//            }
         });
     },
 };

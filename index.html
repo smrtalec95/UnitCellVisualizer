@@ -1,7 +1,7 @@
 <html>
 
     <head>
-        <title>Crystal Lattice</title>
+        <title>Lattice Structures</title>
         <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
 
         <link rel="stylesheet" type="text/css" href="crystal.css">
@@ -75,7 +75,7 @@
                 camera.setAspect(1200.0 / 900.0);
 
                 // Setup key events
-                User.setup();
+                User.setup($('#displaySelector'), $('#crystalSelector'));
 
                 $('#aboutText').hide();
                 $('#legendText').hide(); 
@@ -114,12 +114,18 @@
 
             }
 
-            var instructions = "mouse : rotate view\nmouse + ctrl : zoom\n" +
-                    "scroll : zoom\nshift + scroll: expand/contract\n" +
-                    "'e' : expand\n'c' : contract\n" +
-                    "'i' : inspect unit cell\n't' : translucent\n" +
-                    "'l' : toggle layer animation\n'r' : coordination view\n" +
-                    "'n': next cell\n'p' : previous cell\n";
+            var instructions = "mouse : rotate view\n"
+                             + "mouse + ctrl : zoom\n"
+                             + "scroll : zoom\n"
+                             + "shift (command on mac) + scroll: expand/contract\n"
+                             + "'e' : expand\n" 
+                             + "'c' : contract\n"
+                             + "'i' : inspect unit cell makeup\n"
+                             + "'t' : translucent view\n"
+                             + "'r' : coordination view\n"
+                             + "'n' : toggle layer coloring\n"
+                             + "'l' : toggle layer animation\n"
+                             + "shift + 'l' : lattice view\n";
 
             function instruct() {
                 alert(instructions);
@@ -133,29 +139,19 @@
                 Scene.contract();
             }
 
-            function translucency() {
-                Scene.toggleTranslucency();
-            }
-
-            function inspect() {
-                Scene.toggleInspection();
-            }
-
             function layer() {
+                goToLattice();
                 Scene.toggleLayers();
-            }
-
-            function coordination() {
-                Scene.toggleCoord();
             }
 
 
             function goToCrystal(crystalType) {
                 if(crystalType == 5) {
-                    $('#legendText').show();  
+                    $('#legendText').show();
+                    $('#crystalSelector').val('-1');
                 }
                 else {
-                    $('#legendText').hide(); 
+                    $('#legendText').hide();
                 }
                 Scene.goToCrystal(crystalType);
                 document.getElementById("crystalType").innerHTML = Scene.getCrystalName();
@@ -170,6 +166,47 @@
                     $('#simulation').hide();
                 }
             }
+            
+            function changeCrystal(value) {
+                if(value != '-1') {
+                    // display the error and turn coordination off if
+                    // going to NaCl or CaF2 with coordination on
+                    if(Scene.isCoord && (value == '3' || value == '4')) {
+                        Scene.toggleCoord($('#crystalSelector'), $('#displaySelector'));
+                    }
+                    
+                    goToCrystal(value);
+                }   
+            }
+            
+            function showDisplay(value) {
+                if(value == "0") {
+                    goToLattice();
+                }
+                else if(value == "1") {
+                    Scene.toggleTranslucency();
+                }
+                else if(value == "2") {
+                    Scene.toggleInspection();
+                }
+                else if(value == "3") {
+                    Scene.toggleCoord($('#crystalSelector'), $('#displaySelector'));
+                }
+            }
+            
+            function goToLattice() {
+                Scene.goToLattice();
+                // change display selector back to lattice
+                $('#displaySelector').val('0');
+            }
+            
+            function amuse() {
+                window.open('https://www.inorganicventures.com/fun-chemists');
+            }
+            
+            function color() {
+                Scene.toggleColor();
+            }
 
         </script>
 
@@ -180,17 +217,26 @@
         <div id="simulation">
             
              <div id="navigation">
-                <p>Crystal Lattice</p>
+                <p>Lattice Structures</p>
             </div>
 
             <div id="cells">
                 <center>
-                    <button id="SC" onclick="goToCrystal(0)" type="button">SC</button>
-                    <button id="BCC" onclick="goToCrystal(1)" type="button">BCC</button>
-                    <button id="FCC" onclick="goToCrystal(2)" type="button">FCC</button>
-                    <button id="NaCl" onclick="goToCrystal(3)" type="button">Sodium Chloride</button>
-                    <button id="CaF2" onclick="goToCrystal(4)" type="button">Calcium Fluoride</button>
+                    
+                    <button id="jokes" onclick="amuse()">Amuse me</button>
+                    <button id="instructions" onclick="instruct()" type="button">Key Controls</button>
+                    
+                    <select id="crystalSelector" onchange="changeCrystal(value)">
+                        <option value="-1" disabled>--- Select a Lattice ---</option>
+                        <option value="0" selected>Simple Cubic</option>
+                        <option value="1">Body-Centered Cubic</option>
+                        <option value="2">Face-Centered Cubic</option>
+                        <option value="3">Sodium Chloride</option>
+                        <option value="4">Calcium Fluoride</option>
+                    </select>
+                    
                     <button id="legend" onclick="goToCrystal(5)" type="button">Legend</button>
+                    <button id="about" onclick="about()" type="button">About...</button>
                 </center>
             </div>
 
@@ -206,16 +252,20 @@
                             <p id="Cl"><strong>Chloride</strong></p>
                         </center>
                     </div>
-                    <p id="crystalType">Simple</p>
+                    <p id="crystalType">Simple Cubic</p>
                     <p id="controlButtons">
-                        <button id="instructions" onclick="instruct()" type="button">Key Controls</button>
                         <button id="expand" onclick="expand()" type="button">Expand</button>
                         <button id="contract" onclick="contract()" type="button">Contract</button>
-                        <button id="translucency" onclick="translucency()" type="button">Translucency</button>
-                        <button id="inspect" onclick="inspect()" type="button">Inspect</button>
+                        
+                        <select id="displaySelector" onchange="showDisplay(value)">
+                            <option selected value="0">Lattice</option>
+                            <option value="1">Translucency</option>
+                            <option value="2">Inspect</option>
+                            <option value="3">Coordination</option>
+                        </select>
+                        
                         <button id="layer" onclick="layer()" type="button">Layering</button>
-                        <button id="coordination" onclick="coordination()" type="button">Coordination</button>
-                        <button id="about" onclick="about()" type="button">About...</button>
+                        <button id="color" onclick="color()" type="button">Coloring</button>
                     </p>
                 </center>
             </div>
@@ -225,9 +275,9 @@
             <center><h1>About</h1></center>
             <p>
                 This is a Unit Cell Visualization simulation designed for use in 
-                CHEM 124 at Cal Poly. The simulation is designed with student 
+                CHEM 124/127 at Cal Poly. The simulation is designed with student 
                 interaction in mind, and provides many features to facilitate 
-                student's understanding of concepts relative to crystal structures.
+                student's understanding of concepts relative to lattice structures.
             </p>
             <p>
                 This is an open source project. It is developed in JavaScript, 
@@ -268,8 +318,9 @@
                 Sodium Chloride and Calcium Fluoride along with all features 
                 implemented by Corbin in the simple crystal types. Added on 
                 coordination number views for the simple crystal types. Updated 
-                control schema using buttons for easier navigation and control, 
-                as well as improved zooming and expand/contract controls.
+                control schema using buttons and dropdowns for easier navigation
+                and control, as well as improved zooming and expand/contract controls.
+                Added option to deactivate lattice coloring.
             </p>
 
             <center><h1>Special thanks</h1></center>
@@ -278,7 +329,7 @@
                 Cal Poly's chemistry department site, and keeping it updated for
                 all future modifications.
             </p>
-            <button id="return" onclick="about()" type="button">Return</button>
+            <button id="return" onclick="about()">Return</button>
         </div></center>
 
 </body>
