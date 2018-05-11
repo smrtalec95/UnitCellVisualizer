@@ -3,7 +3,6 @@ var User = {
     mouseDown : false,
     first : true,
     ctrl : false,
-    shift : false,
     dispSelector : null,
 
     setup: function(dispSelector, crystalSelector) {
@@ -32,7 +31,7 @@ var User = {
 
         canvas.onwheel = function(e) {
             
-            if(User.shift) {
+            if(e.shiftKey) {
                 //wheel up - expand
                 if(e.deltaY < 0) {
                     Scene.expand();
