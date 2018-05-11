@@ -3,9 +3,11 @@ var User = {
     mouseDown : false,
     first : true,
     ctrl : false,
+    crystalSelector : null,
     dispSelector : null,
 
     setup: function(dispSelector, crystalSelector) {
+        this.crystalSelector = crystalSelector;
         this.dispSelector = dispSelector;
         var canvas = document.getElementById("canvas");
 
@@ -74,7 +76,11 @@ var User = {
                     break;
                         
                 case 'L'.charCodeAt(0):
-                    Scene.toggleLayers();
+                    
+                    if(!shift) {
+                        Scene.toggleLayers();
+                    }
+                    
                     Scene.goToLattice();
                     dispSelector.val('0');
                     break;
@@ -85,8 +91,10 @@ var User = {
                     break;
                     
                 case 'R'.charCodeAt(0) :
-                    Scene.toggleCoord();
-                    dispSelector.val('3');
+                    var success = Scene.toggleCoord(crystalSelector, dispSelector);
+                    if(success) {
+                        dispSelector.val('3');
+                    }
                     break;
                     
                 case 'N'.charCodeAt(0):

@@ -124,7 +124,8 @@
                              + "'t' : translucent view\n"
                              + "'r' : coordination view\n"
                              + "'n' : toggle layer coloring\n"
-                             + "'l' : toggle layer animation\n'";
+                             + "'l' : toggle layer animation\n"
+                             + "shift + 'l' : lattice view\n";
 
             function instruct() {
                 alert(instructions);
@@ -150,7 +151,7 @@
                     $('#crystalSelector').val('-1');
                 }
                 else {
-                    $('#legendText').hide(); 
+                    $('#legendText').hide();
                 }
                 Scene.goToCrystal(crystalType);
                 document.getElementById("crystalType").innerHTML = Scene.getCrystalName();
@@ -168,8 +169,14 @@
             
             function changeCrystal(value) {
                 if(value != '-1') {
+                    // display the error and turn coordination off if
+                    // going to NaCl or CaF2 with coordination on
+                    if(Scene.isCoord && (value == '3' || value == '4')) {
+                        Scene.toggleCoord($('#crystalSelector'), $('#displaySelector'));
+                    }
+                    
                     goToCrystal(value);
-                }
+                }   
             }
             
             function showDisplay(value) {
@@ -183,7 +190,7 @@
                     Scene.toggleInspection();
                 }
                 else if(value == "3") {
-                    Scene.toggleCoord();
+                    Scene.toggleCoord($('#crystalSelector'), $('#displaySelector'));
                 }
             }
             
