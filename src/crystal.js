@@ -4,6 +4,7 @@ function Crystal(type, eighth, half, sphere, colors) {
 
     this.init = function() {
         this.initCellPositions();
+        // test
         
         switch (type) {
             
