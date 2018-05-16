@@ -84,6 +84,7 @@ function Crystal(type, eighth, half, sphere, colors) {
     };
     
     this.activateInspection = function() {
+        // legend has no inspection view
         if(type != CrystalType.LEGEND) {
             inspctExp = 0.0;
             inspecting = true;
@@ -94,6 +95,7 @@ function Crystal(type, eighth, half, sphere, colors) {
     };
     
     this.activateCoordView = function() {
+        // legend has no coordination view
         if(type != CrystalType.LEGEND) {
             dispCoord = true;
             translucent = false;
@@ -148,7 +150,9 @@ function Crystal(type, eighth, half, sphere, colors) {
         MV.pushMatrix();
           
         // Rotation of face-centered cubic so that it matches layering scheme
-        if (type == CrystalType.FACE) { MV.rotate(45, vec3.fromValues(0,0,1)); }
+        if (type == CrystalType.FACE) { 
+            MV.rotate(45, vec3.fromValues(0,0,1)); 
+        }
         
         MV.scale(scale);
         
@@ -166,7 +170,7 @@ function Crystal(type, eighth, half, sphere, colors) {
             vec3.scale(v, v, expansion); // Adjust cell positioning by any expansion
           
             //this is the whole model as it appears on the screen
-            unit.draw(MV, prog, v, alpha, false, bounds, ndx, color); // Draw cell
+            unit.draw(MV, prog, v, alpha, false, bounds, ndx, color);
         }
         
         MV.popMatrix();
@@ -315,12 +319,6 @@ function Crystal(type, eighth, half, sphere, colors) {
         
         MV.popMatrix();
     };
-    
-    this.isBasic = function(type) {
-        return type == CrystalType.SIMPLE ||
-               type == CrystalType.BODY ||
-               type == CrystalType.FACE;
-    }
     
     this.drawCoordView = function(MV, prog) {
         gl.uniform1f(prog.getHandle("alpha"), 1.0);

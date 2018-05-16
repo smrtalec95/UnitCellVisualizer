@@ -212,6 +212,7 @@ function CalciumFluoride(eighth, half, sphere, colors, inspect) {
     }
     
     this.drawInspect = function(MV, prog, scale, inspctExp) {
+        // todo - fix inspect view to use expansion
         MV.pushMatrix();
         MV.scale(.47);
         MV.scale(scale);
