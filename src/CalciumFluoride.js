@@ -239,6 +239,10 @@ function CalciumFluoride(eighth, half, sphere, colors, inspect) {
         MV.popMatrix();
     }
     
+    this.drawCoord = function(MV, prog, scale) {
+        // todo
+    }
+    
     this.getCellLayers = function() {
         if(layers == null) {
             layers = new Array();

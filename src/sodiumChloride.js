@@ -320,6 +320,10 @@ function SodiumChloride(eighth, half, sphere, colors, inspect) {
         MV.popMatrix();
     }
     
+    this.drawCoord = function(MV, prog, scale) {
+        
+    }
+    
     this.getCellLayers = function() {
         if(layers == null) {
             layers = new Array();
