@@ -167,15 +167,7 @@
             }
             
             function changeCrystal(value) {
-                if(value != '-1') {
-                    // display the error and turn coordination off if
-                    // going to NaCl or CaF2 with coordination on
-                    if(Scene.isCoord && (value == '3' || value == '4')) {
-                        Scene.toggleCoord($('#crystalSelector'), $('#displaySelector'));
-                    }
-                    
-                    goToCrystal(value);
-                }   
+                goToCrystal(value);
             }
             
             function showDisplay(value) {
@@ -189,7 +181,7 @@
                     Scene.toggleInspection();
                 }
                 else if(value == "3") {
-                    Scene.toggleCoord($('#crystalSelector'), $('#displaySelector'));
+                    Scene.toggleCoord();
                 }
             }
             
@@ -280,7 +272,8 @@
             </p>
             <p>
                 This is an open source project. It is developed in JavaScript, 
-                using WebGL for all graphics. The project source currently resides 
+                using WebGL for all graphics. The project's code is open source
+                and currently resides 
                 <a href="https://github.com/smrtalec95/UnitCellVisualizer">on Github</a>.
             </p>
 

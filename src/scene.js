@@ -103,28 +103,10 @@ var Scene = {
         }
     },
     
-    toggleCoord : function(crystalSelector, dispSelector) {
-        var out = false;
-        // check NaCl and CaF2 - they don't currently have a coordination view
-        if(crystalSelector.val() == "3") {
-            alert('Sodium Chloride does not currently have a coordination view.');
-            Scene.goToLattice();
-            dispSelector.val("0");
-            
+    toggleCoord : function() {
+        for(var i = 0; i < this.crystals.length; i++) {
+            this.crystals[i].activateCoordView();
         }
-        else if(crystalSelector.val() == "4") {
-            alert('Calcium Fluoride does not currently have a coordination view');
-            Scene.goToLattice();
-            dispSelector.val("0");
-        }
-        else {
-            for(var i = 0; i < this.crystals.length; i++) {
-                this.crystals[i].activateCoordView();
-            }
-            out = true;
-        }
-        Scene.isCoord = !Scene.isCoord;
-        return out;
     },
     
     toggleColor : function() {
