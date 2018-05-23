@@ -138,4 +138,3 @@ var Scene = {
     colors : {},
     isCoord : false
 };
-//changes
