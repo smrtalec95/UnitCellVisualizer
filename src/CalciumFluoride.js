@@ -1,4 +1,4 @@
-function CalciumFluoride(eighth, half, sphere, colors, inspect) {
+function CalciumFluoride(eighth, half, sphere, colors) {
     
     this.prototype = new UnitCell(eighth, half, sphere, colors);
     
@@ -212,6 +212,7 @@ function CalciumFluoride(eighth, half, sphere, colors, inspect) {
     }
     
     this.drawInspect = function(MV, prog, scale, inspctExp) {
+        // todo - fix inspect view to use expansion
         MV.pushMatrix();
         MV.scale(.47);
         MV.scale(scale);
@@ -235,6 +236,59 @@ function CalciumFluoride(eighth, half, sphere, colors, inspect) {
             sphere.draw(prog);
             MV.popMatrix();
         }
+        
+        MV.popMatrix();
+    }
+    
+    this.drawCoord = function(MV, prog, scale) {
+        
+        MV.pushMatrix();
+        MV.scale(scale);
+        
+        //draw left (calcium centered)
+        MV.pushMatrix();
+        MV.translate(vec3.fromValues(-4, 0, 0));
+        gl.uniform3fv(prog.getHandle("kdFront"), colors["white"]);
+        gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
+        sphere.draw(prog);
+        gl.uniform3fv(prog.getHandle("kdFront"), colors["orange"]);
+        
+        for(var i = -1.13; i < 2; i += 2.26) {
+            for(var j = -1.13; j < 2; j += 2.26) {
+                for(var k = -1.13; k < 2; k += 2.26) {
+                    MV.pushMatrix();
+                    MV.translate(vec3.fromValues(i, j, k));
+                    gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
+                    sphere.draw(prog);
+                    MV.popMatrix();
+                }
+            }
+        }
+        MV.popMatrix();
+        
+        //draw right (fluoride centered)
+        MV.pushMatrix();
+        MV.translate(vec3.fromValues(4, 0, 0));
+        gl.uniform3fv(prog.getHandle("kdFront"), colors["orange"]);
+        gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
+        sphere.draw(prog);
+        gl.uniform3fv(prog.getHandle("kdFront"), colors["white"]);
+        
+        for(var i = -1.13; i < 2; i += 2.26) {
+            for(var j = -1.13; j < 2; j += 2.26) {
+                MV.pushMatrix();
+                if(i > 0) {
+                    MV.translate(vec3.fromValues(i, j, j));
+                }
+                else {
+                    MV.translate(vec3.fromValues(i, j, -j));
+                }
+                gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
+                sphere.draw(prog);
+                MV.popMatrix();
+            }
+        }
+        MV.popMatrix();
         
         MV.popMatrix();
     }

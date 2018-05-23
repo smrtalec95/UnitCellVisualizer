@@ -91,10 +91,8 @@ var User = {
                     break;
                     
                 case 'R'.charCodeAt(0) :
-                    var success = Scene.toggleCoord(crystalSelector, dispSelector);
-                    if(success) {
-                        dispSelector.val('3');
-                    }
+                    Scene.toggleCoord();
+                    dispSelector.val('3');
                     break;
                     
                 case 'N'.charCodeAt(0):

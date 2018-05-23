@@ -8,24 +8,23 @@ function Crystal(type, eighth, half, sphere, colors) {
         switch (type) {
             
             case CrystalType.SIMPLE :
-                unit = new SimpleCubic(eighth, half, sphere, colors, inspect);
+                unit = new SimpleCubic(eighth, half, sphere, colors, /*inspect*/);
             break;
 
             case CrystalType.BODY :
-                unit = new BodyCentered(eighth, half, sphere, colors, inspect);
+                unit = new BodyCentered(eighth, half, sphere, colors, /*inspect*/);
             break;
 
             case CrystalType.FACE :
-                unit = new FaceCentered(eighth, half, sphere, colors, inspect);
+                unit = new FaceCentered(eighth, half, sphere, colors, /*inspect*/);
             break;
             
-            //new additions for NaCl Unit Cell
             case CrystalType.NaCl :
-                unit = new SodiumChloride(eighth, half, sphere, colors, inspect);
+                unit = new SodiumChloride(eighth, half, sphere, colors, /*inspect*/);
             break;
             
             case CrystalType.CaF2:
-                unit = new CalciumFluoride(eighth, half, sphere, colors, inspect);
+                unit = new CalciumFluoride(eighth, half, sphere, colors, /*inspect*/);
             break;
             
             case CrystalType.LEGEND:
@@ -47,6 +46,7 @@ function Crystal(type, eighth, half, sphere, colors) {
         } else if(dispCoord) {
             this.drawCoordView(MV, prog);
         }
+        // legend has no layering animation for obvious reasons
         else if (layersDraw && type != CrystalType.LEGEND) {
             this.drawLayers(MV, prog);
         } else {
@@ -57,22 +57,24 @@ function Crystal(type, eighth, half, sphere, colors) {
     };
     
     this.expand = function() {
-        if (inspecting) {
-            if (inspctExp < 0.6) { inspctExp += .2; }
-        } else {
-            if (expansion < 4.0) { expansion += .2; }
+        if (inspecting && inspctExp < 0.6) {
+            inspctExp += .2; 
+        } else if (expansion < 4.0) {
+                expansion += .2; 
         }
     };
     
     this.contract = function() {
-        if (inspecting) {
-            if (inspctExp > 0.2) { inspctExp -= .2; }
-        } else {
-            if (expansion > 1.0) { expansion -= .2; }
+        if (inspecting &&inspctExp > 0.2) {
+            inspctExp -= .2; 
+        }
+        else if (expansion > 1.0) {
+            expansion -= .2; 
         }
     };
     
     this.activateTranslucency = function() {
+        // legend has no translucency view
         if(type != CrystalType.LEGEND) {
             translucent = true;
             layersDraw = false;
@@ -81,26 +83,8 @@ function Crystal(type, eighth, half, sphere, colors) {
         }
     };
     
-    this.setDrawLayers = function() {
-        this.toggleLayers();
-        layersDraw = true;
-    };
-
-    this.toggleLayers = function() {
-         if (type != CrystalType.LEGEND) {
-             layersDraw = !layersDraw;
-             
-             for (var i = 0; i < layers.length; i++) {
-                 layers[i].reset();
-             }
-             
-             expansion = 1.0;
-             inspctExp = 1.0;
-             translucent = false;
-         }
-    };
-
     this.activateInspection = function() {
+        // legend has no inspection view
         if(type != CrystalType.LEGEND) {
             inspctExp = 0.0;
             inspecting = true;
@@ -111,12 +95,32 @@ function Crystal(type, eighth, half, sphere, colors) {
     };
     
     this.activateCoordView = function() {
+        // legend has no coordination view
         if(type != CrystalType.LEGEND) {
             dispCoord = true;
             translucent = false;
             layersDraw = false;
             inspecting = false;
         }
+    };
+    
+    this.setDrawLayers = function() {
+        this.toggleLayers();
+        layersDraw = true;
+    };
+
+    this.toggleLayers = function() {
+        // legend has no layers to toggle on/off
+         if (type != CrystalType.LEGEND) {
+             layersDraw = !layersDraw;
+             
+             for (var i = 0; i < layers.length; i++) {
+                 layers[i].reset();
+             }
+             
+             expansion = 1.0;
+             inspctExp = 1.0;
+         }
     };
     
     this.toggleColor = function() {
@@ -146,7 +150,9 @@ function Crystal(type, eighth, half, sphere, colors) {
         MV.pushMatrix();
           
         // Rotation of face-centered cubic so that it matches layering scheme
-        if (type == CrystalType.FACE) { MV.rotate(45, vec3.fromValues(0,0,1)); }
+        if (type == CrystalType.FACE) { 
+            MV.rotate(45, vec3.fromValues(0,0,1)); 
+        }
         
         MV.scale(scale);
         
@@ -164,7 +170,7 @@ function Crystal(type, eighth, half, sphere, colors) {
             vec3.scale(v, v, expansion); // Adjust cell positioning by any expansion
           
             //this is the whole model as it appears on the screen
-            unit.draw(MV, prog, v, alpha, false, bounds, ndx, color); // Draw cell
+            unit.draw(MV, prog, v, alpha, false, bounds, ndx, color);
         }
         
         MV.popMatrix();
@@ -314,27 +320,9 @@ function Crystal(type, eighth, half, sphere, colors) {
         MV.popMatrix();
     };
     
-    this.isBasic = function(type) {
-        return type == CrystalType.SIMPLE ||
-               type == CrystalType.BODY ||
-               type == CrystalType.FACE;
-    }
-    
     this.drawCoordView = function(MV, prog) {
         gl.uniform1f(prog.getHandle("alpha"), 1.0);
-        switch(type) {
-            case CrystalType.SIMPLE :
-                this.drawSimpleCoordView(MV, prog);
-            break;
-            
-            case CrystalType.BODY :
-                this.drawBodyCoordView(MV, prog);
-            break;
-            
-            case CrystalType.FACE :
-                this.drawFaceCoordView(MV, prog);
-            break;
-        }
+        unit.drawCoord(MV, prog, scale);
     }
     
     this.goToLattice = function() {
@@ -343,102 +331,6 @@ function Crystal(type, eighth, half, sphere, colors) {
             translucent = false;
             inspecting = false;
         }
-    }
-    
-    this.drawSimpleCoordView = function(MV, prog) {
-        MV.pushMatrix();
-        MV.scale(scale);
-        gl.uniform3fv(prog.getHandle("kdFront"), colors["red"]);
-        gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
-        sphere.draw(prog);
-        gl.uniform3fv(prog.getHandle("kdFront"), colors["grey"]);
-        
-        for(var i = 0; i < 3; i++) {
-            for(var j = -2; j < 5; j += 4) {
-                MV.pushMatrix();
-                if(i == 0) {
-                    MV.translate(vec3.fromValues(j, 0, 0));
-                }
-                else if (i == 1) {
-                    MV.translate(vec3.fromValues(0, j, 0));
-                }
-                else {
-                    MV.translate(vec3.fromValues(0, 0, j));
-                }
-                gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
-                sphere.draw(prog);
-                MV.popMatrix();
-            }
-        }
-        
-        MV.popMatrix();
-    }
-    
-    this.drawBodyCoordView = function(MV, prog) {
-        MV.pushMatrix();
-        MV.scale(scale);
-        gl.uniform3fv(prog.getHandle("kdFront"), colors["red"]);
-        gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
-        sphere.draw(prog);
-        gl.uniform3fv(prog.getHandle("kdFront"), colors["grey"]);
-        
-        for(var i = -1.13; i < 2; i += 2.26) {
-            for(var j = -1.13; j < 2; j += 2.26) {
-                for(var k = -1.13; k < 2; k += 2.26) {
-                    MV.pushMatrix();
-                    MV.translate(vec3.fromValues(i, j, k));
-                    gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
-                    sphere.draw(prog);
-                    MV.popMatrix();
-                }
-            }
-        }
-        
-        MV.popMatrix();
-    }
-    
-    this.drawFaceCoordView = function(MV, prog) {
-        MV.pushMatrix();
-        MV.scale(scale);
-        gl.uniform3fv(prog.getHandle("kdFront"), colors["red"]);
-        gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
-        sphere.draw(prog);
-        gl.uniform3fv(prog.getHandle("kdFront"), colors["grey"]);
-        
-        for(var i = -1.35; i < 2; i += 2.7) {
-            for(var j = -1.35; j < 2; j += 2.7) {
-                MV.pushMatrix();
-                MV.translate(vec3.fromValues(0, i, j));
-                gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
-                sphere.draw(prog);
-                MV.popMatrix();
-            }
-        }
-        
-        for(var i = -1.4; i < 2; i+= 2.8) {
-            MV.pushMatrix();
-            MV.translate(vec3.fromValues(i, 0, 0));
-            
-            for(var j = -1.4; j < 2; j += 2.8) {
-                MV.pushMatrix();
-                MV.translate(vec3.fromValues(0, 0, j));
-                gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
-                sphere.draw(prog);
-                MV.popMatrix();
-            }
-            
-            for(var k = -1.4; k < 2; k += 2.8) {
-                MV.pushMatrix();
-                MV.translate(vec3.fromValues(0, k, 0));
-                gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
-                sphere.draw(prog);
-                MV.popMatrix();
-            }
-            
-            MV.popMatrix();
-        }
-        
-        MV.popMatrix();
     }
     
     var type = type;
@@ -460,5 +352,4 @@ function Crystal(type, eighth, half, sphere, colors) {
     var colors = colors;
     var cells = new Array();
     var layers;
-    var inspect = new Inspect(eighth, half, scale);
 }

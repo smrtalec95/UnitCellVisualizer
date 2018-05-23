@@ -1,4 +1,4 @@
-function BodyCentered(eighth, half, sphere, colors, inspect) {
+function BodyCentered(eighth, half, sphere, colors) {
 
     this.draw = function(MV, prog, pos, alpha, center, bounds, ndx, color) {
         if (center && alpha < 1.0) { 
@@ -82,9 +82,6 @@ function BodyCentered(eighth, half, sphere, colors, inspect) {
     };
     
     this.drawInspect = function(MV, prog, scale, inspctExp) {
-        //console.log('BCC inspect');
-        //MV.pushMatrix();
-        //MV.scale(scale);
         gl.uniform1f(prog.getHandle("alpha"), 1.0);
         gl.uniform3fv(prog.getHandle("kdFront"), colors["grey"]);
         
@@ -116,7 +113,29 @@ function BodyCentered(eighth, half, sphere, colors, inspect) {
         gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
         sphere.draw(prog);
         MV.popMatrix();
-        //MV.popMatrix();
+    }
+    
+    this.drawCoord = function(MV, prog, scale) {
+        MV.pushMatrix();
+        MV.scale(scale);
+        gl.uniform3fv(prog.getHandle("kdFront"), colors["red"]);
+        gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
+        sphere.draw(prog);
+        gl.uniform3fv(prog.getHandle("kdFront"), colors["grey"]);
+        
+        for(var i = -1.13; i < 2; i += 2.26) {
+            for(var j = -1.13; j < 2; j += 2.26) {
+                for(var k = -1.13; k < 2; k += 2.26) {
+                    MV.pushMatrix();
+                    MV.translate(vec3.fromValues(i, j, k));
+                    gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
+                    sphere.draw(prog);
+                    MV.popMatrix();
+                }
+            }
+        }
+        
+        MV.popMatrix();
     }
     
     this.getCellLayers = function() {
@@ -136,6 +155,5 @@ function BodyCentered(eighth, half, sphere, colors, inspect) {
     
     this.name = "Body-Centered Cubic";
     this.scale = 0.87;
-    this.inspect = inspect;
     var layers = null;
 }

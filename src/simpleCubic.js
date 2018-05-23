@@ -1,4 +1,4 @@
-function SimpleCubic(eighth, half, sphere, colors, inspect) {
+function SimpleCubic(eighth, half, sphere, colors) {
     
     this.prototype = new UnitCell(eighth, half, sphere, colors);
 
@@ -93,6 +93,35 @@ function SimpleCubic(eighth, half, sphere, colors, inspect) {
         MV.popMatrix();
     }
     
+    this.drawCoord = function(MV, prog, scale) {
+        MV.pushMatrix();
+        MV.scale(scale);
+        gl.uniform3fv(prog.getHandle("kdFront"), colors["red"]);
+        gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
+        sphere.draw(prog);
+        gl.uniform3fv(prog.getHandle("kdFront"), colors["grey"]);
+        
+        for(var i = 0; i < 3; i++) {
+            for(var j = -2; j < 5; j += 4) {
+                MV.pushMatrix();
+                if(i == 0) {
+                    MV.translate(vec3.fromValues(j, 0, 0));
+                }
+                else if (i == 1) {
+                    MV.translate(vec3.fromValues(0, j, 0));
+                }
+                else {
+                    MV.translate(vec3.fromValues(0, 0, j));
+                }
+                gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
+                sphere.draw(prog);
+                MV.popMatrix();
+            }
+        }
+        
+        MV.popMatrix();
+    }
+    
     this.getCellLayers = function() {
         if(layers == null) {
             layers = new Array();
@@ -106,6 +135,5 @@ function SimpleCubic(eighth, half, sphere, colors, inspect) {
     }
     
     this.name = "Simple Cubic";
-    this.inspect = inspect;
     var layers = null;
 }

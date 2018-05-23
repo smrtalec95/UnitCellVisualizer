@@ -1,11 +1,8 @@
-function FaceCentered(eighth, half, sphere, colors, inspect) {
+function FaceCentered(eighth, half, sphere, colors, /*inspect*/) {
     
     this.draw = function(MV, prog, pos, alpha, center, bounds, ndx, color) {
         
         this.color = color;
-        /*gl.uniform3fv(prog.getHandle("kdFront"), colors["red"]);            // 9
-        gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
-        half.draw(prog);*/
 
         if (center && alpha < 1.0) { 
             gl.uniform1f(prog.getHandle("alpha"), 1.0);
@@ -112,10 +109,6 @@ function FaceCentered(eighth, half, sphere, colors, inspect) {
         if (!center && alpha < 1.0) { return colors["grey"]; }
          
         var key = (z + y) % 3; 
-
-        // g, gr, o: 1, 5, 12, 13
-        // o, g, gr: 2, 4, 6, 8, 9, 10, 11
-        // gr, o, g: 3, 7, 11, 14 
 
         switch (id) {
             
@@ -279,6 +272,50 @@ function FaceCentered(eighth, half, sphere, colors, inspect) {
         MV.popMatrix();
     }
     
+    this.drawCoord = function(MV, prog, scale) {
+        MV.pushMatrix();
+        MV.scale(scale);
+        gl.uniform3fv(prog.getHandle("kdFront"), colors["red"]);
+        gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
+        sphere.draw(prog);
+        gl.uniform3fv(prog.getHandle("kdFront"), colors["grey"]);
+        
+        for(var i = -1.35; i < 2; i += 2.7) {
+            for(var j = -1.35; j < 2; j += 2.7) {
+                MV.pushMatrix();
+                MV.translate(vec3.fromValues(0, i, j));
+                gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
+                sphere.draw(prog);
+                MV.popMatrix();
+            }
+        }
+        
+        for(var i = -1.4; i < 2; i+= 2.8) {
+            MV.pushMatrix();
+            MV.translate(vec3.fromValues(i, 0, 0));
+            
+            for(var j = -1.4; j < 2; j += 2.8) {
+                MV.pushMatrix();
+                MV.translate(vec3.fromValues(0, 0, j));
+                gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
+                sphere.draw(prog);
+                MV.popMatrix();
+            }
+            
+            for(var k = -1.4; k < 2; k += 2.8) {
+                MV.pushMatrix();
+                MV.translate(vec3.fromValues(0, k, 0));
+                gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
+                sphere.draw(prog);
+                MV.popMatrix();
+            }
+            
+            MV.popMatrix();
+        }
+        
+        MV.popMatrix();
+    }
+    
     this.getCellLayers = function() {
         if(layers == null) {
             var s = 2;
@@ -308,7 +345,6 @@ function FaceCentered(eighth, half, sphere, colors, inspect) {
     
     this.name = "Face-Centered Cubic";
     this.scale = 0.71;
-    this.inspect = inspect;
     this.color = false;
     var layers = null;
 }

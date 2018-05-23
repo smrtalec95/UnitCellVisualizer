@@ -1,4 +1,4 @@
-function SodiumChloride(eighth, half, sphere, colors, inspect) {
+function SodiumChloride(eighth, half, sphere, colors) {
     
     this.prototype = new UnitCell(eighth, half, sphere, colors);
     
@@ -275,11 +275,12 @@ function SodiumChloride(eighth, half, sphere, colors, inspect) {
         this.drawClFourth(MV, prog, 180, true, 0);
         this.drawClFourth(MV, prog, 270, true, 0);
 
-        //center Na atom
+        //center Cl atom
         this.drawClAtom(MV, prog);
     }
     
     this.drawInspect = function(MV, prog, scale, inspctExp) {
+        // todo - fix to use inspect expansion
         var eps = .01;
         
         gl.uniform1f(prog.getHandle("alpha"), 1.0);
@@ -316,6 +317,89 @@ function SodiumChloride(eighth, half, sphere, colors, inspect) {
             sphere.draw(prog);
             MV.popMatrix();
         }
+        
+        MV.popMatrix();
+    }
+    
+    this.drawCoord = function(MV, prog, scale) {
+        MV.pushMatrix();
+        MV.scale(scale);
+        
+        // draw left coordination view (chlorine centered)
+        MV.pushMatrix();
+        MV.translate(vec3.fromValues(-4, 0, 0));
+        
+        // draw center chlorine
+        MV.pushMatrix();
+        MV.scale(1.3);
+        gl.uniform3fv(prog.getHandle("kdFront"), colors["green"]);
+        gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
+        sphere.draw(prog);
+        MV.popMatrix();
+        
+        // draw surrounding sodiums
+        MV.pushMatrix();
+        MV.scale(.7);
+        gl.uniform3fv(prog.getHandle("kdFront"), colors["purple"]);
+        
+        for(var i = 0; i < 3; i++) {
+            for(var j = -2.8; j < 5; j += 5.6) {
+                MV.pushMatrix();
+                if(i == 0) {
+                    MV.translate(vec3.fromValues(j, 0, 0));
+                }
+                else if (i == 1) {
+                    MV.translate(vec3.fromValues(0, j, 0));
+                }
+                else {
+                    MV.translate(vec3.fromValues(0, 0, j));
+                }
+                gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
+                sphere.draw(prog);
+                MV.popMatrix();
+            }
+        }
+        MV.popMatrix();
+        
+        MV.popMatrix();
+        
+        // draw right coordination (sodium centered)
+        MV.pushMatrix();
+        MV.translate(vec3.fromValues(4, 0, 0));
+        
+        // draw center sodium
+        MV.pushMatrix();
+        MV.scale(.7);
+        gl.uniform3fv(prog.getHandle("kdFront"), colors["purple"]);
+        gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
+        sphere.draw(prog);
+        MV.popMatrix();
+        
+        // draw surrounding chlorines
+        MV.pushMatrix();
+        MV.scale(1.3);
+        gl.uniform3fv(prog.getHandle("kdFront"), colors["green"]);
+        
+        for(var i = 0; i < 3; i++) {
+            for(var j = -1.5; j < 4; j += 3) {
+                MV.pushMatrix();
+                if(i == 0) {
+                    MV.translate(vec3.fromValues(j, 0, 0));
+                }
+                else if (i == 1) {
+                    MV.translate(vec3.fromValues(0, j, 0));
+                }
+                else {
+                    MV.translate(vec3.fromValues(0, 0, j));
+                }
+                gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
+                sphere.draw(prog);
+                MV.popMatrix();
+            }
+        }
+        MV.popMatrix();
+        
+        MV.popMatrix();
         
         MV.popMatrix();
     }
