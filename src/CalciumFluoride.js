@@ -274,7 +274,6 @@ function CalciumFluoride(eighth, half, sphere, colors) {
         sphere.draw(prog);
         gl.uniform3fv(prog.getHandle("kdFront"), colors["white"]);
         
-        // want: pos pos pos, pos neg neg, neg neg neg, neg pos pos
         for(var i = -1.13; i < 2; i += 2.26) {
             for(var j = -1.13; j < 2; j += 2.26) {
                 MV.pushMatrix();
