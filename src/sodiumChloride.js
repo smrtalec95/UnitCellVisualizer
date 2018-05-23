@@ -1,4 +1,4 @@
-function SodiumChloride(eighth, half, sphere, colors, inspect) {
+function SodiumChloride(eighth, half, sphere, colors) {
     
     this.prototype = new UnitCell(eighth, half, sphere, colors);
     

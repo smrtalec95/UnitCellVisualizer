@@ -1,4 +1,4 @@
-function BodyCentered(eighth, half, sphere, colors, inspect) {
+function BodyCentered(eighth, half, sphere, colors) {
 
     this.draw = function(MV, prog, pos, alpha, center, bounds, ndx, color) {
         if (center && alpha < 1.0) { 
@@ -155,6 +155,5 @@ function BodyCentered(eighth, half, sphere, colors, inspect) {
     
     this.name = "Body-Centered Cubic";
     this.scale = 0.87;
-    this.inspect = inspect;
     var layers = null;
 }

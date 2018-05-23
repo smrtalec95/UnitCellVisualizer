@@ -1,4 +1,4 @@
-function FaceCentered(eighth, half, sphere, colors, inspect) {
+function FaceCentered(eighth, half, sphere, colors, /*inspect*/) {
     
     this.draw = function(MV, prog, pos, alpha, center, bounds, ndx, color) {
         
@@ -345,7 +345,6 @@ function FaceCentered(eighth, half, sphere, colors, inspect) {
     
     this.name = "Face-Centered Cubic";
     this.scale = 0.71;
-    this.inspect = inspect;
     this.color = false;
     var layers = null;
 }

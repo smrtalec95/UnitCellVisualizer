@@ -1,4 +1,4 @@
-function SimpleCubic(eighth, half, sphere, colors, inspect) {
+function SimpleCubic(eighth, half, sphere, colors) {
     
     this.prototype = new UnitCell(eighth, half, sphere, colors);
 
@@ -135,6 +135,5 @@ function SimpleCubic(eighth, half, sphere, colors, inspect) {
     }
     
     this.name = "Simple Cubic";
-    this.inspect = inspect;
     var layers = null;
 }
