@@ -8,23 +8,23 @@ function Crystal(type, eighth, half, sphere, colors) {
         switch (type) {
             
             case CrystalType.SIMPLE :
-                unit = new SimpleCubic(eighth, half, sphere, colors, /*inspect*/);
+                unit = new SimpleCubic(eighth, half, sphere, colors);
             break;
 
             case CrystalType.BODY :
-                unit = new BodyCentered(eighth, half, sphere, colors, /*inspect*/);
+                unit = new BodyCentered(eighth, half, sphere, colors);
             break;
 
             case CrystalType.FACE :
-                unit = new FaceCentered(eighth, half, sphere, colors, /*inspect*/);
+                unit = new FaceCentered(eighth, half, sphere, colors);
             break;
             
             case CrystalType.NaCl :
-                unit = new SodiumChloride(eighth, half, sphere, colors, /*inspect*/);
+                unit = new SodiumChloride(eighth, half, sphere, colors);
             break;
             
             case CrystalType.CaF2:
-                unit = new CalciumFluoride(eighth, half, sphere, colors, /*inspect*/);
+                unit = new CalciumFluoride(eighth, half, sphere, colors);
             break;
             
             case CrystalType.LEGEND:
@@ -124,7 +124,10 @@ function Crystal(type, eighth, half, sphere, colors) {
     };
     
     this.toggleColor = function() {
-        color = !color;
+        color++;
+        if(color == 3) {
+            color = 0;
+        }
     }
     
     var Cell = function(bounds, pos, ndx) {
@@ -344,7 +347,7 @@ function Crystal(type, eighth, half, sphere, colors) {
     var layersDraw = true;
     var inspecting = false;
     var dispCoord = false;
-    var color = true;
+    var color = 0;
     var unit;
     var eighth = eighth;
     var half = half;
