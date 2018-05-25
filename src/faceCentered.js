@@ -113,7 +113,7 @@ function FaceCentered(eighth, half, sphere, colors) {
                 return colors["green"];
             }
             else if(shape === this.type.eighth) {
-                return colors["orange"];
+                return colors["grey"];
             }
         }
         
