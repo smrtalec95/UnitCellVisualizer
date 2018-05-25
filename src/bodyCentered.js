@@ -8,7 +8,7 @@ function BodyCentered(eighth, half, sphere, colors) {
         } 
 
         if (center || alpha == 1.0) {
-            if(color) {
+            if(color == 0) {
                 gl.uniform3fv(prog.getHandle("kdFront"), colors["red"]);
             }
             else {

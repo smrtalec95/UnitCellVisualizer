@@ -5,7 +5,6 @@ function SimpleCubic(eighth, half, sphere, colors) {
     this.draw = function(MV, prog, pos, alpha, center, bounds, ndx, color) {
         if (center && alpha < 1.0) {
             gl.uniform1f(prog.getHandle("alpha"), 1.0);
-            console.log('color: ' + color);
             if(color == 0) {
                 gl.uniform3fv(prog.getHandle("kdFront"), colors["blue"]);
             }
