@@ -1,7 +1,5 @@
 function CalciumFluoride(eighth, half, sphere, colors) {
     
-    // todo setup color toggles
-    
     this.prototype = new UnitCell(eighth, half, sphere, colors);
     
     //only need to render a 3 by 3 area
