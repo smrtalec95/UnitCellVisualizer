@@ -84,6 +84,7 @@ function BodyCentered(eighth, half, sphere, colors) {
     };
     
     this.drawInspect = function(MV, prog, scale, inspctExp) {
+        gl.uniform3fv(prog.getHandle("kdFront"), colors["grey"]);
         MV.pushMatrix();
         MV.scale(scale);
         
