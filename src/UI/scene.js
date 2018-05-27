@@ -103,9 +103,9 @@ var Scene = {
         }
     },
     
-    toggleCoord : function() {
+    toggleCoord : function(dispSelector, crystal) {
         for(var i = 0; i < this.crystals.length; i++) {
-            this.crystals[i].activateCoordView();
+            this.crystals[i].activateCoordView(dispSelector, crystal);
         }
     },
     
