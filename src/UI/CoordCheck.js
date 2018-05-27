@@ -42,7 +42,7 @@ function CoordCheck(dispSelector) {
         var out = true;
         // don't ask again if they already answered correctly
         if(!status) {
-            var input = prompt(msg);
+            var input = window.prompt(msg);
             if(input != correctVal) {
                 out = false;;
             }
@@ -54,8 +54,8 @@ function CoordCheck(dispSelector) {
     this.verifyIonic = function(msgCat, msgAn, correctCat, correctAn, status) {
         var out = true;
         if(!status) {
-            var cation = prompt(msgCat);
-            var anion = prompt(msgAn);
+            var cation = window.prompt(msgCat);
+            var anion = window.prompt(msgAn);
             if(cation != correctCat || anion != correctAn) {
                 out = false;
             }
