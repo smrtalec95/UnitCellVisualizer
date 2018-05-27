@@ -37,6 +37,8 @@ var Scene = {
         crystal = new Crystal(CrystalType.LEGEND, this.eighth, this.half, this.sphere, this.colors, dispSelector);
         crystal.init();
         this.crystals.push(crystal);
+        
+        this.coordCheck = new CoordCheck(dispSelector);
     },
 
     setupColors : function() {
@@ -103,9 +105,15 @@ var Scene = {
         }
     },
     
-    toggleCoord : function(dispSelector, crystal) {
-        for(var i = 0; i < this.crystals.length; i++) {
-            this.crystals[i].activateCoordView(dispSelector, crystal);
+    activateCoord : function(dispSelector, crystal) {
+        this.coordCheck.checkCrystal(crystal);
+        if(this.coordCheck.checked(crystal)) {
+            for(var i = 0; i < this.crystals.length; i++) {
+                this.crystals[i].activateCoordView();
+            }
+        }
+        else {
+            this.goToLattice();
         }
     },
     
@@ -136,5 +144,6 @@ var Scene = {
     sphere : new Shape(),
     crystals : new Array(),
     colors : {},
-    isCoord : false
+    isCoord : false,
+    coordCheck : null,
 };

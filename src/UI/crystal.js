@@ -1,6 +1,6 @@
 var CrystalType = {SIMPLE : 0, BODY : 1, FACE : 2 , NaCl : 3, CaF2: 4, LEGEND : 5};
 
-function Crystal(type, eighth, half, sphere, colors, dispSelector) {
+function Crystal(type, eighth, half, sphere, colors) {
 
     this.init = function() {
         this.initCellPositions();
@@ -94,14 +94,13 @@ function Crystal(type, eighth, half, sphere, colors, dispSelector) {
         }
     };
     
-    this.activateCoordView = function(dispSelector, crystal) {
+    this.activateCoordView = function() {
         // legend has no coordination view
         if(type != CrystalType.LEGEND) {
             dispCoord = true;
             translucent = false;
             layersDraw = false;
             inspecting = false;
-            this.coordCheck.checkCrystal(crystal);
         }
     };
     
@@ -356,5 +355,4 @@ function Crystal(type, eighth, half, sphere, colors, dispSelector) {
     var colors = colors;
     var cells = new Array();
     var layers;
-    this.coordCheck = new CoordCheck(dispSelector);
 }

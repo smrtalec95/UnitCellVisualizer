@@ -110,6 +110,9 @@ function FaceCentered(eighth, half, sphere, colors) {
         
         else if(this.color == 1) {
             if (shape === this.type.half) {
+                if(!center && alpha < 1.0) {
+                    return colors["grey"];
+                }
                 return colors["green"];
             }
             else if(shape === this.type.eighth) {
@@ -117,7 +120,9 @@ function FaceCentered(eighth, half, sphere, colors) {
             }
         }
         
-        if (!center && alpha < 1.0) { return colors["grey"]; }
+        if (!center && alpha < 1.0) {
+            return colors["grey"]; 
+        }
          
         var key = (z + y) % 3; 
 

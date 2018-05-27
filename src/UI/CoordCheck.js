@@ -11,11 +11,8 @@ function CoordCheck(dispSelector) {
     
     this.checkCrystal = function(crystal) {
         var success;
-        console.log('Crystal: ' + crystal);
         if(crystal == CrystalType.SIMPLE) {
-            console.log('before call');
             this.checkedSimple = this.verify('What is the coordination number for the SC lattice?', 6, this.checkedSimple);
-            console.log('after call');
             success = this.checkedSimple;
         }
         else if(crystal == CrystalType.BODY) {
@@ -40,20 +37,38 @@ function CoordCheck(dispSelector) {
         }
         
         if(!success) {
-            alert('Sorry, that\'s incorrect...look closer and try again!');
+            alert('Sorry, that\'s incorrect...look closer at the lattice and try again!');
             dispSelector.val(0);
             Scene.goToLattice();
         }
     };
+    
+    this.checked = function(crystal) {
+        var out;
+        if(crystal == CrystalType.SIMPLE) {
+            out = this.checkedSimple;
+        }
+        else if(crystal == CrystalType.BODY) {
+            out = this.checkedBody;
+        }
+        else if(crystal == CrystalType.FACE) {
+            out = this.checkedFace;
+        }
+        else if(crystal == CrystalType.NaCl) {
+            out = this.checkedNaCl;
+        }
+        else if(crystal == CrystalType.CaF2) {
+            out = this.checkedCaF2;
+        }
+        
+        return out;
+    }
             
     this.verify = function(msg, correctVal, status) {
         var out = true;
         // don't ask again if they already answered correctly
-        console.log('status: ' + status);
         if(!status) {
-            console.log('A');
             var input = window.prompt(msg);
-            console.log('B');
             if(input != correctVal) {
                 out = false;;
             }
