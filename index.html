@@ -169,6 +169,9 @@
             }
             
             function changeCrystal(value) {
+                if($('displaySelector').val() == 3) {
+                    Scene.toggleCoord($('displaySelector'), value);
+                }
                 goToCrystal(value);
             }
             
@@ -183,7 +186,7 @@
                     Scene.toggleInspection();
                 }
                 else if(value == "3") {
-                    Scene.toggleCoord($('displaySelector'), $('crystalSelector').val());
+                    Scene.toggleCoord($('#displaySelector'), $('#crystalSelector').val());
                 }
             }
             

@@ -95,13 +95,16 @@ function Crystal(type, eighth, half, sphere, colors) {
     };
     
     this.activateCoordView = function(dispSelector, crystal) {
+        if(coordCheck == null) {
+            coordCheck = new CoordCheck(dispSelector);
+        }
         // legend has no coordination view
         if(type != CrystalType.LEGEND) {
             dispCoord = true;
             translucent = false;
             layersDraw = false;
             inspecting = false;
-            console.log('Crystal: ' + crystal);
+            coordCheck.checkCrystal(crystal);
         }
     };
     
@@ -356,4 +359,5 @@ function Crystal(type, eighth, half, sphere, colors) {
     var colors = colors;
     var cells = new Array();
     var layers;
+    var coordCheck = null;
 }
