@@ -1,4 +1,6 @@
 function BodyCentered(eighth, half, sphere, colors) {
+    
+    this.prototype = new UnitCell(eighth, half, sphere, colors);
 
     this.draw = function(MV, prog, pos, alpha, center, bounds, ndx, color) {
         if (center && alpha < 1.0) { 
@@ -6,7 +8,7 @@ function BodyCentered(eighth, half, sphere, colors) {
         } 
 
         if (center || alpha == 1.0) {
-            if(color) {
+            if(color == 0) {
                 gl.uniform3fv(prog.getHandle("kdFront"), colors["red"]);
             }
             else {
@@ -82,36 +84,22 @@ function BodyCentered(eighth, half, sphere, colors) {
     };
     
     this.drawInspect = function(MV, prog, scale, inspctExp) {
-        gl.uniform1f(prog.getHandle("alpha"), 1.0);
         gl.uniform3fv(prog.getHandle("kdFront"), colors["grey"]);
-        
         MV.pushMatrix();
-        MV.translate(vec3.fromValues(-inspctExp/20 - 0.15, 0, 0));
-        this.inspect.drawEighth(MV, prog, 0, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
-        this.inspect.drawEighth(MV, prog, 90, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
-        this.inspect.drawEighth(MV, prog, 180, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
-        this.inspect.drawEighth(MV, prog, 270, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
-        
-        MV.pushMatrix();
-        MV.rotate(90.0, vec3.fromValues(1.0, 0.0, 0.0));
-        this.inspect.drawEighth(MV, prog, 0, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
-        this.inspect.drawEighth(MV, prog, 90, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
-        
-        MV.rotate(180.0, vec3.fromValues(1.0, 0.0, 0.0));
-        
-        this.inspect.drawEighth(MV, prog, 180, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
-        this.inspect.drawEighth(MV, prog, 270, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
-        
-        MV.popMatrix();    
-        MV.popMatrix();
-
-        gl.uniform3fv(prog.getHandle("kdFront"), colors["red"]);
-        
-        MV.pushMatrix();
-        MV.translate(vec3.fromValues(.15,0,0));
         MV.scale(scale);
+        
+        MV.pushMatrix();
+        MV.translate(vec3.fromValues(-2, 0, 0));
         gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
         sphere.draw(prog);
+        MV.popMatrix();
+        
+        MV.pushMatrix();
+        MV.translate(vec3.fromValues(2, 0, 0));
+        gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
+        sphere.draw(prog);
+        MV.popMatrix();
+        
         MV.popMatrix();
     }
     

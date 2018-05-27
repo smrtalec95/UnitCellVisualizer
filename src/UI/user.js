@@ -91,7 +91,7 @@ var User = {
                     break;
                     
                 case 'R'.charCodeAt(0) :
-                    Scene.toggleCoord();
+                    Scene.activateCoord(dispSelector, crystalSelector.val());
                     dispSelector.val('3');
                     break;
                     

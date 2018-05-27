@@ -1,4 +1,6 @@
-function FaceCentered(eighth, half, sphere, colors, /*inspect*/) {
+function FaceCentered(eighth, half, sphere, colors) {
+    
+    this.prototype = new UnitCell(eighth, half, sphere, colors);
     
     this.draw = function(MV, prog, pos, alpha, center, bounds, ndx, color) {
         
@@ -15,7 +17,7 @@ function FaceCentered(eighth, half, sphere, colors, /*inspect*/) {
         var y = ndx[1];
         var z = ndx[2];
 
-        gl.uniform3fv(prog.getHandle("kdFront"), this.whichColor(center,alpha,x,y,z, 12));           // 12
+        gl.uniform3fv(prog.getHandle("kdFront"), this.whichColor(center,alpha,x,y,z, 12, this.type.half));           // 12
         
         if (bounds[0] >= UnitCellPos.ONEB4MIN && bounds[0] <= UnitCellPos.MAX && // left right
             bounds[1] >= UnitCellPos.ONEB4MIN && bounds[1] < UnitCellPos.MAX && // height
@@ -24,35 +26,35 @@ function FaceCentered(eighth, half, sphere, colors, /*inspect*/) {
         }
 
         
-        gl.uniform3fv(prog.getHandle("kdFront"), this.whichColor(center,alpha,x,y,z, 9));            // 9
+        gl.uniform3fv(prog.getHandle("kdFront"), this.whichColor(center,alpha,x,y,z, 9, this.type.half));            // 9
         if (bounds[0] >= UnitCellPos.ONEB4MIN && bounds[0] < UnitCellPos.MAX && // left right
             bounds[1] >= UnitCellPos.ONEB4MIN && bounds[1] < UnitCellPos.MAX && // height
             bounds[2] >= UnitCellPos.MIN && bounds[2] < UnitCellPos.MAX) { // depth
             this.drawHalf(MV, prog, 90, vec3.fromValues(0, 1.0, 0));
         }
 
-        gl.uniform3fv(prog.getHandle("kdFront"), this.whichColor(center,alpha,x,y,z, 14));           // 14
+        gl.uniform3fv(prog.getHandle("kdFront"), this.whichColor(center,alpha,x,y,z, 14, this.type.half));           // 14
         if (bounds[0] >= UnitCellPos.MIN && bounds[0] < UnitCellPos.MAX && // left right
             bounds[1] >= UnitCellPos.ONEB4MIN && bounds[1] < UnitCellPos.MAX && // height
             bounds[2] >= UnitCellPos.ONEB4MIN && bounds[2] < UnitCellPos.MAX) { // depth
             this.drawHalf(MV, prog, 180, vec3.fromValues(0, 1.0, 0));
         }
 
-        gl.uniform3fv(prog.getHandle("kdFront"), this.whichColor(center,alpha,x,y,z, 10));          // 10
+        gl.uniform3fv(prog.getHandle("kdFront"), this.whichColor(center,alpha,x,y,z, 10, this.type.half));          // 10
         if (bounds[0] >= UnitCellPos.ONEB4MIN && bounds[0] < UnitCellPos.MAX && // left right
             bounds[1] >= UnitCellPos.ONEB4MIN && bounds[1] < UnitCellPos.MAX && // height
             bounds[2] >= UnitCellPos.ONEB4MIN && bounds[2] <= UnitCellPos.MAX) {
             this.drawHalf(MV, prog, 270, vec3.fromValues(0, 1.0, 0));
         }
 
-        gl.uniform3fv(prog.getHandle("kdFront"), this.whichColor(center,alpha,x,y,z, 11));          // 11
+        gl.uniform3fv(prog.getHandle("kdFront"), this.whichColor(center,alpha,x,y,z, 11, this.type.half));          // 11
         if (bounds[0] >= UnitCellPos.ONEB4MIN && bounds[0] < UnitCellPos.MAX && // left right
             bounds[1] >= UnitCellPos.MIN && bounds[1] < UnitCellPos.MAX && // height
             bounds[2] >= UnitCellPos.ONEB4MIN && bounds[2] < UnitCellPos.MAX) { 
             this.drawHalf(MV, prog, -90, vec3.fromValues(0, 0, 1.0));
         }
 
-        gl.uniform3fv(prog.getHandle("kdFront"), this.whichColor(center,alpha,x,y,z, 13));          // 13
+        gl.uniform3fv(prog.getHandle("kdFront"), this.whichColor(center,alpha,x,y,z, 13, this.type.half));          // 13
         if (bounds[0] >= UnitCellPos.ONEB4MIN && bounds[0] < UnitCellPos.MAX && // left right
             bounds[1] >= UnitCellPos.ONEB4MIN && bounds[1] <= UnitCellPos.MAX && // height
             bounds[2] >= UnitCellPos.ONEB4MIN && bounds[2] < UnitCellPos.MAX) { 
@@ -62,16 +64,16 @@ function FaceCentered(eighth, half, sphere, colors, /*inspect*/) {
         if (bounds[1] != UnitCellPos.MIN) {
             
             if (bounds[2] != UnitCellPos.MIN) {
-                gl.uniform3fv(prog.getHandle("kdFront"), this.whichColor(center,alpha,x,y,z, 8));  // 8
+                gl.uniform3fv(prog.getHandle("kdFront"), this.whichColor(center,alpha,x,y,z, 8, this.type.eighth));  // 8
                 if (bounds[0] != UnitCellPos.MAX) { this.drawEighth(MV, prog, 0); }
-                gl.uniform3fv(prog.getHandle("kdFront"), this.whichColor(center,alpha,x,y,z, 7));  // 7
+                gl.uniform3fv(prog.getHandle("kdFront"), this.whichColor(center,alpha,x,y,z, 7, this.type.eighth));  // 7
                 if (bounds[0] != UnitCellPos.MIN) { this.drawEighth(MV, prog, 90); }
             }
             
             if (bounds[2] != UnitCellPos.MAX) {
-                gl.uniform3fv(prog.getHandle("kdFront"), this.whichColor(center,alpha,x,y,z, 3)); // 3
+                gl.uniform3fv(prog.getHandle("kdFront"), this.whichColor(center,alpha,x,y,z, 3, this.type.eighth)); // 3
                 if (bounds[0] != UnitCellPos.MIN) { this.drawEighth(MV, prog, 180); }
-                gl.uniform3fv(prog.getHandle("kdFront"), this.whichColor(center,alpha,x,y,z, 4)); // 4
+                gl.uniform3fv(prog.getHandle("kdFront"), this.whichColor(center,alpha,x,y,z, 4, this.type.eighth)); // 4
                 if (bounds[0] != UnitCellPos.MAX) { this.drawEighth(MV, prog, 270); }                
             }
         }
@@ -80,17 +82,17 @@ function FaceCentered(eighth, half, sphere, colors, /*inspect*/) {
             MV.pushMatrix();
             MV.rotate(90.0, vec3.fromValues(1.0, 0.0, 0.0));
             if (bounds[2] != UnitCellPos.MIN) {
-                gl.uniform3fv(prog.getHandle("kdFront"), this.whichColor(center,alpha,x,y,z, 5)); // 5
+                gl.uniform3fv(prog.getHandle("kdFront"), this.whichColor(center,alpha,x,y,z, 5, this.type.eighth)); // 5
                 if (bounds[0] != UnitCellPos.MAX) { this.drawEighth(MV, prog, 0); }
-                gl.uniform3fv(prog.getHandle("kdFront"), this.whichColor(center,alpha,x,y,z, 6)); // 6
+                gl.uniform3fv(prog.getHandle("kdFront"), this.whichColor(center,alpha,x,y,z, 6, this.type.eighth)); // 6
                 if (bounds[0] != UnitCellPos.MIN) { this.drawEighth(MV, prog, 90); }
             }
             
             MV.rotate(180.0, vec3.fromValues(1.0, 0.0, 0.0));
             if (bounds[2] != UnitCellPos.MAX) {
-                gl.uniform3fv(prog.getHandle("kdFront"), this.whichColor(center,alpha,x,y,z, 2)); // 2
+                gl.uniform3fv(prog.getHandle("kdFront"), this.whichColor(center,alpha,x,y,z, 2, this.type.eighth)); // 2
                 if (bounds[0] != UnitCellPos.MIN) { this.drawEighth(MV, prog, 180); } 
-                gl.uniform3fv(prog.getHandle("kdFront"), this.whichColor(center,alpha,x,y,z, 1)); // 1
+                gl.uniform3fv(prog.getHandle("kdFront"), this.whichColor(center,alpha,x,y,z, 1, this.type.eighth)); // 1
                 if (bounds[0] != UnitCellPos.MAX) { this.drawEighth(MV, prog, 270); }
             }
             MV.popMatrix();
@@ -101,12 +103,26 @@ function FaceCentered(eighth, half, sphere, colors, /*inspect*/) {
         gl.uniform1f(prog.getHandle("alpha"), alpha); // Make sure alpha is same as it was 
     }
 
-    this.whichColor = function(center, alpha, x, y, z, id) {
-        if(!this.color) {
+    this.whichColor = function(center, alpha, x, y, z, id, shape) {
+        if(this.color == 2) {
             return colors["grey"];
         }
         
-        if (!center && alpha < 1.0) { return colors["grey"]; }
+        else if(this.color == 1) {
+            if (shape === this.type.half) {
+                if(!center && alpha < 1.0) {
+                    return colors["grey"];
+                }
+                return colors["green"];
+            }
+            else if(shape === this.type.eighth) {
+                return colors["grey"];
+            }
+        }
+        
+        if (!center && alpha < 1.0) {
+            return colors["grey"]; 
+        }
          
         var key = (z + y) % 3; 
 
@@ -227,48 +243,34 @@ function FaceCentered(eighth, half, sphere, colors, /*inspect*/) {
     };
     
     this.drawInspect = function(MV, prog, scale, inspctExp) {
-
-        gl.uniform1f(prog.getHandle("alpha"), 1.0);
         gl.uniform3fv(prog.getHandle("kdFront"), colors["grey"]);
         MV.pushMatrix();
-        MV.translate(vec3.fromValues(-0.45*1.1, 0, 0));
-        this.inspect.drawEighth(MV, prog, 0, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
-        this.inspect.drawEighth(MV, prog, 90, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
-        this.inspect.drawEighth(MV, prog, 180, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
-        this.inspect.drawEighth(MV, prog, 270, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
+        MV.scale(scale);
         
         MV.pushMatrix();
-        MV.rotate(90.0, vec3.fromValues(1.0, 0.0, 0.0));
-        this.inspect.drawEighth(MV, prog, 0, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
-        this.inspect.drawEighth(MV, prog, 90, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
-        
-        MV.rotate(180.0, vec3.fromValues(1.0, 0.0, 0.0));
-        
-        this.inspect.drawEighth(MV, prog, 180, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
-        this.inspect.drawEighth(MV, prog, 270, vec3.fromValues(-inspctExp, inspctExp, inspctExp)); 
-        
-        MV.popMatrix();    
+        MV.translate(vec3.fromValues(-6, 0, 0));
+        gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
+        sphere.draw(prog);
         MV.popMatrix();
         
-        gl.uniform3fv(prog.getHandle("kdFront"), colors["green"]);
         MV.pushMatrix();
-        MV.translate(vec3.fromValues(-0.15*1.1, 0, 0));
-        this.inspect.drawHalf(MV, prog, 0, vec3.fromValues(inspctExp + .99, 0, 0));
-        this.inspect.drawHalf(MV, prog, 180, vec3.fromValues(inspctExp + .99, 0, 0));
+        MV.translate(vec3.fromValues(-2, 0, 0));
+        gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
+        sphere.draw(prog);
         MV.popMatrix();
         
-        gl.uniform3fv(prog.getHandle("kdFront"), colors["orange"]);
         MV.pushMatrix();
-        MV.translate(vec3.fromValues(0.15*1.1, 0, 0));
-        this.inspect.drawHalf(MV, prog, 0, vec3.fromValues(inspctExp + .99, 0, 0));
-        this.inspect.drawHalf(MV, prog, 180, vec3.fromValues(inspctExp + .99, 0, 0));
+        MV.translate(vec3.fromValues(2, 0, 0));
+        gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
+        sphere.draw(prog);
         MV.popMatrix();
         
-        gl.uniform3fv(prog.getHandle("kdFront"), colors["grey"]);
         MV.pushMatrix();
-        MV.translate(vec3.fromValues(0.45*1.1, 0, 0));
-        this.inspect.drawHalf(MV, prog, 0, vec3.fromValues(inspctExp + .99, 0, 0));
-        this.inspect.drawHalf(MV, prog, 180, vec3.fromValues(inspctExp + .99, 0, 0));
+        MV.translate(vec3.fromValues(6, 0, 0));
+        gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
+        sphere.draw(prog);
+        MV.popMatrix();
+        
         MV.popMatrix();
     }
     
@@ -347,4 +349,5 @@ function FaceCentered(eighth, half, sphere, colors, /*inspect*/) {
     this.scale = 0.71;
     this.color = false;
     var layers = null;
+    this.type = {eighth : 0, half: 1};
 }
