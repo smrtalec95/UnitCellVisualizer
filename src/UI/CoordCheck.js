@@ -2,7 +2,7 @@
 
 function CoordCheck(dispSelector) {
     
-    this.checkCrsytal = function(crystal) {
+    this.checkCrystal = function(crystal) {
         var success;
         switch(crystal) {
             case CrystalType.SIMPLE:
