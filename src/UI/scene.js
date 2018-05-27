@@ -1,6 +1,6 @@
 var Scene = {
 
-    load : function(resourceDir) {
+    load : function(resourceDir, dispSelector) {
 
         // Setup meshes
         this.eighth.loadMesh(resourceDir + "eighth.obj");
@@ -14,27 +14,27 @@ var Scene = {
 
         var crystal;
 
-        crystal = new Crystal(CrystalType.SIMPLE, this.eighth, this.half, this.sphere, this.colors);
+        crystal = new Crystal(CrystalType.SIMPLE, this.eighth, this.half, this.sphere, this.colors, dispSelector);
         crystal.init();
         this.crystals.push(crystal);
 
-        crystal = new Crystal(CrystalType.BODY, this.eighth, this.half, this.sphere, this.colors);
+        crystal = new Crystal(CrystalType.BODY, this.eighth, this.half, this.sphere, this.colors, dispSelector);
         crystal.init();
         this.crystals.push(crystal);
 
-        crystal = new Crystal(CrystalType.FACE, this.eighth, this.half, this.sphere, this.colors);
+        crystal = new Crystal(CrystalType.FACE, this.eighth, this.half, this.sphere, this.colors, dispSelector);
         crystal.init();
         this.crystals.push(crystal);
         
-        crystal = new Crystal(CrystalType.NaCl, this.eighth, this.half, this.sphere, this.colors);
+        crystal = new Crystal(CrystalType.NaCl, this.eighth, this.half, this.sphere, this.colors, dispSelector);
         crystal.init();
         this.crystals.push(crystal);
         
-        crystal = new Crystal(CrystalType.CaF2, this.eighth, this.half, this.sphere, this.colors);
+        crystal = new Crystal(CrystalType.CaF2, this.eighth, this.half, this.sphere, this.colors, dispSelector);
         crystal.init();
         this.crystals.push(crystal);
         
-        crystal = new Crystal(CrystalType.LEGEND, this.eighth, this.half, this.sphere, this.colors);
+        crystal = new Crystal(CrystalType.LEGEND, this.eighth, this.half, this.sphere, this.colors, dispSelector);
         crystal.init();
         this.crystals.push(crystal);
     },
