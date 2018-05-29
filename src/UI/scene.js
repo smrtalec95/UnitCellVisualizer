@@ -118,8 +118,9 @@ var Scene = {
     },
     
     toggleColor : function() {
-        for(var i = 0; i < this.crystals.length; i++) {
-            this.crystals[i].toggleColor();
+        this.color++;
+        if(this.color == 3) {
+            this.color = 0;
         }
     },
     
@@ -135,6 +136,7 @@ var Scene = {
     
     goToCrystal : function(crystalType) {
         this.whichCrystal = crystalType;
+        this.color = 0;
         //this.crystals[this.whichCrystal].setDrawLayers();
     },
 
@@ -146,4 +148,5 @@ var Scene = {
     colors : {},
     isCoord : false,
     coordCheck : null,
+    color : 0
 };
