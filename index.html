@@ -127,6 +127,7 @@
                              + "'i' : inspect unit cell makeup\n"
                              + "'t' : translucent view\n"
                              + "'r' : coordination view\n"
+                             + "'s' : single cell view\n"
                              + "'n' : toggle cell coloring\n"
                              + "'l' : toggle layer animation\n"
                              + "shift + 'l' : lattice view\n";
@@ -190,6 +191,9 @@
                 }
                 else if(value == "3") {
                     Scene.activateCoord($('#displaySelector'), $('#crystalSelector').val());
+                }
+                else if(value == "4") {
+                    Scene.toggleSingle();
                 }
             }
             
@@ -261,6 +265,7 @@
                             <option value="1">Translucency</option>
                             <option value="2">Inspect</option>
                             <option value="3">Coordination</option>
+                            <option value="4">Single</option>
                         </select>
                         
                         <button id="layer" onclick="layer()" type="button">Layering</button>

@@ -8,6 +8,8 @@ function UnitCell(eighth, half, sphere, colors) {
     
     this.drawCoord = function(MV, prog, scale) {}; // ABSTRACT
     
+    this.drawSingle = function(MV, prog, scale) {}; //ABSTRACT
+    
     this.drawEighth = function(MV, prog, rot) {
         MV.pushMatrix();
         
