@@ -118,6 +118,25 @@ function SimpleCubic(eighth, half, sphere, colors) {
         return layers;
     }
     
+    this.drawSingle = function(MV, prog, scale) {
+        MV.pushMatrix();
+        MV.scale(scale);
+        
+        for(var i = -1; i < 2; i += 2) {
+            for(var j = -1; j < 2; j += 2) {
+                for(var k = -1; k < 2; k += 2) {
+                    MV.pushMatrix();
+                    MV.translate(vec3.fromValues(i, j, k));
+                    gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
+                    sphere.draw(prog);
+                    MV.popMatrix();
+                }
+            }
+        }
+        
+        MV.popMatrix();
+    }
+    
     this.name = "Simple Cubic";
     var layers = null;
 }
