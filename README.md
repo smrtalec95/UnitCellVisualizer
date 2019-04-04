@@ -10,7 +10,7 @@ The simulation is designed to be easy to use and interesting to look at.
 The simulation is written in JavaScript and uses WebGL to handle graphics.
 The simulation is currently available at http://atom.calpoly.edu/crystal .
 
-#Design Credit
+**Design Credit**
 
 - Dr. Zahra Alghoul: Initial specifications and chemistry knowledge.
 - Dr. Zoe Wood: Graphics knowledge. Oversaw development on the simulation as part of
