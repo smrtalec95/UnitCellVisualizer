@@ -154,9 +154,11 @@
                 if(crystalType == 5) {
                     $('#legendText').show();
                     $('#crystalSelector').val('-1');
+                    $('#displaySelector').hide();
                 }
                 else {
                     $('#legendText').hide();
+                    $('#displaySelector').show();
                 }
                 Scene.goToCrystal(crystalType);
                 document.getElementById("crystalType").innerHTML = Scene.getCrystalName();

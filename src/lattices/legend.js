@@ -24,6 +24,7 @@ function Legend(sphere, colors) {
     this.drawCa = function(MV, prog) {
         MV.pushMatrix();
         MV.translate(vec3.fromValues(0, 8, 0));
+        MV.scale(.8);
         gl.uniform3fv(prog.getHandle("kdFront"), colors["white"]);
         gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
         sphere.draw(prog);
@@ -33,6 +34,7 @@ function Legend(sphere, colors) {
     this.drawF = function(MV, prog) {
         MV.pushMatrix();
         MV.translate(vec3.fromValues(0, 3, 0));
+        MV.scale(1.2);
         gl.uniform3fv(prog.getHandle("kdFront"), colors["orange"]);
         gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
         sphere.draw(prog);

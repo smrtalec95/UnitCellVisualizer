@@ -121,6 +121,7 @@ function SimpleCubic(eighth, half, sphere, colors) {
     this.drawSingle = function(MV, prog, scale) {
         MV.pushMatrix();
         MV.scale(scale);
+        gl.uniform3fv(prog.getHandle("kdFront"), colors["grey"]);
         
         for(var i = -1; i < 2; i += 2) {
             for(var j = -1; j < 2; j += 2) {
