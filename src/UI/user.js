@@ -98,6 +98,10 @@ var User = {
                 case 'N'.charCodeAt(0):
                     Scene.toggleColor();
                     break;
+                    
+                case 'S'.charCodeAt(0):
+                    Scene.toggleSingle();
+                    break;
             
                 case 17:
                     User.ctrl = true;

@@ -124,6 +124,12 @@ var Scene = {
         }
     },
     
+    toggleSingle: function() {
+        for (var i = 0; i < this.crystals.length; i++) {
+            this.crystals[i].activateSingle();
+        }
+    },
+    
     goToLattice : function() {
         for(var i = 0; i < this.crystals.length; i++) {
             this.crystals[i].goToLattice();

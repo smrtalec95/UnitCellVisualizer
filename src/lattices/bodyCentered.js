@@ -141,6 +141,29 @@ function BodyCentered(eighth, half, sphere, colors) {
         return layers;
     }
     
+    this.drawSingle = function(MV, prog, scale) {
+        MV.pushMatrix();
+        MV.scale(scale);
+        gl.uniform3fv(prog.getHandle("kdFront"), colors["red"]);
+        gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
+        sphere.draw(prog);
+        
+        gl.uniform3fv(prog.getHandle("kdFront"), colors["grey"]);
+        for(var i = -1.15; i < 2; i += 2.3) {
+            for(var j = -1.15; j < 2; j += 2.3) {
+                for(var k = -1.15; k < 2; k += 2.3) {
+                    MV.pushMatrix();
+                    MV.translate(vec3.fromValues(i, j, k));
+                    gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
+                    sphere.draw(prog);
+                    MV.popMatrix();
+                }
+            }
+        }
+        
+        MV.popMatrix();
+    }
+    
     this.name = "Body-Centered Cubic";
     this.scale = 0.87;
     var layers = null;

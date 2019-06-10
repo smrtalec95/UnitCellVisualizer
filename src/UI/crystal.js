@@ -49,7 +49,11 @@ function Crystal(type, eighth, half, sphere, colors) {
         // legend has no layering animation for obvious reasons
         else if (layersDraw && type != CrystalType.LEGEND) {
             this.drawLayers(MV, prog);
-        } else {
+        }
+        else if(drawSingle && type != CrystalType.LEGEND) {
+            this.drawSingle(MV, prog);
+        } 
+        else {
             this.drawCells(MV, prog);
         }
         
@@ -80,6 +84,7 @@ function Crystal(type, eighth, half, sphere, colors) {
             layersDraw = false;
             inspecting = false;
             dispCoord = false;
+            drawSingle = false;
         }
     };
     
@@ -91,6 +96,7 @@ function Crystal(type, eighth, half, sphere, colors) {
             translucent = false;
             layersDraw = false;
             dispCoord = false;
+            drawSingle = false;
         }
     };
     
@@ -101,8 +107,19 @@ function Crystal(type, eighth, half, sphere, colors) {
             translucent = false;
             layersDraw = false;
             inspecting = false;
+            drawSingle = false;
         }
     };
+    
+    this.activateSingle = function() {
+        if(type != CrystalType.LEGEND) {
+            dispCoord = false;
+            translucent = false;
+            layersDraw = false;
+            inspecting = false;
+            drawSingle = true;
+        }
+    }
     
     this.setDrawLayers = function() {
         this.toggleLayers();
@@ -219,6 +236,11 @@ function Crystal(type, eighth, half, sphere, colors) {
         gl.uniform1f(prog.getHandle("alpha"), 1.0);
         unit.drawInspect(MV, prog, scale, inspctExp);
     };
+    
+    this.drawSingle = function(MV, prog) {
+        gl.uniform1f(prog.getHandle("alpha"), 1.0);
+        unit.drawSingle(MV, prog, scale);
+    }
 
     this.initCellPositions = function() {
 
@@ -340,6 +362,7 @@ function Crystal(type, eighth, half, sphere, colors) {
     var layersDraw = true;
     var inspecting = false;
     var dispCoord = false;
+    var drawSingle = false;
     var unit;
     var eighth = eighth;
     var half = half;

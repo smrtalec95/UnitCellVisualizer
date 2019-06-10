@@ -30,10 +30,11 @@ function CaF2Layer(rows, cols, restHeight, xexpansion, zexpansion, sphere, atom,
                     MV.pushMatrix();
                     MV.translate(pos);
                     
-                    for(var m = -1.15; m < 2; m += 2.3) {
-                        for(var n = -1.15; n < 2; n += 2.3) {
+                    for(var m = -1.25; m < 2; m += 2.5) {
+                        for(var n = -1.25; n < 2; n += 2.5) {
                             MV.pushMatrix();
                             MV.translate(vec3.fromValues(m, 0, n));
+                            MV.scale(1.2);
                             gl.uniform3fv(prog.getHandle("kdFront"), color);
                             gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
                             sphere.draw(prog);
@@ -57,6 +58,7 @@ function CaF2Layer(rows, cols, restHeight, xexpansion, zexpansion, sphere, atom,
                         var pos = vec3.fromValues(offset[0] + j*2*xexpansion, curHeight*xexpansion, offset[2] + i*2*zexpansion);
                         MV.pushMatrix();
                         MV.translate(pos);
+                        MV.scale(.8);
                         gl.uniform3fv(prog.getHandle("kdFront"), color);
                         gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
                         sphere.draw(prog);

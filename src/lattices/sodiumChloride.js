@@ -424,6 +424,38 @@ function SodiumChloride(eighth, half, sphere, colors) {
         return layers;
     }
     
+    this.drawSingle = function(MV, prog, scale) {
+        MV.pushMatrix();
+        MV.scale(scale);
+        for(var i = -2; i < 4; i += 2) {
+            for(var j = -2; j < 4; j += 2) {
+                for(var k = -2; k < 4; k += 2) {
+                    MV.pushMatrix();
+                    MV.translate(vec3.fromValues(i, j, k));
+                    if((i != 0 && j != 0 && k != 0) || (i == 0 && j == 0 && k != 0)
+                        || (i == 0 && j != 0 && k == 0) || (i != 0 && j == 0 && k == 0)) {
+                        
+                        gl.uniform3fv(prog.getHandle("kdFront"), colors["purple"]);
+                        MV.scale(.7);
+                    }
+                    else {
+                        if(i == 0 && j == 0 && k == 0) {
+                            gl.uniform3fv(prog.getHandle("kdFront"), colors["forestGreen"]);
+                        }
+                        else {
+                            gl.uniform3fv(prog.getHandle("kdFront"), colors["green"]);
+                        }
+                        MV.scale(1.3);
+                    }
+                    gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
+                    sphere.draw(prog);
+                    MV.popMatrix();
+                }
+            }
+        }
+        MV.popMatrix();
+    }
+    
     this.name = "Sodium Chloride";
     var layers = null;
 }
