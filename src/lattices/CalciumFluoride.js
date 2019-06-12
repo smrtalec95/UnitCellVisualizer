@@ -218,8 +218,6 @@ function CalciumFluoride(eighth, half, sphere, colors) {
         }
     }
     
-    // tis close
-    
     this.drawInspect = function(MV, prog, scale, inspctExp) {
         // todo - fix inspect view to use expansion
         MV.pushMatrix();
@@ -332,8 +330,29 @@ function CalciumFluoride(eighth, half, sphere, colors) {
     }
     
     this.drawSingle = function(MV, prog, scale) {
-        gl.uniform3fv(prog.getHandle("kdFront"), colors["orange"]);
-        sphere.draw(prog);
+        MV.pushMatrix();
+        MV.scale(scale);
+        //draw F cluster
+        this.drawFCluster(MV, prog);
+        
+        //draw the 8 Ca corners
+        this.drawCaEighth(MV, prog, 0, false);
+        this.drawCaEighth(MV, prog, 90, false);
+        this.drawCaEighth(MV, prog, 180, false);
+        this.drawCaEighth(MV, prog, 270, false);
+        this.drawCaEighth(MV, prog, 0, true);
+        this.drawCaEighth(MV, prog, 90, true);
+        this.drawCaEighth(MV, prog, 180, true);
+        this.drawCaEighth(MV, prog, 270, true);
+        
+        //draw the 6 Ca faces
+        this.drawCaHalf(MV, prog, false, false, false, false, false);
+        this.drawCaHalf(MV, prog, true, false, false, false, false);
+        this.drawCaHalf(MV, prog, false, true, false, false, false);
+        this.drawCaHalf(MV, prog, false, false, false, true, false);
+        this.drawCaHalf(MV, prog, false, false, true, true, true);
+        this.drawCaHalf(MV, prog, false, true, true, false, false);
+        MV.popMatrix();
     }
     
     this.name = "Calcium Fluoride";

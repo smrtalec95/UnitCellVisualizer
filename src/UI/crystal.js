@@ -1,6 +1,6 @@
-var CrystalType = {SIMPLE : 0, BODY : 1, FACE : 2 , NaCl : 3, CaF2: 4, LEGEND : 5};
+var CrystalType = {SIMPLE : 0, BODY : 1, FACE : 2 , NaCl : 3, CaF2: 4, LEGEND : 5, HCP : 6};
 
-function Crystal(type, eighth, half, sphere, colors) {
+function Crystal(type, eighth, sixth, half, sphere, colors) {
 
     this.init = function() {
         this.initCellPositions();
@@ -29,6 +29,10 @@ function Crystal(type, eighth, half, sphere, colors) {
             
             case CrystalType.LEGEND:
                 unit = new Legend(sphere, colors);
+            break;
+            
+            case CrystalType.HCP:
+                unit = new HCP(eighth, sixth, half, sphere, colors);
             break;
         }
         
