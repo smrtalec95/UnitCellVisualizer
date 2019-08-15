@@ -173,7 +173,12 @@ function CalciumFluoride(eighth, half, sphere, colors) {
                 MV.rotate(180, vec3.fromValues(1, 0, 0));
             }
             MV.rotate(rot, vec3.fromValues(0, 1, 0));
-            MV.translate(vec3.fromValues(2.5, -2.5, -2.5));
+            if(isSphere !== undefined) {
+                MV.translate(vec3.fromValues(2.4, -2.4, -2.4));
+            }
+            else {
+                MV.translate(vec3.fromValues(2.5, -2.5, -2.5));
+            }
             MV.scale(.8);
 
             gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
@@ -213,7 +218,12 @@ function CalciumFluoride(eighth, half, sphere, colors) {
                 }
                 MV.rotate(-90, vec3.fromValues(0, 1, 0));
             }
-            MV.translate(vec3.fromValues(1.71, 0, 0));
+            if(isSphere !== undefined) {
+                MV.translate(vec3.fromValues(2.4, 0, 0));
+            }
+            else {
+                MV.translate(vec3.fromValues(1.71, 0, 0));
+            }
             MV.rotate(180, vec3.fromValues(0, 1, 0));
             MV.scale(.8);
             
