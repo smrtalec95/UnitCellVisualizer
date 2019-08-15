@@ -133,6 +133,10 @@ function Crystal(type, eighth, sixth, half, sphere, colors) {
     this.toggleLayers = function() {
         // legend has no layers to toggle on/off
          if (type != CrystalType.LEGEND) {
+             dispCoord = false;
+             translucent = false;
+             inspecting = false;
+             drawSingle = false;
              layersDraw = !layersDraw;
              
              for (var i = 0; i < layers.length; i++) {
