@@ -350,6 +350,7 @@ function Crystal(type, eighth, sixth, half, sphere, colors) {
             dispCoord = false;
             translucent = false;
             inspecting = false;
+            drawSingle = false;
         }
     }
     
