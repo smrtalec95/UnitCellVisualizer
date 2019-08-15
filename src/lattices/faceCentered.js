@@ -104,11 +104,8 @@ function FaceCentered(eighth, half, sphere, colors) {
     }
 
     this.whichColor = function(center, alpha, x, y, z, id, shape) {
-        if(this.color == 2) {
-            return colors["grey"];
-        }
-        
-        else if(this.color == 1) {
+
+        if(this.color == 0) {
             if (shape === this.type.half) {
                 if(!center && alpha < 1.0) {
                     return colors["grey"];
@@ -120,103 +117,10 @@ function FaceCentered(eighth, half, sphere, colors) {
             }
         }
         
-        if (!center && alpha < 1.0) {
-            return colors["grey"]; 
+        else {
+            return colors["grey"];
         }
-         
-        var key = (z + y) % 3; 
-
-        switch (id) {
-            
-        case 1 : 
-            switch (key) {
-            case 0 : return colors["grey"];
-            case 1 : return colors["green"];
-            case 2 : return colors["orange"]; 
-            }
-        case 2 :
-            switch (key) {
-            case 0 : return colors["orange"];
-            case 1 : return colors["grey"];
-            case 2 : return colors["green"]; 
-            }
-        case 3 :
-            switch (key) {
-            case 0 : return colors["green"];
-            case 1 : return colors["orange"];
-            case 2 : return colors["grey"]; 
-            }
-        case 4 :
-            switch (key) {
-            case 0 : return colors["orange"];
-            case 1 : return colors["grey"];
-            case 2 : return colors["green"]; 
-            }
-        case 5 :
-            switch (key) {
-            case 0 : return colors["grey"];
-            case 1 : return colors["green"];
-            case 2 : return colors["orange"]; 
-            }
-        case 6 :
-            switch (key) {
-            case 0 : return colors["orange"];
-            case 1 : return colors["grey"];
-            case 2 : return colors["green"]; 
-            }
-        case 7 :
-            switch (key) {
-            case 0 : return colors["green"];
-            case 1 : return colors["orange"];
-            case 2 : return colors["grey"]; 
-            }
-        case 8 :
-            switch (key) {
-            case 0 : return colors["orange"];
-            case 1 : return colors["grey"];
-            case 2 : return colors["green"]; 
-            }
-        case 9 :
-            switch (key) {
-            case 0 : return colors["orange"];
-            case 1 : return colors["grey"];
-            case 2 : return colors["green"]; 
-            }
-        case 10 :
-            switch (key) {
-            case 0 : return colors["orange"];
-            case 1 : return colors["grey"];
-            case 2 : return colors["green"]; 
-            }
-        case 11 :
-            switch (key) {
-            case 0 : return colors["green"];
-            case 1 : return colors["orange"];
-            case 2 : return colors["grey"]; 
-            }
-        case 12 :
-            switch (key) {
-            case 0 : return colors["grey"];
-            case 1 : return colors["green"];
-            case 2 : return colors["orange"]; 
-            }
-        case 13 :
-            switch (key) {
-            case 0 : return colors["grey"];
-            case 1 : return colors["green"];
-            case 2 : return colors["orange"]; 
-            }
-        case 14 :
-            switch (key) {
-            case 0 : return colors["green"];
-            case 1 : return colors["orange"];
-            case 2 : return colors["grey"]; 
-            }
-        }
-        
-
-        return colors["black"];
-    };
+    }
     
     this.drawEighth = function(MV, prog, rot) {
         MV.pushMatrix();
@@ -323,23 +227,13 @@ function FaceCentered(eighth, half, sphere, colors) {
             var s = 2;
             layers = new Array();
             
-            layers.push(new Layer(4,1, -3.0*s, 1.0, 1.40845, colors["grey"], sphere));
-            layers.push(new Layer(3,2, -2.5*s, 1.0, 1.40845, colors["orange"], sphere));
-            layers.push(new Layer(4,3, -2.0*s, 1.0, 1.40845, colors["green"], sphere));
-
-            layers.push(new Layer(3,4, -1.5*s, 1.0, 1.40845, colors["grey"], sphere));
-            layers.push(new Layer(4,5, -1.0*s, 1.0, 1.40845, colors["orange"], sphere));
-            layers.push(new Layer(3,6, -0.5*s, 1.0, 1.40845, colors["green"], sphere));
-
-            layers.push(new Layer(4,7, 0, 1.0, 1.40845, colors["grey"], sphere));
-
-            layers.push(new Layer(3,6, 0.5*s, 1.0, 1.40845, colors["orange"], sphere));
-            layers.push(new Layer(4,5, 1.0*s, 1.0, 1.40845, colors["green"], sphere));
-            layers.push(new Layer(3,4, 1.5*s, 1.0, 1.40845, colors["grey"], sphere));
-
-            layers.push(new Layer(4,3, 2.0*s, 1.0, 1.40845, colors["orange"], sphere));
-            layers.push(new Layer(3,2, 2.5*s, 1.0, 1.40845, colors["green"], sphere));
-            layers.push(new Layer(4,1, 3.0*s, 1.0, 1.40845, colors["grey"], sphere));
+            layers.push(new FaceCenteredLayer(7, 7, -6, .7, .7, sphere, true, colors["grey"], colors["green"]));
+            layers.push(new FaceCenteredLayer(7, 7, -4, .7, .7, sphere, false, colors["green"], colors["green"]));
+            layers.push(new FaceCenteredLayer(7, 7, -2, .7, .7, sphere, true, colors["grey"], colors["green"]));
+            layers.push(new FaceCenteredLayer(7, 7, 0, .7, .7, sphere, false, colors["green"], colors["green"]));
+            layers.push(new FaceCenteredLayer(7, 7, 2, .7, .7, sphere, true, colors["grey"], colors["green"]));
+            layers.push(new FaceCenteredLayer(7, 7, 4, .7, .7, sphere, false, colors["green"], colors["green"]));
+            layers.push(new FaceCenteredLayer(7, 7, 6, .7, .7, sphere, true, colors["grey"], colors["green"]));
         }
         
         return layers;

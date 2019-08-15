@@ -165,12 +165,6 @@ function Crystal(type, eighth, sixth, half, sphere, colors) {
         gl.uniform1f(prog.getHandle("alpha"), alpha);
         
         MV.pushMatrix();
-          
-        // Rotation of face-centered cubic so that it matches layering scheme
-        if (type == CrystalType.FACE) { 
-            MV.rotate(45, vec3.fromValues(0,0,1)); 
-        }
-        
         MV.scale(scale);
         
         //this is one unit cell (ie what shows up when translucency is toggled)
