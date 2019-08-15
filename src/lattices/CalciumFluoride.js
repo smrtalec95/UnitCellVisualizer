@@ -159,7 +159,7 @@ function CalciumFluoride(eighth, half, sphere, colors) {
         }
     }
     
-    this.drawCaEighth = function(MV, prog, rot, flipY, center, alpha, color) {
+    this.drawCaEighth = function(MV, prog, rot, flipY, center, alpha, color, isSphere) {
         if(color != 2) {
             if(alpha < 1 && !center) {
                 gl.uniform3fv(prog.getHandle("kdFront"), colors["grey"]);
@@ -177,12 +177,17 @@ function CalciumFluoride(eighth, half, sphere, colors) {
             MV.scale(.8);
 
             gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
-            eighth.draw(prog);
+            if(isSphere !== undefined) {
+                sphere.draw(prog);
+            }
+            else {
+                eighth.draw(prog);
+            }
             MV.popMatrix();
         }
     }
     
-    this.drawCaHalf = function(MV, prog, flipX, onY, flipY, onZ, flipZ, center, alpha, color) {
+    this.drawCaHalf = function(MV, prog, flipX, onY, flipY, onZ, flipZ, center, alpha, color, isSphere) {
         
         if(color != 2) {
             if(alpha < 1 && !center) {
@@ -213,7 +218,12 @@ function CalciumFluoride(eighth, half, sphere, colors) {
             MV.scale(.8);
             
             gl.uniformMatrix4fv(prog.getHandle("MV"), false, MV.top());
-            half.draw(prog);
+            if(isSphere !== undefined) {
+                sphere.draw(prog);
+            }
+            else {
+                half.draw(prog);
+            }
             MV.popMatrix();
         }
     }
@@ -336,22 +346,22 @@ function CalciumFluoride(eighth, half, sphere, colors) {
         this.drawFCluster(MV, prog);
         
         //draw the 8 Ca corners
-        this.drawCaEighth(MV, prog, 0, false);
-        this.drawCaEighth(MV, prog, 90, false);
-        this.drawCaEighth(MV, prog, 180, false);
-        this.drawCaEighth(MV, prog, 270, false);
-        this.drawCaEighth(MV, prog, 0, true);
-        this.drawCaEighth(MV, prog, 90, true);
-        this.drawCaEighth(MV, prog, 180, true);
-        this.drawCaEighth(MV, prog, 270, true);
+        this.drawCaEighth(MV, prog, 0, false, true, 1, colors["white"], true);
+        this.drawCaEighth(MV, prog, 90, false, true, 1, colors["white"], true);
+        this.drawCaEighth(MV, prog, 180, false, true, 1, colors["white"], true);
+        this.drawCaEighth(MV, prog, 270, false, true, 1, colors["white"], true);
+        this.drawCaEighth(MV, prog, 0, true, true, 1, colors["white"], true);
+        this.drawCaEighth(MV, prog, 90, true, true, 1, colors["white"], true);
+        this.drawCaEighth(MV, prog, 180, true, true, 1, colors["white"], true);
+        this.drawCaEighth(MV, prog, 270, true, true, 1, colors["white"], true);
         
         //draw the 6 Ca faces
-        this.drawCaHalf(MV, prog, false, false, false, false, false);
-        this.drawCaHalf(MV, prog, true, false, false, false, false);
-        this.drawCaHalf(MV, prog, false, true, false, false, false);
-        this.drawCaHalf(MV, prog, false, false, false, true, false);
-        this.drawCaHalf(MV, prog, false, false, true, true, true);
-        this.drawCaHalf(MV, prog, false, true, true, false, false);
+        this.drawCaHalf(MV, prog, false, false, false, false, false, true, 1, colors["white"], true);
+        this.drawCaHalf(MV, prog, true, false, false, false, false, true, 1, colors["white"], true);
+        this.drawCaHalf(MV, prog, false, true, false, false, false, true, 1, colors["white"], true);
+        this.drawCaHalf(MV, prog, false, false, false, true, false, true, 1, colors["white"], true);
+        this.drawCaHalf(MV, prog, false, false, true, true, true, true, 1, colors["white"], true);
+        this.drawCaHalf(MV, prog, false, true, true, false, false, true, 1, colors["white"], true);
         MV.popMatrix();
     }
     
